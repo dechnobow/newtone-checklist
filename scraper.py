@@ -25,16 +25,8 @@ def parse_products(soup, category):
     if not soup:
         return records
 
-    items = soup.select('ul.products li, .product-list li, li.product')
-    if not items:
-        items = soup.select('li')
-
-    for item in items:
+    for title_el in soup.select('a[href*="/product/"]'):
         try:
-            title_el = item.select_one('a[href*="/product/"]')
-            if not title_el:
-                continue
-
             href = title_el.get('href', '')
             if not href.startswith('http'):
                 href = BASE_URL + '/' + href.lstrip('/')
@@ -42,27 +34,49 @@ def parse_products(soup, category):
             m = re.search(r'/product/(\d+)', href)
             if not m:
                 continue
-            rid = 't' + m.group(1).lstrip('0')
+            rid = m.group(1)
 
-            img_el = item.select_one('img')
+            # 親要素をさかのぼって情報を取得
+            item = title_el.parent
+            for _ in range(4):
+                if item is None:
+                    break
+                if item.name == 'li':
+                    break
+                item = item.parent
+            if item is None:
+                item = title_el.parent
+
+            img_el = item.select_one('img') if item else None
             img = ''
             if img_el:
                 img = img_el.get('src', '')
                 if img and not img.startswith('http'):
                     img = BASE_URL + img
 
-            artist_el = item.select_one('h3 a, h3, .artist a, .artist')
+            artist_el = item.select_one('h3') if item else None
             artist = artist_el.get_text(strip=True) if artist_el else ''
 
-            fmt_el = item.select_one('.format, .type, span.cat')
-            fmt = fmt_el.get_text(strip=True) if fmt_el else ''
-
-            label_el = item.select_one('.label a, .label')
-            label = label_el.get_text(strip=True) if label_el else ''
+            label_els = item.select('a') if item else []
+            label = ''
+            for a in label_els:
+                ahref = a.get('href', '')
+                if '/label/' in ahref and a != title_el:
+                    label = a.get_text(strip=True)
+                    break
 
             title = title_el.get_text(strip=True)
             if not title:
                 continue
+
+            # フォーマット（li直下のテキストノードやspanから）
+            fmt = ''
+            if item:
+                for child in item.children:
+                    text = child.get_text(strip=True) if hasattr(child, 'get_text') else str(child).strip()
+                    if text and len(text) < 30 and text not in (title, artist, label):
+                        fmt = text
+                        break
 
             records.append({
                 'id':       rid,
@@ -79,12 +93,14 @@ def parse_products(soup, category):
         except Exception as e:
             print(f'Parse error: {e}')
 
+    # 重複除去（同じカテゴリ内のみ）
     seen = set()
     unique = []
     for r in records:
         if r['id'] not in seen:
             seen.add(r['id'])
             unique.append(r)
+    print(f'  Found {len(unique)} items')
     return unique
 
 def scrape_all():
@@ -97,16 +113,9 @@ def scrape_all():
     all_groups = []
     for cat, path in categories.items():
         url = BASE_URL + path
-        print(f'Scraping {cat}: {url}')
+        print(f'Scraping {cat}...')
         soup = fetch(url)
-        if soup:
-            sample = soup.select_one('a[href*="/product/"]')
-            if sample:
-                print(f'  Sample link: {sample.get("href","")}')
-            else:
-                print(f'  WARNING: No product links found')
         records = parse_products(soup, cat)
-        print(f'  Found {len(records)} items')
         if records:
             all_groups.append({
                 'date': today,
@@ -129,7 +138,7 @@ def load_existing_data(html_path):
 
     raw = m.group(1)
 
-    # まずJSON形式で試す
+    # JSON形式で試す
     try:
         data = json.loads(raw)
         print(f'Loaded {len(data)} existing groups (JSON)')
@@ -139,9 +148,12 @@ def load_existing_data(html_path):
 
     # JS形式をJSONに変換
     try:
-        json_str = re.sub(r'(\{|,)\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', raw)
-        json_str = re.sub(r"'([^'\\]*(?:\\.[^'\\]*)*)'", lambda m: '"' + m.group(1).replace('"', '\\"') + '"', json_str)
-        json_str = re.sub(r',\s*([}\]])', r'\1', json_str)
+        # キー名にダブルクォートを追加
+        json_str = re.sub(r'(?<=[{,])\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'"\1":', raw)
+        # シングルクォートをダブルクォートに
+        json_str = re.sub(r"'([^'\\]*(?:\\.[^'\\]*)*)'", lambda mo: json.dumps(mo.group(1)), json_str)
+        # 末尾カンマを除去
+        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
         data = json.loads(json_str)
         print(f'Loaded {len(data)} existing groups (JS converted)')
         return data
@@ -150,6 +162,7 @@ def load_existing_data(html_path):
         return []
 
 def merge_data(existing, new_groups):
+    # 今日のデータを除いた既存データ
     merged = [g for g in existing if g.get('date') != today]
     merged.extend(new_groups)
     merged.sort(key=lambda g: (g.get('date', ''), g.get('category', '')), reverse=True)
