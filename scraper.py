@@ -108,7 +108,6 @@ def scrape_all():
         'thisweek': '/store/thisweek/',
         'new':      '/store/',
         'preorder': '/store/pre/',
-        'used':     '/store/used/',
     }
     all_groups = []
     for cat, path in categories.items():
