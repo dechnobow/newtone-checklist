@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NT Records">
+<title>NEWTONE RECORDS — 新譜チェック</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #181818;
+    --surface2: #222;
+    --border: #2a2a2a;
+    --accent: #d4ff00;
+    --accent2: #ff4b00;
+    --text: #e8e8e8;
+    --muted: #666;
+    --checked-bg: #1a1f00;
+    --checked-text: #6a8a00;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* ── Header ── */
+  #app-header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+
+  #back-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 24px;
+    padding: 4px 8px 4px 0;
+    cursor: pointer;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .header-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  #header-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+
+  /* ── Panels ── */
+  #panels {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #list-panel {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    background: var(--bg);
+    will-change: transform;
+  }
+
+  #day-panel {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    background: var(--bg);
+    will-change: transform;
+  }
+
+  #day-panel.visible   { transform: translateX(0); }
+  #list-panel.hidden   { transform: translateX(-25%); }
+
+  @media (min-width: 680px) {
+    #panels { display: flex; }
+    #list-panel, #day-panel {
+      position: relative;
+      transform: none !important;
+      transition: none;
+    }
+    #list-panel { width: 240px; border-right: 1px solid var(--border); flex-shrink: 0; }
+    #day-panel  { flex: 1; }
+    #back-btn   { display: none !important; }
+  }
+
+  /* ── Tree ── */
+  .tree-year-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .tree-year-btn .arrow { font-size: 10px; transition: transform .2s; }
+  .tree-year-btn.collapsed .arrow { transform: rotate(-90deg); }
+
+  .month-block { border-bottom: 1px solid var(--border); }
+
+  .month-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 14px 20px 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border-left: 3px solid transparent;
+    min-height: 48px;
+    transition: background .1s;
+  }
+  .month-btn:active { background: var(--surface); }
+  .month-btn.active { color: var(--accent); border-left-color: var(--accent); background: #1a1e00; }
+
+  .badge {
+    font-size: 11px;
+    background: var(--surface2);
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Courier Prime', monospace;
+    flex-shrink: 0;
+  }
+  .month-btn.active .badge { background: #2a3300; color: var(--accent); }
+
+  .day-list { overflow: hidden; }
+  .day-list.collapsed { display: none; }
+
+  .day-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 12px 20px 12px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border-left: 3px solid transparent;
+    min-height: 48px;
+    transition: background .1s;
+  }
+  .day-btn:active { background: var(--surface); }
+  .day-btn.active { color: var(--accent); border-left-color: var(--accent); background: #1a1e00; }
+  .day-btn .badge { font-size: 10px; }
+
+  /* ── Day content ── */
+  .day-header {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 20;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px 12px;
+  }
+
+  .day-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    margin-bottom: 9px;
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width .3s ease;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    font-family: 'Courier Prime', monospace;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .btn {
+    flex: 1;
+    padding: 10px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'Courier Prime', monospace;
+    cursor: pointer;
+    border-radius: 4px;
+    min-height: 44px;
+    -webkit-appearance: none;
+    transition: all .1s;
+  }
+  .btn:active { background: var(--surface); color: var(--text); border-color: var(--text); }
+  .btn.danger:active { color: var(--accent2); border-color: var(--accent2); }
+
+  .cat-header {
+    padding: 11px 20px 10px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .cat-count { color: var(--accent); }
+
+  /* ── Record item ── */
+  .record-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    min-height: 76px;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background .1s;
+  }
+  .record-item:active { background: var(--surface); }
+  .record-item.checked { background: var(--checked-bg); }
+
+  .check-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: transparent;
+    transition: all .15s;
+  }
+  .record-item.checked .check-circle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  .record-thumb {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--surface2);
+    border-radius: 3px;
+  }
+
+  .record-info { flex: 1; min-width: 0; }
+
+  .record-artist {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+  .record-item.checked .record-artist { color: var(--checked-text); }
+
+  .record-title {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+  .record-item.checked .record-title { color: #3d5000; }
+
+  .record-tags {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    background: var(--surface2);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+  .tag.used    { color: var(--accent2); border: 1px solid var(--accent2); background: none; }
+  .tag.preorder{ color: #00c8ff; border: 1px solid #00c8ff; background: none; }
+
+  .record-link-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 16px;
+    transition: all .1s;
+  }
+  .record-link-btn:active { color: var(--accent); border-color: var(--accent); }
+
+  .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 2.2;
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #333; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header id="app-header">
+    <button id="back-btn" onclick="showList()">‹</button>
+    <div class="header-title">Newtone Records</div>
+    <div id="header-sub">新譜チェック</div>
+  </header>
+
+  <div id="panels">
+    <div id="list-panel"><div id="tree"></div></div>
+    <div id="day-panel"><div id="day-content"><div class="empty">日付を選んでください</div></div></div>
+  </div>
+
+</div>
+<script>
+const rawData = [
+  { date:"2026-03-02", category:"thisweek", records:[
+    { id:"t0116858", artist:"HANS-JOACHIM ROEDELIUS", title:"Tape Archive Essence 1973-1978", label:"BUREAU B", format:"LP", genre:"Rock / Experimental", img:"https://www.newtone-records.com/pic/26/02_04/n_t0116858_200.jpeg", url:"https://newtone-records.com/product/0116858" },
+    { id:"t0116686", artist:"Seafoam", title:"Ear Candy EP", label:"", format:"12inch", genre:"", img:"https://www.newtone-records.com/pic/26/01_27/n_t0116686_200.jpg", url:"https://newtone-records.com/product/0116686" },
+    { id:"t0116775", artist:"Recloose, Mike Misiu, Medlar & Daisybelle et al.", title:"Family Affair Vol. 5", label:"", format:"", genre:"House / Disco", img:"https://www.newtone-records.com/pic/26/02_03/n_t0116775_200.jpg", url:"https://newtone-records.com/product/0116775" },
+    { id:"t0116777", artist:"M Sexton", title:"LATE 001", label:"", format:"", genre:"", img:"https://www.newtone-records.com/pic/26/02_03/n_t0116777_200.jpg", url:"https://newtone-records.com/product/0116777" },
+    { id:"t0117099", artist:"Kerri Chandler", title:"Downtown EP Pt.2", label:"", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_26/n_t0117099_200.jpg", url:"https://newtone-records.com/product/0117099" },
+    { id:"t0116047", artist:"坂本慎太郎（Shintaro Sakamoto）", title:"ヤッホー", label:"", format:"", genre:"Rock", img:"https://www.newtone-records.com/pic/25/11_18/n_t0116047_200.jpg", url:"https://newtone-records.com/product/0116047" },
+  ]},
+  { date:"2026-03-02", category:"preorder", records:[
+    { id:"t0117165", artist:"Various Artists", title:"Incognito Trax 007", label:"Incognito Trax", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_27/n_t0117165_200.png", url:"https://newtone-records.com/product/0117165", preorder:true },
+    { id:"t0117113", artist:"Doc L Junior", title:"Footnotes 3 (2025 Remaster)", label:"All That Jelly / SEX TAGS", format:"EU12INCH", genre:"House", img:"https://www.newtone-records.com/pic/26/02_24/n_t0117113_200.jpg", url:"https://newtone-records.com/product/0117113", preorder:true },
+    { id:"t0116926", artist:"Larrison", title:"Connecters Vol. 1: Original Recordings, 1992-1999", label:"Freedom To Spend", format:"LP", genre:"Electronic / Synth", img:"https://www.newtone-records.com/pic/26/02_09/n_t0116926_200.jpg", url:"https://newtone-records.com/product/0116926", preorder:true },
+    { id:"t0116801", artist:"DJ GARTH / ETI", title:"Twenty Minutes Of Disco Glory (30th Anniversary reissue)", label:"GRAYHOUND", format:"12inch", genre:"90s House", img:"https://www.newtone-records.com/pic/26/01_30/n_t0116801_200.jpg", url:"https://newtone-records.com/product/0116801", preorder:true },
+    { id:"t0116658", artist:"Eden Burns", title:"Big Beat Manifesto Vol. XI", label:"Public Possession", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/01_26/n_t0116658_200.jpg", url:"https://newtone-records.com/product/0116658", preorder:true },
+    { id:"t0116506", artist:"Shackleton", title:"Euphoria Bound", label:"Ad 93", format:"2LP", genre:"Electronic", img:"https://www.newtone-records.com/pic/26/01_08/n_t0116506_200.jpg", url:"https://newtone-records.com/product/0116506", preorder:true },
+  ]},
+  { date:"2026-03-02", category:"new", records:[
+    { id:"t0116490", artist:"VA", title:"Musik GPS", label:"Stima", format:"LP", genre:"Techno / Rock", img:"https://www.newtone-records.com/pic/26/01_06/n_t0116490_200.jpg", url:"https://newtone-records.com/product/0116490" },
+    { id:"t0117041", artist:"VA", title:"Alle Sorgenti Delle Civiltá Vol. 3", label:"Musica Per Immagini", format:"LP", genre:"Rock / World", img:"https://www.newtone-records.com/pic/26/02_17/n_t0117041_200.jpg", url:"https://newtone-records.com/product/0117041" },
+    { id:"t0117067", artist:"WILLIAM BASINSKI", title:"The Disintegration Loops (Arcadia Artist Edition)", label:"TEMPORARY RESIDENCE LIMITED", format:"8LP|4CD", genre:"Experimental / Ambient", img:"https://www.newtone-records.com/pic/26/02_18/n_t0117067_200.jpg", url:"https://newtone-records.com/product/0117067" },
+    { id:"t0117152", artist:"T. Ichiyanagi and A. Lucier", title:"Appearance/Music for Solo Performer", label:"OMEGA POINT", format:"CD|LP", genre:"Contemporary", img:"https://www.newtone-records.com/pic/26/02_26/n_t0117153_200.png", url:"https://newtone-records.com/product/0117152" },
+    { id:"t0116608", artist:"Aziz Balouch", title:"Sufi Hispano-Pakistani (Expanded)", label:"Death Is Not The End", format:"LP|Cassette", genre:"World", img:"https://www.newtone-records.com/pic/26/02_20/n_t0116609_200.jpg", url:"https://newtone-records.com/product/0116608" },
+    { id:"t0116109", artist:"Neue Grafik", title:"Rachael", label:"Week-End", format:"LP", genre:"HipHop / House", img:"https://www.newtone-records.com/pic/25/11_25/n_t0116109_200.jpg", url:"https://newtone-records.com/product/0116109" },
+    { id:"t0116377", artist:"Jalen Ngonda", title:"All About Me", label:"Daptone", format:"7inch", genre:"R&B / Soul", img:"https://www.newtone-records.com/pic/26/01_23/n_t0116377_200.jpg", url:"https://newtone-records.com/product/0116377" },
+    { id:"t0116944", artist:"Seitaro Mine/Williams (CONOMARK/TAIHEI)", title:"elhst 001", label:"ELHAST EXPERIENCE", format:"7inch", genre:"HipHop / Funk", img:"https://www.newtone-records.com/pic/26/02_10/n_t0116944_200.jpg", url:"https://newtone-records.com/product/0116944" },
+    { id:"t0116589", artist:"URBAN VOLCANO SOUNDS", title:"丘サウダージ c/w DRIVE HER CAR", label:"URBAN VOLCANO SOUNDS", format:"7inch", genre:"J-Funk", img:"https://www.newtone-records.com/pic/26/01_16/n_t0116589_200.jpg", url:"https://newtone-records.com/product/0116589" },
+    { id:"t0116120", artist:"Vesu's", title:"Tokage No Risuto", label:"SWIMS", format:"Cassette", genre:"HipHop", img:"https://www.newtone-records.com/pic/26/01_30/n_t0116120_200.jpg", url:"https://newtone-records.com/product/0116120" },
+    { id:"t0115974", artist:"Shimon Hoshino", title:"Nagisa feat. Edbl", label:"インセンス ミュージックワークス", format:"7inch", genre:"J-Soul", img:"https://www.newtone-records.com/pic/25/11_11/n_t0115974_200.jpg", url:"https://newtone-records.com/product/0115974" },
+    { id:"t0116554", artist:"Harmon", title:"Happy Accidents", label:"Mule Musiq", format:"12inch", genre:"Techno / House", img:"https://www.newtone-records.com/pic/26/01_13/n_t0116554_200.jpg", url:"https://newtone-records.com/product/0116554" },
+    { id:"t0117062", artist:"Rhythms Of Prescott", title:"Run Of Deluxe", label:"Potency", format:"12inch", genre:"Techno", img:"https://www.newtone-records.com/pic/26/02_18/n_t0117062_200.jpeg", url:"https://newtone-records.com/product/0117062" },
+    { id:"t0115647", artist:"Tommaso Cappellato", title:"Anti-planeting", label:"Domanda Music", format:"LP", genre:"Techno / House", img:"https://www.newtone-records.com/pic/25/11_07/n_t0115647_200.jpg", url:"https://newtone-records.com/product/0115647" },
+    { id:"t0116956", artist:"Compuma", title:"jimoku", label:"Something About", format:"CD", genre:"Techno / Ambient", img:"https://www.newtone-records.com/pic/26/02_10/n_t0116956_200.jpeg", url:"https://newtone-records.com/product/0116956" },
+    { id:"t0116536", artist:"Mike Shannon", title:"Off World Synthetics EP", label:"Rekids", format:"12inch", genre:"Techno", img:"https://www.newtone-records.com/pic/26/02_11/n_t0116536_200.jpg", url:"https://newtone-records.com/product/0116536" },
+    { id:"t0117090", artist:"Orlando Voorn", title:"OV Trax", label:"X-masters", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_19/n_t0117090_200.jpg", url:"https://newtone-records.com/product/0117090" },
+    { id:"t0114923", artist:"Soul Reductions", title:"Got To Be Loved", label:"Take Away", format:"12inch", genre:"Disco / House", img:"https://www.newtone-records.com/pic/25/08_05/n_t0114923_200.jpg", url:"https://newtone-records.com/product/0114923" },
+    { id:"t0117017", artist:"FK + DFP", title:"THE NASSAU EXCURSION", label:"RUSH HOUR", format:"12inch", genre:"House / Disco", img:"https://www.newtone-records.com/pic/26/02_17/n_t0117017_200.jpg", url:"https://newtone-records.com/product/0117017" },
+    { id:"t0117154", artist:"Mustapha Skandrani", title:"Istikhbars and Improvisations", label:"EM RECORDS", format:"CD", genre:"World / Jazz", img:"https://www.newtone-records.com/pic/26/02_26/n_t0117154_200.png", url:"https://newtone-records.com/product/0117154" },
+    { id:"t0116105", artist:"KEIHIN", title:"Chaos and Order", label:"Prowler", format:"CD+DL", genre:"Techno / Experimental", img:"https://www.newtone-records.com/pic/25/11_22/n_t0116105_200.png", url:"https://newtone-records.com/product/0116105" },
+    { id:"t0117057", artist:"MoreShitA", title:"寝落", label:"ONDOMUSIC", format:"MIXCD", genre:"", img:"https://www.newtone-records.com/pic/26/02_17/n_t0117057_200.jpg", url:"https://newtone-records.com/product/0117057" },
+  ]},
+  { date:"2026-03-02", category:"used", records:[
+    { id:"t0002391", artist:"NO MILK", title:"Nobody Knows It But You", label:"RHAPSODY", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_20/n_t0002391_200.jpeg", url:"https://newtone-records.com/product/0002391", used:true },
+    { id:"t0002401", artist:"A MAN CALLED ADAM", title:"Qué Tal America?", label:"PRESCRIPTION", format:"2x12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_24/n_t0002401_200.jpeg", url:"https://newtone-records.com/product/0002401", used:true },
+    { id:"t0002403", artist:"FREESTYLE MAN", title:"Que Domingo Remixes", label:"PUU", format:"12inch", genre:"Latin / House", img:"https://www.newtone-records.com/pic/26/02_27/n_t0002403_200.jpeg", url:"https://newtone-records.com/product/0002403", used:true },
+    { id:"t0011637", artist:"DJ Rasoul", title:"Reality", label:"Soulfood", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_27/n_t0011637_200.jpeg", url:"https://newtone-records.com/product/0011637", used:true },
+    { id:"t0002404", artist:"A DIFFERENT JIMI", title:"Hi5, Sweet Canfy", label:"HITS RECORDS", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/02_27/n_t0002404_200.jpeg", url:"https://newtone-records.com/product/0002404", used:true },
+    { id:"t0071783", artist:"Cate", title:"Heavy Breathing", label:"Doge", format:"12inch", genre:"House", img:"https://www.newtone-records.com/pic/26/03_01/n_t0071783_200.jpeg", url:"https://newtone-records.com/product/0071783", used:true },
+  ]},
+];
+
+// ── State ──
+let checked = {};
+try { checked = JSON.parse(localStorage.getItem('nt_checked')||'{}'); } catch(e){}
+let activeDay = null, activeMonth = null;
+
+// ── Build tree ──
+function buildTree() {
+  const t = {};
+  rawData.forEach(g => {
+    const [y,mo] = g.date.split('-');
+    const m = y+'-'+mo;
+    if(!t[y]) t[y]={};
+    if(!t[y][m]) t[y][m]={};
+    if(!t[y][m][g.date]) t[y][m][g.date]=[];
+    t[y][m][g.date].push(...g.records.map(r=>({...r,category:g.category})));
+  });
+  Object.keys(t).forEach(y=>Object.keys(t[y]).forEach(m=>Object.keys(t[y][m]).forEach(d=>{
+    const seen=new Set();
+    t[y][m][d]=t[y][m][d].filter(r=>{if(seen.has(r.id))return false;seen.add(r.id);return true;});
+  })));
+  return t;
+}
+const tree = buildTree();
+
+function save(){ try{localStorage.setItem('nt_checked',JSON.stringify(checked));}catch(e){} }
+function dayChecked(recs){ return recs.filter(r=>checked[r.id]).length; }
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtMonth(ym){ const[y,m]=ym.split('-'); return MN[+m-1]+' '+y; }
+function fmtDay(date){ const d=new Date(date+'T00:00:00'); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
+
+// ── Render tree ──
+function renderTree(){
+  let html='';
+  Object.keys(tree).sort().reverse().forEach(y=>{
+    html+=`<button class="tree-year-btn" onclick="toggleYear('${y}')" data-year="${y}">${y}<span class="arrow">▼</span></button><div id="ym-${y}">`;
+    Object.keys(tree[y]).sort().reverse().forEach(m=>{
+      const days=Object.keys(tree[y][m]).sort().reverse();
+      const total=days.reduce((a,d)=>a+tree[y][m][d].length,0);
+      const open=activeMonth===m;
+      html+=`<div class="month-block"><button class="month-btn ${open?'active':''}" onclick="toggleMonth('${m}','${y}')" id="mbtn-${m}"><span>${fmtMonth(m)}</span><span class="badge">${total}</span></button><div class="day-list ${open?'':'collapsed'}" id="dl-${m}">`;
+      days.forEach(d=>{
+        const recs=tree[y][m][d]; const chk=dayChecked(recs);
+        html+=`<button class="day-btn ${activeDay===d?'active':''}" onclick="selectDay('${d}')" id="dbtn-${d}"><span>${fmtDay(d)}</span><span class="badge">${chk}/${recs.length}</span></button>`;
+      });
+      html+=`</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('tree').innerHTML=html;
+}
+
+function toggleYear(y){
+  const btn=document.querySelector(`[data-year="${y}"]`);
+  const list=document.getElementById('ym-'+y);
+  btn.classList.toggle('collapsed');
+  list.style.display=btn.classList.contains('collapsed')?'none':'';
+}
+
+function toggleMonth(m,y){
+  if(activeMonth===m){
+    activeMonth=null;
+    document.getElementById('dl-'+m)?.classList.add('collapsed');
+    document.getElementById('mbtn-'+m)?.classList.remove('active');
+  } else {
+    if(activeMonth){ document.getElementById('dl-'+activeMonth)?.classList.add('collapsed'); document.getElementById('mbtn-'+activeMonth)?.classList.remove('active'); }
+    activeMonth=m;
+    document.getElementById('dl-'+m)?.classList.remove('collapsed');
+    document.getElementById('mbtn-'+m)?.classList.add('active');
+  }
+}
+
+// ── Day view ──
+const catLabels={thisweek:'今週入荷',new:'新入荷',preorder:'予約受付中',used:'中古盤'};
+const catOrder=['thisweek','new','preorder','used'];
+
+function selectDay(date){
+  activeDay=date;
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  if(activeMonth!==m) toggleMonth(m,y);
+  document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-'+date)?.classList.add('active');
+  renderDay(date);
+  if(window.innerWidth<680){
+    document.getElementById('day-panel').classList.add('visible');
+    document.getElementById('list-panel').classList.add('hidden');
+    const bb=document.getElementById('back-btn');
+    bb.style.display='flex';
+    document.getElementById('header-sub').textContent=fmtDay(date);
+  }
+}
+
+function showList(){
+  document.getElementById('day-panel').classList.remove('visible');
+  document.getElementById('list-panel').classList.remove('hidden');
+  document.getElementById('back-btn').style.display='none';
+  document.getElementById('header-sub').textContent='新譜チェック';
+}
+
+function renderDay(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  const chk=dayChecked(recs);
+  const pct=recs.length?Math.round(chk/recs.length*100):0;
+  const groups={};
+  recs.forEach(r=>{ if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
+
+  let html=`<div class="day-header">
+    <div class="day-title">${date} — ${fmtDay(date)}</div>
+    <div class="progress-row">
+      <div class="progress-bar"><div class="progress-fill" id="pfill" style="width:${pct}%"></div></div>
+      <div class="progress-label" id="plabel">${chk} / ${recs.length}</div>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button class="btn" onclick="checkAll('${date}')">すべてチェック</button>
+    <button class="btn danger" onclick="uncheckAll('${date}')">リセット</button>
+  </div>`;
+
+  catOrder.filter(c=>groups[c]).forEach(cat=>{
+    const cr=groups[cat]; const cc=dayChecked(cr);
+    html+=`<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
+    cr.forEach(r=>{
+      const ck=!!checked[r.id];
+      html+=`<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
+        <div class="check-circle">${ck?'✓':''}</div>
+        <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy">
+        <div class="record-info">
+          <div class="record-artist">${r.artist}</div>
+          <div class="record-title">${r.title}</div>
+          <div class="record-tags">
+            ${r.format?`<span class="tag">${r.format}</span>`:''}
+            ${r.label?`<span class="tag">${r.label}</span>`:''}
+            ${r.genre?`<span class="tag">${r.genre}</span>`:''}
+            ${r.used?`<span class="tag used">USED</span>`:''}
+            ${r.preorder?`<span class="tag preorder">予約</span>`:''}
+          </div>
+        </div>
+        <a class="record-link-btn" href="${r.url}" target="_blank" onclick="event.stopPropagation()">↗</a>
+      </div>`;
+    });
+  });
+
+  document.getElementById('day-content').innerHTML=html;
+  document.getElementById('day-panel').scrollTop=0;
+}
+
+function toggle(id,date){
+  checked[id]=!checked[id]; save();
+  const row=document.getElementById('row-'+id);
+  const circle=row.querySelector('.check-circle');
+  if(checked[id]){row.classList.add('checked');circle.textContent='✓';}
+  else{row.classList.remove('checked');circle.textContent='';}
+  // update counts
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  const chk=dayChecked(recs); const pct=recs.length?Math.round(chk/recs.length*100):0;
+  const pf=document.getElementById('pfill'); if(pf) pf.style.width=pct+'%';
+  const pl=document.getElementById('plabel'); if(pl) pl.textContent=chk+' / '+recs.length;
+  const groups={}; recs.forEach(r=>{if(!groups[r.category])groups[r.category]=[];groups[r.category].push(r);});
+  document.querySelectorAll('.cat-header').forEach(h=>{
+    const label=h.querySelector('span:first-child').textContent;
+    const cat=Object.keys(catLabels).find(k=>catLabels[k]===label);
+    if(cat&&groups[cat]) h.querySelector('.cat-count').textContent=dayChecked(groups[cat])+'/'+groups[cat].length;
+  });
+  const badge=document.querySelector('#dbtn-'+date+' .badge');
+  if(badge) badge.textContent=chk+'/'+recs.length;
+}
+
+function checkAll(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  (tree[y][m][date]||[]).forEach(r=>{checked[r.id]=true;}); save(); renderDay(date);
+  const recs=tree[y][m][date]||[]; const badge=document.querySelector('#dbtn-'+date+' .badge');
+  if(badge) badge.textContent=recs.length+'/'+recs.length;
+}
+function uncheckAll(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  (tree[y][m][date]||[]).forEach(r=>{delete checked[r.id];}); save(); renderDay(date);
+  const badge=document.querySelector('#dbtn-'+date+' .badge');
+  if(badge) badge.textContent='0/'+(tree[y][m][date]||[]).length;
+}
+
+// ── Init ──
+renderTree();
+const allDays=[];
+Object.keys(tree).forEach(y=>Object.keys(tree[y]).forEach(m=>Object.keys(tree[y][m]).forEach(d=>allDays.push(d))));
+allDays.sort().reverse();
+if(allDays.length){
+  const latest=allDays[0];
+  const [y,mo]=latest.split('-'); activeMonth=y+'-'+mo;
+  renderTree();
+  if(window.innerWidth>=680) selectDay(latest);
+}
+</script>
+</body>
+</html>
