@@ -105,7 +105,6 @@ def parse_products(soup, category):
 
 def scrape_all():
     categories = {
-        'thisweek': '/store/thisweek/',
         'new':      '/store/',
         'preorder': '/store/pre/',
     }
@@ -161,9 +160,23 @@ def load_existing_data(html_path):
         return []
 
 def merge_data(existing, new_groups):
-    # 今日のデータを除いた既存データ
+    # 既存データ全体のIDセットを作成
+    existing_ids = set()
+    for g in existing:
+        for r in g.get('records', []):
+            existing_ids.add(r.get('id'))
+
+    # 今日のデータから既存IDと重複するものを除去
+    deduped_groups = []
+    for g in new_groups:
+        new_records = [r for r in g.get('records', []) if r.get('id') not in existing_ids]
+        print(f"  {g['category']}: {len(g['records'])} items -> {len(new_records)} new items after dedup")
+        if new_records:
+            deduped_groups.append({**g, 'records': new_records})
+
+    # 今日のデータを除いた既存データに新データを追加
     merged = [g for g in existing if g.get('date') != today]
-    merged.extend(new_groups)
+    merged.extend(deduped_groups)
     merged.sort(key=lambda g: (g.get('date', ''), g.get('category', '')), reverse=True)
     cutoff = (datetime.now(JST) - timedelta(days=90)).strftime('%Y-%m-%d')
     merged = [g for g in merged if g.get('date', '') >= cutoff]
