@@ -105,8 +105,7 @@ def parse_products(soup, category):
 
 def scrape_all():
     categories = {
-        'new':      '/store/',
-        'preorder': '/store/pre/',
+        'new': '/store/',
     }
     all_groups = []
     for cat, path in categories.items():
