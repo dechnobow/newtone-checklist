@@ -1500,6 +1500,34 @@ function deleteDay(date){
   document.getElementById('day-content').innerHTML='<div class="empty">日付を選んでください</div>';
 }
 
+function updateProgress(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  const chk=dayChecked(recs); const pct=recs.length?Math.round(chk/recs.length*100):0;
+  const pf=document.getElementById('pfill'); if(pf) pf.style.width=pct+'%';
+  const pl=document.getElementById('plabel'); if(pl) pl.textContent=chk+' / '+recs.length;
+}
+
+function updateCatCounts(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  const groups={};
+  recs.forEach(r=>{if(!groups[r.category])groups[r.category]=[];groups[r.category].push(r);});
+  document.querySelectorAll('.cat-header').forEach(h=>{
+    const label=h.querySelector('span:first-child').textContent;
+    const cat=Object.keys(catLabels).find(k=>catLabels[k]===label);
+    if(cat&&groups[cat]) h.querySelector('.cat-count').textContent=dayChecked(groups[cat])+'/'+groups[cat].length;
+  });
+}
+
+function updateDayBadge(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  const chk=dayChecked(recs);
+  const badge=document.querySelector('#dbtn-'+date+' .badge');
+  if(badge) badge.textContent=chk+'/'+recs.length;
+}
+
 function checkAll(date){
   const [y,mo]=date.split('-'); const m=y+'-'+mo;
   (tree[y][m][date]||[]).forEach(r=>{checked[r.id]=true;}); save(); renderDay(date);
