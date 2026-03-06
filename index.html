@@ -42,7 +42,6 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  /* ── Header ── */
   #app-header {
     height: 56px;
     display: flex;
@@ -86,7 +85,6 @@
     flex-shrink: 0;
   }
 
-  /* ── Panels ── */
   #panels {
     flex: 1;
     overflow: hidden;
@@ -129,7 +127,6 @@
     #back-btn   { display: none !important; }
   }
 
-  /* ── Tree ── */
   .tree-year-btn {
     width: 100%;
     background: none;
@@ -209,7 +206,6 @@
   .day-btn.active { color: var(--accent); border-left-color: var(--accent); background: #1a1e00; }
   .day-btn .badge { font-size: 10px; }
 
-  /* ── Day content ── */
   .day-header {
     position: sticky;
     top: 0;
@@ -297,7 +293,6 @@
   }
   .cat-count { color: var(--accent); }
 
-  /* ── Record item ── */
   .record-item {
     display: flex;
     align-items: center;
@@ -425,1002 +420,160 @@
 
   <div id="panels">
     <div id="list-panel"><div id="tree"></div></div>
-    <div id="day-panel"><div id="day-content"><div class="empty">日付を選んでください</div></div></div>
+    <div id="day-panel"><div id="day-content"><div class="empty">読み込み中...</div></div></div>
   </div>
 
 </div>
 <script>
-const rawData = [
-  {
-    "date": "2026-03-06",
-    "category": "new",
-    "records": [
-      {
-        "id": "0116390",
-        "artist": "",
-        "title": "Crystal",
-        "label": "Numero Group",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/12_17/n_t0116390.jpg",
-        "url": "https://newtone-records.com/product/0116390",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116773",
-        "artist": "",
-        "title": "BODO-ACE VA 005",
-        "label": "Bobby Donny",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_03/n_t0116773.jpg",
-        "url": "https://newtone-records.com/product/0116773",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116306",
-        "artist": "",
-        "title": "Bonnefoï Dub /Tolosan Dub",
-        "label": "Curio Cabinet",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_06/n_t0116306.jpg",
-        "url": "https://newtone-records.com/product/0116306",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116695",
-        "artist": "",
-        "title": "A Night to Remember: UK Soundsystem Flyers,1972-1994",
-        "label": "Death Is Not The End",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_27/n_t0116695.jpg",
-        "url": "https://newtone-records.com/product/0116695",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116885",
-        "artist": "",
-        "title": "A Thousand Cuts Vol 2(heavyweight vinyl 12\" limited to 100 copies)",
-        "label": "Downside Up Recordings",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_19/n_t0116885.jpg",
-        "url": "https://newtone-records.com/product/0116885",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116955",
-        "artist": "",
-        "title": "100 Years Of Theremin(The Dub Chapter) [CD]",
-        "label": "Dubmission",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_05/n_t0116955.jpg",
-        "url": "https://newtone-records.com/product/0116955",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116936",
-        "artist": "",
-        "title": "Spiral Motion",
-        "label": "Harmony Rec.",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116936.jpg",
-        "url": "https://newtone-records.com/product/0116936",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116728",
-        "artist": "",
-        "title": "Souvenir EP(feat Peaking Lights,Coyote mixes)",
-        "label": "Is It Balearic?",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_05/n_t0116728.jpg",
-        "url": "https://newtone-records.com/product/0116728",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116613",
-        "artist": "",
-        "title": "Galactic",
-        "label": "Lion Charge",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116613.png",
-        "url": "https://newtone-records.com/product/0116613",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117016",
-        "artist": "",
-        "title": "Relict II",
-        "label": "Outlaw",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_17/n_t0117016.jpg",
-        "url": "https://newtone-records.com/product/0117016",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117003",
-        "artist": "",
-        "title": "Explorations 03",
-        "label": "Permanent Vacation",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_16/n_t0117003.jpeg",
-        "url": "https://newtone-records.com/product/0117003",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115965",
-        "artist": "",
-        "title": "Past Through Desire",
-        "label": "quỳnh",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/11_11/n_t0115965.jpg",
-        "url": "https://newtone-records.com/product/0115965",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116612",
-        "artist": "",
-        "title": "Orbital EP ft. Piya Zawa",
-        "label": "Sub Channels",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116612.jpg",
-        "url": "https://newtone-records.com/product/0116612",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116846",
-        "artist": "",
-        "title": "Between Worlds: Interference",
-        "label": "Subject To Restrictions Discs",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_12/n_t0116846.jpg",
-        "url": "https://newtone-records.com/product/0116846",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116615",
-        "artist": "",
-        "title": "Taxi Dub",
-        "label": "Temple Of Sound",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116615.png",
-        "url": "https://newtone-records.com/product/0116615",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116614",
-        "artist": "",
-        "title": "As We Move EP",
-        "label": "Time Is Now",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116614.jpg",
-        "url": "https://newtone-records.com/product/0116614",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116927",
-        "artist": "",
-        "title": "Wabi Sabi",
-        "label": "Wonderwheel Recordings",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_26/n_t0116927.jpg",
-        "url": "https://newtone-records.com/product/0116927",
-        "used": false,
-        "preorder": false
-      }
-    ]
-  },
-  {
-    "date": "2026-03-05",
-    "category": "new",
-    "records": [
-      {
-        "id": "0010974",
-        "artist": "",
-        "title": "Q 1.1",
-        "label": "Basic Channel",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/07/10_19/n_t0010974.jpg",
-        "url": "https://newtone-records.com/product/0010974",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0010179",
-        "artist": "",
-        "title": "Basic Reshape",
-        "label": "Basic Channel",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_14/n_t0010179.jpg",
-        "url": "https://newtone-records.com/product/0010179",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116469",
-        "artist": "",
-        "title": "Daydream 22",
-        "label": "Daydream",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116469.jpg",
-        "url": "https://newtone-records.com/product/0116469",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116746",
-        "artist": "",
-        "title": "Fight the Algorithm",
-        "label": "Exarde",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116746.jpg",
-        "url": "https://newtone-records.com/product/0116746",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116250",
-        "artist": "",
-        "title": "M.E.S.S.A(Incl. Marcos Coya Remix)",
-        "label": "Exarde",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_12/n_t0116250.jpg",
-        "url": "https://newtone-records.com/product/0116250",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116743",
-        "artist": "",
-        "title": "GC002 - Ross Mvnro",
-        "label": "GC Records",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116743.jpg",
-        "url": "https://newtone-records.com/product/0116743",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0103961",
-        "artist": "",
-        "title": "Bring It On",
-        "label": "Global Swing",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0103961.jpg",
-        "url": "https://newtone-records.com/product/0103961",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116471",
-        "artist": "",
-        "title": "MITHRA004",
-        "label": "Mithra Records",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116471.jpg",
-        "url": "https://newtone-records.com/product/0116471",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116749",
-        "artist": "",
-        "title": "Hyperspace EP",
-        "label": "Partisan",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116749.jpeg",
-        "url": "https://newtone-records.com/product/0116749",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116745",
-        "artist": "",
-        "title": "Demiurge",
-        "label": "SlapFunk Records",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0116745.jpg",
-        "url": "https://newtone-records.com/product/0116745",
-        "used": false,
-        "preorder": false
-      }
-    ]
-  },
-  {
-    "date": "2026-03-04",
-    "category": "new",
-    "records": [
-      {
-        "id": "0114576",
-        "artist": "",
-        "title": "Past Present Future EP(Incl. Reflex Blue Remix)",
-        "label": "Automatic Writing",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/09_02/n_t0114576.jpg",
-        "url": "https://newtone-records.com/product/0114576",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0106636",
-        "artist": "",
-        "title": "Gary's Dreamland",
-        "label": "Global Swing",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/23/10_10/n_t0106636.jpg",
-        "url": "https://newtone-records.com/product/0106636",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0101098",
-        "artist": "",
-        "title": "The Dirty Work",
-        "label": "Global Swing",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/22/07_07/n_t0101098.jpeg",
-        "url": "https://newtone-records.com/product/0101098",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115918",
-        "artist": "",
-        "title": "Escape Vector",
-        "label": "Physical Education",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_12/n_t0115918.jpg",
-        "url": "https://newtone-records.com/product/0115918",
-        "used": false,
-        "preorder": false
-      }
-    ]
-  },
-  {
-    "date": "2026-03-03",
-    "category": "new",
-    "records": [
-      {
-        "id": "0110066",
-        "artist": "",
-        "title": "Fonk! EP",
-        "label": "5511",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/24/05_21/n_t0110066.jpg",
-        "url": "https://newtone-records.com/product/0110066",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0114355",
-        "artist": "",
-        "title": "The Africa Seven Edits",
-        "label": "Africa Seven",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/06_17/n_t0114355.jpg",
-        "url": "https://newtone-records.com/product/0114355",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0113986",
-        "artist": "",
-        "title": "Trésor Magnétique",
-        "label": "Africa Seven",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/05_20/n_t0113986.jpg",
-        "url": "https://newtone-records.com/product/0113986",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0113393",
-        "artist": "",
-        "title": "Drums In Dub",
-        "label": "Ancient Archive Of Sound",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/03_25/n_t0113393.jpg",
-        "url": "https://newtone-records.com/product/0113393",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0114371",
-        "artist": "",
-        "title": "Never Get Burned /Sitar Dub",
-        "label": "Bass Come Save Me",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/06_17/n_t0114371.jpg",
-        "url": "https://newtone-records.com/product/0114371",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0097054",
-        "artist": "",
-        "title": "Cirque(Reissue with bonus album)",
-        "label": "Biophon",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/21/02_02/n_t0097054.jpg",
-        "url": "https://newtone-records.com/product/0097054",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0087806",
-        "artist": "",
-        "title": "Polar Sequences(Remastered)",
-        "label": "Biophon",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/19/01_16/n_t0087806_390.jpg",
-        "url": "https://newtone-records.com/product/0087806",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115280",
-        "artist": "",
-        "title": "Am I The Same Man?",
-        "label": "Brixton Heights",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/09_10/n_t0115280.jpg",
-        "url": "https://newtone-records.com/product/0115280",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115836",
-        "artist": "",
-        "title": "The Arboretum",
-        "label": "Butter Sessions",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/10_29/n_t0115836.jpg",
-        "url": "https://newtone-records.com/product/0115836",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115888",
-        "artist": "",
-        "title": "Debt",
-        "label": "Clarity Recordings",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_08/n_t0115888.jpg",
-        "url": "https://newtone-records.com/product/0115888",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116112",
-        "artist": "",
-        "title": "Underloop",
-        "label": "Death Is Not The End",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/11_25/n_t0116112.jpg",
-        "url": "https://newtone-records.com/product/0116112",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0114736",
-        "artist": "",
-        "title": "Future(Detroit Mixes)",
-        "label": "Defected",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/09_03/n_t0114736.jpg",
-        "url": "https://newtone-records.com/product/0114736",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115905",
-        "artist": "",
-        "title": "Jazz Gone Dub",
-        "label": "Dubmission",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/11_04/n_t0115905.jpeg",
-        "url": "https://newtone-records.com/product/0115905",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115844",
-        "artist": "",
-        "title": "Things Ah Get Tuff",
-        "label": "Dubmission",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/10_29/n_t0115844.jpg",
-        "url": "https://newtone-records.com/product/0115844",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0098890",
-        "artist": "",
-        "title": "Roses",
-        "label": "Extra Soul Perception",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/21/07_20/n_t0098890.jpg",
-        "url": "https://newtone-records.com/product/0098890",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116347",
-        "artist": "",
-        "title": "One Hundred Fifty",
-        "label": "Figure",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_22/n_t0116347.jpg",
-        "url": "https://newtone-records.com/product/0116347",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115917",
-        "artist": "",
-        "title": "Timepoint",
-        "label": "fluxus temporis",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/12_16/n_t0115917.jpg",
-        "url": "https://newtone-records.com/product/0115917",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115771",
-        "artist": "",
-        "title": "Dancing On Data Streams",
-        "label": "Funnuvojere",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/12_09/n_t0115771.jpg",
-        "url": "https://newtone-records.com/product/0115771",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116027",
-        "artist": "",
-        "title": "One Of A Kind(Love Affair)",
-        "label": "Hard Times",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/11_14/n_t0116027.jpeg",
-        "url": "https://newtone-records.com/product/0116027",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115984",
-        "artist": "",
-        "title": "Through The Wall",
-        "label": "Hypnic Jerks",
-        "format": "",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/11_11/n_t0115984.jpg",
-        "url": "https://newtone-records.com/product/0115984",
-        "used": false,
-        "preorder": false
-      }
-    ]
-  },
-  {
-    "date": "2026-03-02",
-    "category": "new",
-    "records": [
-      {
-        "id": "0116490",
-        "artist": "VA",
-        "title": "Musik GPS",
-        "label": "Stima",
-        "format": "LP",
-        "genre": "Techno / Rock",
-        "img": "https://www.newtone-records.com/pic/26/01_06/n_t0116490_200.jpg",
-        "url": "https://newtone-records.com/product/0116490",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117041",
-        "artist": "VA",
-        "title": "Alle Sorgenti Delle Civiltá Vol. 3",
-        "label": "Musica Per Immagini",
-        "format": "LP",
-        "genre": "Rock / World",
-        "img": "https://www.newtone-records.com/pic/26/02_17/n_t0117041_200.jpg",
-        "url": "https://newtone-records.com/product/0117041",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117067",
-        "artist": "WILLIAM BASINSKI",
-        "title": "The Disintegration Loops (Arcadia Artist Edition)",
-        "label": "TEMPORARY RESIDENCE LIMITED",
-        "format": "8LP|4CD",
-        "genre": "Experimental / Ambient",
-        "img": "https://www.newtone-records.com/pic/26/02_18/n_t0117067_200.jpg",
-        "url": "https://newtone-records.com/product/0117067",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117152",
-        "artist": "T. Ichiyanagi and A. Lucier",
-        "title": "Appearance/Music for Solo Performer",
-        "label": "OMEGA POINT",
-        "format": "CD|LP",
-        "genre": "Contemporary",
-        "img": "https://www.newtone-records.com/pic/26/02_26/n_t0117153_200.png",
-        "url": "https://newtone-records.com/product/0117152",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116608",
-        "artist": "Aziz Balouch",
-        "title": "Sufi Hispano-Pakistani (Expanded)",
-        "label": "Death Is Not The End",
-        "format": "LP|Cassette",
-        "genre": "World",
-        "img": "https://www.newtone-records.com/pic/26/02_20/n_t0116609_200.jpg",
-        "url": "https://newtone-records.com/product/0116608",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116109",
-        "artist": "Neue Grafik",
-        "title": "Rachael",
-        "label": "Week-End",
-        "format": "LP",
-        "genre": "HipHop / House",
-        "img": "https://www.newtone-records.com/pic/25/11_25/n_t0116109_200.jpg",
-        "url": "https://newtone-records.com/product/0116109",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116377",
-        "artist": "Jalen Ngonda",
-        "title": "All About Me",
-        "label": "Daptone",
-        "format": "7inch",
-        "genre": "R&B / Soul",
-        "img": "https://www.newtone-records.com/pic/26/01_23/n_t0116377_200.jpg",
-        "url": "https://newtone-records.com/product/0116377",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116944",
-        "artist": "Seitaro Mine/Williams (CONOMARK/TAIHEI)",
-        "title": "elhst 001",
-        "label": "ELHAST EXPERIENCE",
-        "format": "7inch",
-        "genre": "HipHop / Funk",
-        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116944_200.jpg",
-        "url": "https://newtone-records.com/product/0116944",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116589",
-        "artist": "URBAN VOLCANO SOUNDS",
-        "title": "丘サウダージ c/w DRIVE HER CAR",
-        "label": "URBAN VOLCANO SOUNDS",
-        "format": "7inch",
-        "genre": "J-Funk",
-        "img": "https://www.newtone-records.com/pic/26/01_16/n_t0116589_200.jpg",
-        "url": "https://newtone-records.com/product/0116589",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116554",
-        "artist": "Harmon",
-        "title": "Happy Accidents",
-        "label": "Mule Musiq",
-        "format": "12inch",
-        "genre": "Techno / House",
-        "img": "https://www.newtone-records.com/pic/26/01_13/n_t0116554_200.jpg",
-        "url": "https://newtone-records.com/product/0116554",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117062",
-        "artist": "Rhythms Of Prescott",
-        "title": "Run Of Deluxe",
-        "label": "Potency",
-        "format": "12inch",
-        "genre": "Techno",
-        "img": "https://www.newtone-records.com/pic/26/02_18/n_t0117062_200.jpeg",
-        "url": "https://newtone-records.com/product/0117062",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0115647",
-        "artist": "Tommaso Cappellato",
-        "title": "Anti-planeting",
-        "label": "Domanda Music",
-        "format": "LP",
-        "genre": "Techno / House",
-        "img": "https://www.newtone-records.com/pic/25/11_07/n_t0115647_200.jpg",
-        "url": "https://newtone-records.com/product/0115647",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116956",
-        "artist": "Compuma",
-        "title": "jimoku",
-        "label": "Something About",
-        "format": "CD",
-        "genre": "Techno / Ambient",
-        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116956_200.jpeg",
-        "url": "https://newtone-records.com/product/0116956",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116536",
-        "artist": "Mike Shannon",
-        "title": "Off World Synthetics EP",
-        "label": "Rekids",
-        "format": "12inch",
-        "genre": "Techno",
-        "img": "https://www.newtone-records.com/pic/26/02_11/n_t0116536_200.jpg",
-        "url": "https://newtone-records.com/product/0116536",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117090",
-        "artist": "Orlando Voorn",
-        "title": "OV Trax",
-        "label": "X-masters",
-        "format": "12inch",
-        "genre": "House",
-        "img": "https://www.newtone-records.com/pic/26/02_19/n_t0117090_200.jpg",
-        "url": "https://newtone-records.com/product/0117090",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0114923",
-        "artist": "Soul Reductions",
-        "title": "Got To Be Loved",
-        "label": "Take Away",
-        "format": "12inch",
-        "genre": "Disco / House",
-        "img": "https://www.newtone-records.com/pic/25/08_05/n_t0114923_200.jpg",
-        "url": "https://newtone-records.com/product/0114923",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117017",
-        "artist": "FK + DFP",
-        "title": "THE NASSAU EXCURSION",
-        "label": "RUSH HOUR",
-        "format": "12inch",
-        "genre": "House / Disco",
-        "img": "https://www.newtone-records.com/pic/26/02_17/n_t0117017_200.jpg",
-        "url": "https://newtone-records.com/product/0117017",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117154",
-        "artist": "Mustapha Skandrani",
-        "title": "Istikhbars and Improvisations",
-        "label": "EM RECORDS",
-        "format": "CD",
-        "genre": "World / Jazz",
-        "img": "https://www.newtone-records.com/pic/26/02_26/n_t0117154_200.png",
-        "url": "https://newtone-records.com/product/0117154",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0116105",
-        "artist": "KEIHIN",
-        "title": "Chaos and Order",
-        "label": "Prowler",
-        "format": "CD+DL",
-        "genre": "Techno / Experimental",
-        "img": "https://www.newtone-records.com/pic/25/11_22/n_t0116105_200.png",
-        "url": "https://newtone-records.com/product/0116105",
-        "used": false,
-        "preorder": false
-      },
-      {
-        "id": "0117057",
-        "artist": "MoreShitA",
-        "title": "寝落",
-        "label": "ONDOMUSIC",
-        "format": "MIXCD",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/02_17/n_t0117057_200.jpg",
-        "url": "https://newtone-records.com/product/0117057",
-        "used": false,
-        "preorder": false
-      }
-    ]
-  }
-];
-// ── State ──
-let checked = {};
-try { checked = JSON.parse(localStorage.getItem('nt_checked')||'{}'); } catch(e){}
+// ── Storage helpers ──
+const LS_DATA    = 'nt_data';    // {date_category: {date, category, records[]}}
+const LS_CHECKED = 'nt_checked'; // {id: true}
+const LS_FETCHED = 'nt_fetched'; // last fetched timestamp
+
+function loadStorage(key, def) {
+  try { return JSON.parse(localStorage.getItem(key) || 'null') ?? def; } catch(e) { return def; }
+}
+function saveStorage(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+let localData = loadStorage(LS_DATA, {});    // key: "date|category"
+let checked   = loadStorage(LS_CHECKED, {});
 let activeDay = null, activeMonth = null;
 
-// ── Build tree ──
+// ── Fetch data.json and merge into localStorage ──
+async function fetchAndMerge() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    const groups = await res.json();
+    groups.forEach(g => {
+      const key = g.date + '|' + g.category;
+      if (!localData[key]) {
+        localData[key] = g;
+      } else {
+        // 既存IDセット
+        const existingIds = new Set(localData[key].records.map(r => r.id));
+        const newRecs = g.records.filter(r => !existingIds.has(r.id));
+        if (newRecs.length > 0) {
+          localData[key].records.push(...newRecs);
+        }
+      }
+    });
+    saveStorage(LS_DATA, localData);
+    saveStorage(LS_FETCHED, Date.now());
+  } catch(e) {
+    console.log('data.json fetch failed:', e);
+  }
+}
+
+// ── Build tree from localData ──
 function buildTree() {
   const t = {};
-  rawData.forEach(g => {
-    const [y,mo] = g.date.split('-');
-    const m = y+'-'+mo;
-    if(!t[y]) t[y]={};
-    if(!t[y][m]) t[y][m]={};
-    if(!t[y][m][g.date]) t[y][m][g.date]=[];
-    t[y][m][g.date].push(...g.records.map(r=>({...r,category:g.category})));
+  Object.values(localData).forEach(g => {
+    const [y, mo] = g.date.split('-');
+    const m = y + '-' + mo;
+    if (!t[y]) t[y] = {};
+    if (!t[y][m]) t[y][m] = {};
+    if (!t[y][m][g.date]) t[y][m][g.date] = [];
+    t[y][m][g.date].push(...g.records.map(r => ({...r, category: g.category})));
   });
-  Object.keys(t).forEach(y=>Object.keys(t[y]).forEach(m=>Object.keys(t[y][m]).forEach(d=>{
-    const seen=new Set();
-    t[y][m][d]=t[y][m][d].filter(r=>{if(seen.has(r.id))return false;seen.add(r.id);return true;});
+  // 重複除去
+  Object.keys(t).forEach(y => Object.keys(t[y]).forEach(m => Object.keys(t[y][m]).forEach(d => {
+    const seen = new Set();
+    t[y][m][d] = t[y][m][d].filter(r => { if(seen.has(r.id)) return false; seen.add(r.id); return true; });
   })));
   return t;
 }
-const tree = buildTree();
 
-function save(){ try{localStorage.setItem('nt_checked',JSON.stringify(checked));}catch(e){} }
-function dayChecked(recs){ return recs.filter(r=>checked[r.id]).length; }
-const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function fmtMonth(ym){ const[y,m]=ym.split('-'); return MN[+m-1]+' '+y; }
-function fmtDay(date){ const d=new Date(date+'T00:00:00'); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
+let tree = {};
+
+function save() { saveStorage(LS_CHECKED, checked); }
+function dayChecked(recs) { return recs.filter(r => checked[r.id]).length; }
+const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtMonth(ym) { const [y,m] = ym.split('-'); return MN[+m-1] + ' ' + y; }
+function fmtDay(date) { const d = new Date(date + 'T00:00:00'); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
 
 // ── Render tree ──
-function renderTree(){
-  let html='';
-  Object.keys(tree).sort().reverse().forEach(y=>{
-    html+=`<button class="tree-year-btn" onclick="toggleYear('${y}')" data-year="${y}">${y}<span class="arrow">▼</span></button><div id="ym-${y}">`;
-    Object.keys(tree[y]).sort().reverse().forEach(m=>{
-      const days=Object.keys(tree[y][m]).sort().reverse();
-      const total=days.reduce((a,d)=>a+tree[y][m][d].length,0);
-      const open=activeMonth===m;
-      html+=`<div class="month-block"><button class="month-btn ${open?'active':''}" onclick="toggleMonth('${m}','${y}')" id="mbtn-${m}"><span>${fmtMonth(m)}</span><span class="badge">${total}</span></button><div class="day-list ${open?'':'collapsed'}" id="dl-${m}">`;
-      days.forEach(d=>{
-        const recs=tree[y][m][d]; const chk=dayChecked(recs);
-        html+=`<button class="day-btn ${activeDay===d?'active':''}" onclick="selectDay('${d}')" id="dbtn-${d}"><span>${fmtDay(d)}</span><span class="badge">${chk}/${recs.length}</span></button>`;
+function renderTree() {
+  let html = '';
+  Object.keys(tree).sort().reverse().forEach(y => {
+    html += `<button class="tree-year-btn" onclick="toggleYear('${y}')" data-year="${y}">${y}<span class="arrow">▼</span></button><div id="ym-${y}">`;
+    Object.keys(tree[y]).sort().reverse().forEach(m => {
+      const days = Object.keys(tree[y][m]).sort().reverse();
+      const total = days.reduce((a,d) => a + tree[y][m][d].length, 0);
+      const open = activeMonth === m;
+      html += `<div class="month-block"><button class="month-btn ${open?'active':''}" onclick="toggleMonth('${m}','${y}')" id="mbtn-${m}"><span>${fmtMonth(m)}</span><span class="badge">${total}</span></button><div class="day-list ${open?'':'collapsed'}" id="dl-${m}">`;
+      days.forEach(d => {
+        const recs = tree[y][m][d]; const chk = dayChecked(recs);
+        html += `<button class="day-btn ${activeDay===d?'active':''}" onclick="selectDay('${d}')" id="dbtn-${d}"><span>${fmtDay(d)}</span><span class="badge">${chk}/${recs.length}</span></button>`;
       });
-      html+=`</div></div>`;
+      html += `</div></div>`;
     });
-    html+=`</div>`;
+    html += `</div>`;
   });
-  document.getElementById('tree').innerHTML=html;
+  if (!html) html = '<div class="empty">データがありません</div>';
+  document.getElementById('tree').innerHTML = html;
 }
 
-function toggleYear(y){
-  const btn=document.querySelector(`[data-year="${y}"]`);
-  const list=document.getElementById('ym-'+y);
+function toggleYear(y) {
+  const btn = document.querySelector(`[data-year="${y}"]`);
+  const list = document.getElementById('ym-' + y);
   btn.classList.toggle('collapsed');
-  list.style.display=btn.classList.contains('collapsed')?'none':'';
+  list.style.display = btn.classList.contains('collapsed') ? 'none' : '';
 }
 
-function toggleMonth(m,y){
-  if(activeMonth===m){
-    activeMonth=null;
-    document.getElementById('dl-'+m)?.classList.add('collapsed');
-    document.getElementById('mbtn-'+m)?.classList.remove('active');
+function toggleMonth(m, y) {
+  if (activeMonth === m) {
+    activeMonth = null;
+    document.getElementById('dl-' + m)?.classList.add('collapsed');
+    document.getElementById('mbtn-' + m)?.classList.remove('active');
   } else {
-    if(activeMonth){ document.getElementById('dl-'+activeMonth)?.classList.add('collapsed'); document.getElementById('mbtn-'+activeMonth)?.classList.remove('active'); }
-    activeMonth=m;
-    document.getElementById('dl-'+m)?.classList.remove('collapsed');
-    document.getElementById('mbtn-'+m)?.classList.add('active');
+    if (activeMonth) {
+      document.getElementById('dl-' + activeMonth)?.classList.add('collapsed');
+      document.getElementById('mbtn-' + activeMonth)?.classList.remove('active');
+    }
+    activeMonth = m;
+    document.getElementById('dl-' + m)?.classList.remove('collapsed');
+    document.getElementById('mbtn-' + m)?.classList.add('active');
   }
 }
 
 // ── Day view ──
-const catLabels={thisweek:'今週入荷',new:'新入荷',preorder:'予約受付中',used:'中古盤'};
-const catOrder=['thisweek','new','preorder','used'];
+const catLabels = {thisweek:'今週入荷', new:'新入荷', preorder:'予約受付中', used:'中古盤'};
+const catOrder  = ['thisweek','new','preorder','used'];
 
-function selectDay(date){
-  activeDay=date;
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  if(activeMonth!==m) toggleMonth(m,y);
-  document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('dbtn-'+date)?.classList.add('active');
+function selectDay(date) {
+  activeDay = date;
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  if (activeMonth !== m) toggleMonth(m, y);
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('dbtn-' + date)?.classList.add('active');
   renderDay(date);
-  if(window.innerWidth<680){
+  if (window.innerWidth < 680) {
     document.getElementById('day-panel').classList.add('visible');
     document.getElementById('list-panel').classList.add('hidden');
-    const bb=document.getElementById('back-btn');
-    bb.style.display='flex';
-    document.getElementById('header-sub').textContent=fmtDay(date);
+    document.getElementById('back-btn').style.display = 'flex';
+    document.getElementById('header-sub').textContent = fmtDay(date);
   }
 }
 
-function showList(){
+function showList() {
   document.getElementById('day-panel').classList.remove('visible');
   document.getElementById('list-panel').classList.remove('hidden');
-  document.getElementById('back-btn').style.display='none';
-  document.getElementById('header-sub').textContent='新譜チェック';
+  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('header-sub').textContent = '新譜チェック';
 }
 
-function renderDay(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  const chk=dayChecked(recs);
-  const pct=recs.length?Math.round(chk/recs.length*100):0;
-  const groups={};
-  recs.forEach(r=>{ if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
+function renderDay(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+  const chk = dayChecked(recs);
+  const pct = recs.length ? Math.round(chk / recs.length * 100) : 0;
+  const groups = {};
+  recs.forEach(r => { if (!groups[r.category]) groups[r.category] = []; groups[r.category].push(r); });
 
-  let html=`<div class="day-header">
+  let html = `<div class="day-header">
     <div class="day-title">${date} — ${fmtDay(date)}</div>
     <div class="progress-row">
       <div class="progress-bar"><div class="progress-fill" id="pfill" style="width:${pct}%"></div></div>
@@ -1432,17 +585,17 @@ function renderDay(date){
     <button class="btn danger" onclick="uncheckAll('${date}')">リセット</button>
   </div>`;
 
-  catOrder.filter(c=>groups[c]).forEach(cat=>{
-    const cr=groups[cat]; const cc=dayChecked(cr);
-    html+=`<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
-    cr.forEach(r=>{
-      const ck=!!checked[r.id];
-      html+=`<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
+  catOrder.filter(c => groups[c]).forEach(cat => {
+    const cr = groups[cat]; const cc = dayChecked(cr);
+    html += `<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
+    cr.forEach(r => {
+      const ck = !!checked[r.id];
+      html += `<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
         <div class="check-circle">${ck?'✓':''}</div>
         <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy">
         <div class="record-info">
-          <div class="record-artist">${r.artist}</div>
-          <div class="record-title">${r.title}</div>
+          <div class="record-artist">${r.artist||''}</div>
+          <div class="record-title">${r.title||''}</div>
           <div class="record-tags">
             ${r.format?`<span class="tag">${r.format}</span>`:''}
             ${r.label?`<span class="tag">${r.label}</span>`:''}
@@ -1456,102 +609,117 @@ function renderDay(date){
     });
   });
 
-  document.getElementById('day-content').innerHTML=html;
-  document.getElementById('day-panel').scrollTop=0;
+  document.getElementById('day-content').innerHTML = html;
+  document.getElementById('day-panel').scrollTop = 0;
 }
 
-function toggle(id,date){
-  checked[id]=!checked[id]; save();
-  const row=document.getElementById('row-'+id);
-  const circle=row.querySelector('.check-circle');
-  if(checked[id]){row.classList.add('checked');circle.textContent='✓';}
-  else{row.classList.remove('checked');circle.textContent='';}
+function toggle(id, date) {
+  checked[id] = !checked[id]; save();
+  const row = document.getElementById('row-' + id);
+  const circle = row.querySelector('.check-circle');
+  if (checked[id]) { row.classList.add('checked'); circle.textContent = '✓'; }
+  else { row.classList.remove('checked'); circle.textContent = ''; }
   updateCatCounts(date);
   updateProgress(date);
   updateDayBadge(date);
 
-  // 全アイテムにチェックが入ったか確認
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  const allChecked=recs.every(r=>checked[r.id]);
-  if(allChecked && recs.length > 0){
-    setTimeout(()=>{
-      if(confirm(`${date} のチェックが完了しました。リストから削除しますか？`)){
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+  const allChecked = recs.length > 0 && recs.every(r => checked[r.id]);
+  if (allChecked) {
+    setTimeout(() => {
+      if (confirm(`${date} のチェックが完了しました。リストから削除しますか？`)) {
         deleteDay(date);
       }
     }, 300);
   }
 }
 
-function deleteDay(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  // チェック状態を削除
-  recs.forEach(r=>{ delete checked[r.id]; });
+function deleteDay(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+
+  // localStorageからデータ削除
+  Object.keys(localData).forEach(key => {
+    if (key.startsWith(date + '|')) delete localData[key];
+  });
+  saveStorage(LS_DATA, localData);
+
+  // チェック状態も削除
+  recs.forEach(r => { delete checked[r.id]; });
   save();
+
   // treeから削除
   delete tree[y][m][date];
-  if(Object.keys(tree[y][m]).length===0) delete tree[y][m];
-  if(Object.keys(tree[y]).length===0) delete tree[y];
-  // リストに戻る
-  activeDay=null;
+  if (Object.keys(tree[y][m]).length === 0) delete tree[y][m];
+  if (Object.keys(tree[y]).length === 0) delete tree[y];
+
+  activeDay = null;
   showList();
   renderTree();
-  document.getElementById('day-content').innerHTML='<div class="empty">日付を選んでください</div>';
+  document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
 }
 
-function updateProgress(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  const chk=dayChecked(recs); const pct=recs.length?Math.round(chk/recs.length*100):0;
-  const pf=document.getElementById('pfill'); if(pf) pf.style.width=pct+'%';
-  const pl=document.getElementById('plabel'); if(pl) pl.textContent=chk+' / '+recs.length;
+function updateProgress(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+  const chk = dayChecked(recs); const pct = recs.length ? Math.round(chk/recs.length*100) : 0;
+  const pf = document.getElementById('pfill'); if(pf) pf.style.width = pct + '%';
+  const pl = document.getElementById('plabel'); if(pl) pl.textContent = chk + ' / ' + recs.length;
 }
 
-function updateCatCounts(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  const groups={};
-  recs.forEach(r=>{if(!groups[r.category])groups[r.category]=[];groups[r.category].push(r);});
-  document.querySelectorAll('.cat-header').forEach(h=>{
-    const label=h.querySelector('span:first-child').textContent;
-    const cat=Object.keys(catLabels).find(k=>catLabels[k]===label);
-    if(cat&&groups[cat]) h.querySelector('.cat-count').textContent=dayChecked(groups[cat])+'/'+groups[cat].length;
+function updateCatCounts(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+  const groups = {};
+  recs.forEach(r => { if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
+  document.querySelectorAll('.cat-header').forEach(h => {
+    const label = h.querySelector('span:first-child').textContent;
+    const cat = Object.keys(catLabels).find(k => catLabels[k] === label);
+    if (cat && groups[cat]) h.querySelector('.cat-count').textContent = dayChecked(groups[cat]) + '/' + groups[cat].length;
   });
 }
 
-function updateDayBadge(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  const recs=tree[y][m][date]||[];
-  const chk=dayChecked(recs);
-  const badge=document.querySelector('#dbtn-'+date+' .badge');
-  if(badge) badge.textContent=chk+'/'+recs.length;
+function updateDayBadge(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  const recs = tree[y]?.[m]?.[date] || [];
+  const chk = dayChecked(recs);
+  const badge = document.querySelector('#dbtn-' + date + ' .badge');
+  if (badge) badge.textContent = chk + '/' + recs.length;
 }
 
-function checkAll(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  (tree[y][m][date]||[]).forEach(r=>{checked[r.id]=true;}); save(); renderDay(date);
-  const recs=tree[y][m][date]||[]; const badge=document.querySelector('#dbtn-'+date+' .badge');
-  if(badge) badge.textContent=recs.length+'/'+recs.length;
+function checkAll(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  (tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; }); save(); renderDay(date);
+  updateDayBadge(date);
 }
-function uncheckAll(date){
-  const [y,mo]=date.split('-'); const m=y+'-'+mo;
-  (tree[y][m][date]||[]).forEach(r=>{delete checked[r.id];}); save(); renderDay(date);
-  const badge=document.querySelector('#dbtn-'+date+' .badge');
-  if(badge) badge.textContent='0/'+(tree[y][m][date]||[]).length;
+
+function uncheckAll(date) {
+  const [y,mo] = date.split('-'); const m = y + '-' + mo;
+  (tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; }); save(); renderDay(date);
+  updateDayBadge(date);
 }
 
 // ── Init ──
-renderTree();
-const allDays=[];
-Object.keys(tree).forEach(y=>Object.keys(tree[y]).forEach(m=>Object.keys(tree[y][m]).forEach(d=>allDays.push(d))));
-allDays.sort().reverse();
-if(allDays.length){
-  const latest=allDays[0];
-  const [y,mo]=latest.split('-'); activeMonth=y+'-'+mo;
+async function init() {
+  await fetchAndMerge();
+  tree = buildTree();
   renderTree();
-  if(window.innerWidth>=680) selectDay(latest);
+
+  const allDays = [];
+  Object.keys(tree).forEach(y => Object.keys(tree[y]).forEach(m => Object.keys(tree[y][m]).forEach(d => allDays.push(d))));
+  allDays.sort().reverse();
+
+  if (allDays.length) {
+    const latest = allDays[0];
+    const [y,mo] = latest.split('-'); activeMonth = y + '-' + mo;
+    renderTree();
+    if (window.innerWidth >= 680) selectDay(latest);
+    else document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
+  }
 }
+
+init();
 </script>
 </body>
 </html>
