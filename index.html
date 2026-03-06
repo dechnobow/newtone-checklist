@@ -426,9 +426,10 @@
 </div>
 <script>
 // ── Storage helpers ──
-const LS_DATA    = 'nt_data';    // {date_category: {date, category, records[]}}
+const LS_DATA    = 'nt_data';    // {date|category: {date, category, records[]}}
 const LS_CHECKED = 'nt_checked'; // {id: true}
 const LS_FETCHED = 'nt_fetched'; // last fetched timestamp
+const LS_DELETED = 'nt_deleted'; // {date: true} 削除済み日付（当日のみ保持）
 
 function loadStorage(key, def) {
   try { return JSON.parse(localStorage.getItem(key) || 'null') ?? def; } catch(e) { return def; }
@@ -437,17 +438,26 @@ function saveStorage(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
 }
 
-let localData = loadStorage(LS_DATA, {});    // key: "date|category"
-let checked   = loadStorage(LS_CHECKED, {});
+let localData   = loadStorage(LS_DATA, {});
+let checked     = loadStorage(LS_CHECKED, {});
+let deletedDays = loadStorage(LS_DELETED, {});
 let activeDay = null, activeMonth = null;
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
+  // 当日以外の削除済み日付をブラックリストから除去
+  const today = new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Tokyo'});
+  Object.keys(deletedDays).forEach(d => {
+    if (d !== today) delete deletedDays[d];
+  });
+  saveStorage(LS_DELETED, deletedDays);
+
   try {
     const res = await fetch('data.json?t=' + Date.now());
     if (!res.ok) throw new Error('fetch failed');
     const groups = await res.json();
     groups.forEach(g => {
+      if (deletedDays[g.date]) return; // 削除済み日付はスキップ
       const key = g.date + '|' + g.category;
       if (!localData[key]) {
         localData[key] = g;
@@ -638,6 +648,10 @@ function toggle(id, date) {
 function deleteDay(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
   const recs = tree[y]?.[m]?.[date] || [];
+
+  // 削除済み日付として記録（当日のみ有効、翌日自動解除）
+  deletedDays[date] = true;
+  saveStorage(LS_DELETED, deletedDays);
 
   // localStorageからデータ削除
   Object.keys(localData).forEach(key => {
