@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -22,392 +23,492 @@
     --checked-text: #6a8a00;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+- { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-  html, body {
-    height: 100%;
-    overflow: hidden;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-  }
+html, body {
+height: 100%;
+overflow: hidden;
+background: var(–bg);
+color: var(–text);
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 300;
+-webkit-font-smoothing: antialiased;
+}
 
-  #app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
+#app {
+display: flex;
+flex-direction: column;
+height: 100%;
+padding-top: env(safe-area-inset-top, 0px);
+padding-bottom: env(safe-area-inset-bottom, 0px);
+}
 
-  #app-header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    background: var(--bg);
-    z-index: 100;
-  }
+#app-header {
+height: 56px;
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 0 20px;
+border-bottom: 1px solid var(–border);
+flex-shrink: 0;
+background: var(–bg);
+z-index: 100;
+}
 
-  #back-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-size: 24px;
-    padding: 4px 8px 4px 0;
-    cursor: pointer;
-    line-height: 1;
-    flex-shrink: 0;
-    min-width: 44px;
-    min-height: 44px;
-    align-items: center;
-  }
+#back-btn {
+display: none;
+background: none;
+border: none;
+color: var(–accent);
+font-size: 24px;
+padding: 4px 8px 4px 0;
+cursor: pointer;
+line-height: 1;
+flex-shrink: 0;
+min-width: 44px;
+min-height: 44px;
+align-items: center;
+}
 
-  .header-title {
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    flex: 1;
-  }
+.header-title {
+font-family: ‘Courier Prime’, monospace;
+font-size: 12px;
+letter-spacing: 0.2em;
+color: var(–accent);
+text-transform: uppercase;
+flex: 1;
+}
 
-  #header-sub {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    flex-shrink: 0;
-  }
+#header-sub {
+font-size: 11px;
+color: var(–muted);
+letter-spacing: 0.08em;
+flex-shrink: 0;
+}
 
-  #panels {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
+#panels {
+flex: 1;
+overflow: hidden;
+position: relative;
+}
 
-  #list-panel {
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    background: var(--bg);
-    will-change: transform;
-  }
+#list-panel {
+position: absolute;
+inset: 0;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+background: var(–bg);
+will-change: transform;
+}
 
-  #day-panel {
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    transform: translateX(100%);
-    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    background: var(--bg);
-    will-change: transform;
-  }
+#day-panel {
+position: absolute;
+inset: 0;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+transform: translateX(100%);
+transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+background: var(–bg);
+will-change: transform;
+}
 
-  #day-panel.visible   { transform: translateX(0); }
-  #list-panel.hidden   { transform: translateX(-25%); }
+#day-panel.visible   { transform: translateX(0); }
+#list-panel.hidden   { transform: translateX(-25%); }
 
-  @media (min-width: 680px) {
-    #panels { display: flex; }
-    #list-panel, #day-panel {
-      position: relative;
-      transform: none !important;
-      transition: none;
-    }
-    #list-panel { width: 240px; border-right: 1px solid var(--border); flex-shrink: 0; }
-    #day-panel  { flex: 1; }
-    #back-btn   { display: none !important; }
-  }
+@media (min-width: 680px) {
+#panels { display: flex; }
+#list-panel, #day-panel {
+position: relative;
+transform: none !important;
+transition: none;
+}
+#list-panel { width: 240px; border-right: 1px solid var(–border); flex-shrink: 0; }
+#day-panel  { flex: 1; }
+#back-btn   { display: none !important; }
+}
 
-  .tree-year-btn {
-    width: 100%;
-    background: none;
-    border: none;
-    border-bottom: 1px solid var(--border);
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'Courier Prime', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-  }
+.tree-year-btn {
+width: 100%;
+background: none;
+border: none;
+border-bottom: 1px solid var(–border);
+padding: 15px 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+font-family: ‘Courier Prime’, monospace;
+font-size: 11px;
+letter-spacing: 0.2em;
+color: var(–accent);
+text-transform: uppercase;
+cursor: pointer;
+-webkit-user-select: none;
+user-select: none;
+}
 
-  .tree-year-btn .arrow { font-size: 10px; transition: transform .2s; }
-  .tree-year-btn.collapsed .arrow { transform: rotate(-90deg); }
+.tree-year-btn .arrow { font-size: 10px; transition: transform .2s; }
+.tree-year-btn.collapsed .arrow { transform: rotate(-90deg); }
 
-  .month-block { border-bottom: 1px solid var(--border); }
+.month-block { border-bottom: 1px solid var(–border); }
 
-  .month-btn {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 14px 20px 14px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--muted);
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-    border-left: 3px solid transparent;
-    min-height: 48px;
-    transition: background .1s;
-  }
-  .month-btn:active { background: var(--surface); }
-  .month-btn.active { color: var(--accent); border-left-color: var(--accent); background: #1a1e00; }
+.month-btn {
+width: 100%;
+background: none;
+border: none;
+padding: 14px 20px 14px 28px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+font-size: 13px;
+color: var(–muted);
+cursor: pointer;
+-webkit-user-select: none;
+user-select: none;
+border-left: 3px solid transparent;
+min-height: 48px;
+transition: background .1s;
+}
+.month-btn:active { background: var(–surface); }
+.month-btn.active { color: var(–accent); border-left-color: var(–accent); background: #1a1e00; }
 
-  .badge {
-    font-size: 11px;
-    background: var(--surface2);
-    padding: 3px 8px;
-    border-radius: 10px;
-    color: var(--muted);
-    font-family: 'Courier Prime', monospace;
-    flex-shrink: 0;
-  }
-  .month-btn.active .badge { background: #2a3300; color: var(--accent); }
+.badge {
+font-size: 11px;
+background: var(–surface2);
+padding: 3px 8px;
+border-radius: 10px;
+color: var(–muted);
+font-family: ‘Courier Prime’, monospace;
+flex-shrink: 0;
+}
+.month-btn.active .badge { background: #2a3300; color: var(–accent); }
 
-  .day-list { overflow: hidden; }
-  .day-list.collapsed { display: none; }
+.day-list { overflow: hidden; }
+.day-list.collapsed { display: none; }
 
-  .day-btn {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 12px 20px 12px 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-    border-left: 3px solid transparent;
-    min-height: 48px;
-    transition: background .1s;
-  }
-  .day-btn:active { background: var(--surface); }
-  .day-btn.active { color: var(--accent); border-left-color: var(--accent); background: #1a1e00; }
-  .day-btn .badge { font-size: 10px; }
+.day-btn {
+width: 100%;
+background: none;
+border: none;
+padding: 12px 20px 12px 44px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+font-size: 12px;
+color: var(–muted);
+cursor: pointer;
+-webkit-user-select: none;
+user-select: none;
+border-left: 3px solid transparent;
+min-height: 48px;
+transition: background .1s;
+}
+.day-btn:active { background: var(–surface); }
+.day-btn.active { color: var(–accent); border-left-color: var(–accent); background: #1a1e00; }
+.day-btn .badge { font-size: 10px; }
 
-  .day-header {
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 20;
-    border-bottom: 1px solid var(--border);
-    padding: 14px 20px 12px;
-  }
+.day-header {
+position: sticky;
+top: 0;
+background: var(–bg);
+z-index: 20;
+border-bottom: 1px solid var(–border);
+padding: 14px 20px 12px;
+}
 
-  .day-title {
-    font-family: 'Courier Prime', monospace;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    color: var(--text);
-    margin-bottom: 9px;
-  }
+.day-title {
+font-family: ‘Courier Prime’, monospace;
+font-size: 13px;
+letter-spacing: 0.12em;
+color: var(–text);
+margin-bottom: 9px;
+}
 
-  .progress-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.progress-row {
+display: flex;
+align-items: center;
+gap: 10px;
+}
 
-  .progress-bar {
-    flex: 1;
-    height: 3px;
-    background: var(--surface2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+.progress-bar {
+flex: 1;
+height: 3px;
+background: var(–surface2);
+border-radius: 2px;
+overflow: hidden;
+}
 
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width .3s ease;
-  }
+.progress-fill {
+height: 100%;
+background: var(–accent);
+transition: width .3s ease;
+}
 
-  .progress-label {
-    font-size: 11px;
-    color: var(--muted);
-    white-space: nowrap;
-    font-family: 'Courier Prime', monospace;
-    min-width: 50px;
-    text-align: right;
-  }
+.progress-label {
+font-size: 11px;
+color: var(–muted);
+white-space: nowrap;
+font-family: ‘Courier Prime’, monospace;
+min-width: 50px;
+text-align: right;
+}
 
-  .toolbar {
-    display: flex;
-    gap: 8px;
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--border);
-  }
+.toolbar {
+display: flex;
+gap: 8px;
+padding: 10px 20px;
+border-bottom: 1px solid var(–border);
+}
 
-  .btn {
-    flex: 1;
-    padding: 10px;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-family: 'Courier Prime', monospace;
-    cursor: pointer;
-    border-radius: 4px;
-    min-height: 44px;
-    -webkit-appearance: none;
-    transition: all .1s;
-  }
-  .btn:active { background: var(--surface); color: var(--text); border-color: var(--text); }
-  .btn.danger:active { color: var(--accent2); border-color: var(--accent2); }
+.btn {
+flex: 1;
+padding: 10px;
+background: none;
+border: 1px solid var(–border);
+color: var(–muted);
+font-size: 11px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+font-family: ‘Courier Prime’, monospace;
+cursor: pointer;
+border-radius: 4px;
+min-height: 44px;
+-webkit-appearance: none;
+transition: all .1s;
+}
+.btn:active { background: var(–surface); color: var(–text); border-color: var(–text); }
+.btn.danger:active { color: var(–accent2); border-color: var(–accent2); }
 
-  .cat-header {
-    padding: 11px 20px 10px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'Courier Prime', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .cat-count { color: var(--accent); }
+.cat-header {
+padding: 11px 20px 10px;
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+font-family: ‘Courier Prime’, monospace;
+font-size: 10px;
+letter-spacing: 0.2em;
+color: var(–muted);
+text-transform: uppercase;
+}
+.cat-count { color: var(–accent); }
 
-  .record-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px 14px 20px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    min-height: 76px;
-    -webkit-user-select: none;
-    user-select: none;
-    transition: background .1s;
-  }
-  .record-item:active { background: var(--surface); }
-  .record-item.checked { background: var(--checked-bg); }
+.record-item {
+display: flex;
+align-items: center;
+gap: 14px;
+padding: 14px 16px 14px 20px;
+border-bottom: 1px solid var(–border);
+cursor: pointer;
+min-height: 76px;
+-webkit-user-select: none;
+user-select: none;
+transition: background .1s;
+}
+.record-item:active { background: var(–surface); }
+.record-item.checked { background: var(–checked-bg); }
 
-  .check-circle {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 2px solid #444;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: bold;
-    color: transparent;
-    transition: all .15s;
-  }
-  .record-item.checked .check-circle {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #000;
-  }
+.check-circle {
+width: 26px;
+height: 26px;
+border-radius: 50%;
+border: 2px solid #444;
+flex-shrink: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+font-weight: bold;
+color: transparent;
+transition: all .15s;
+}
+.record-item.checked .check-circle {
+background: var(–accent);
+border-color: var(–accent);
+color: #000;
+}
 
-  .record-thumb {
-    width: 54px;
-    height: 54px;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--surface2);
-    border-radius: 3px;
-  }
+.record-thumb {
+width: 54px;
+height: 54px;
+object-fit: cover;
+flex-shrink: 0;
+background: var(–surface2);
+border-radius: 3px;
+}
 
-  .record-info { flex: 1; min-width: 0; }
+.record-info { flex: 1; min-width: 0; }
 
-  .record-artist {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 1.3;
-  }
-  .record-item.checked .record-artist { color: var(--checked-text); }
+.record-artist {
+font-size: 13px;
+font-weight: 500;
+color: var(–text);
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+line-height: 1.3;
+}
+.record-item.checked .record-artist { color: var(–checked-text); }
 
-  .record-title {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 1.3;
-  }
-  .record-item.checked .record-title { color: #3d5000; }
+.record-title {
+font-size: 12px;
+color: var(–muted);
+margin-top: 2px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+line-height: 1.3;
+}
+.record-item.checked .record-title { color: #3d5000; }
 
-  .record-tags {
-    display: flex;
-    gap: 5px;
-    margin-top: 5px;
-    flex-wrap: wrap;
-  }
+.record-tags {
+display: flex;
+gap: 5px;
+margin-top: 5px;
+flex-wrap: wrap;
+}
 
-  .tag {
-    font-size: 9px;
-    padding: 1px 5px;
-    background: var(--surface2);
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    border-radius: 2px;
-  }
-  .tag.used    { color: var(--accent2); border: 1px solid var(--accent2); background: none; }
-  .tag.preorder{ color: #00c8ff; border: 1px solid #00c8ff; background: none; }
+.tag {
+font-size: 9px;
+padding: 1px 5px;
+background: var(–surface2);
+color: var(–muted);
+letter-spacing: 0.05em;
+text-transform: uppercase;
+border-radius: 2px;
+}
+.tag.used    { color: var(–accent2); border: 1px solid var(–accent2); background: none; }
+.tag.preorder{ color: #00c8ff; border: 1px solid #00c8ff; background: none; }
 
-  .record-link-btn {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 16px;
-    transition: all .1s;
-  }
-  .record-link-btn:active { color: var(--accent); border-color: var(--accent); }
+.record-actions {
+display: flex;
+flex-direction: column;
+gap: 6px;
+flex-shrink: 0;
+}
 
-  .empty {
-    padding: 60px 20px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 2.2;
-  }
+.record-link-btn {
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid var(–border);
+border-radius: 50%;
+color: var(–muted);
+text-decoration: none;
+font-size: 16px;
+transition: all .1s;
+}
+.record-link-btn:active { color: var(–accent); border-color: var(–accent); }
 
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #333; }
+.heart-btn {
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid var(–border);
+border-radius: 50%;
+color: var(–muted);
+background: none;
+font-size: 16px;
+cursor: pointer;
+transition: all .1s;
+-webkit-tap-highlight-color: transparent;
+}
+.heart-btn:active { color: #ff4b00; border-color: #ff4b00; }
+.heart-btn.pooled { color: #ff4b00; border-color: #ff4b00; }
+
+.pool-section { border-bottom: 1px solid var(–border); }
+
+.pool-header-btn {
+width: 100%;
+background: none;
+border: none;
+border-bottom: 1px solid var(–border);
+padding: 15px 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+font-family: ‘Courier Prime’, monospace;
+font-size: 11px;
+letter-spacing: 0.2em;
+color: #ff4b00;
+text-transform: uppercase;
+cursor: pointer;
+-webkit-user-select: none;
+user-select: none;
+}
+.pool-header-btn .arrow { font-size: 10px; transition: transform .2s; }
+.pool-header-btn.collapsed .arrow { transform: rotate(-90deg); }
+
+.pool-item {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 12px 16px 12px 20px;
+border-bottom: 1px solid var(–border);
+min-height: 64px;
+}
+
+.pool-item-thumb {
+width: 44px;
+height: 44px;
+object-fit: cover;
+flex-shrink: 0;
+background: var(–surface2);
+border-radius: 3px;
+}
+
+.pool-item-info { flex: 1; min-width: 0; }
+
+.pool-item-title {
+font-size: 12px;
+color: var(–text);
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.pool-item-label {
+font-size: 11px;
+color: var(–muted);
+margin-top: 2px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.pool-remove-btn {
+width: 32px;
+height: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+background: none;
+color: var(–muted);
+font-size: 18px;
+cursor: pointer;
+flex-shrink: 0;
+}
+.pool-remove-btn:active { color: #ff4b00; }
+
+.empty {
+padding: 60px 20px;
+text-align: center;
+color: var(–muted);
+font-size: 13px;
+line-height: 2.2;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; }
 </style>
+
 </head>
 <body>
 <div id="app">
@@ -430,83 +531,144 @@ const LS_DATA    = 'nt_data';    // {date|category: {date, category, records[]}}
 const LS_CHECKED = 'nt_checked'; // {id: true}
 const LS_FETCHED = 'nt_fetched'; // last fetched timestamp
 const LS_DELETED = 'nt_deleted'; // {date: true} 削除済み日付（当日のみ保持）
+const LS_POOL    = 'nt_pool';    // {id: {record}} プールしたレコード
 
 function loadStorage(key, def) {
-  try { return JSON.parse(localStorage.getItem(key) || 'null') ?? def; } catch(e) { return def; }
+try { return JSON.parse(localStorage.getItem(key) || ‘null’) ?? def; } catch(e) { return def; }
 }
 function saveStorage(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
 }
 
 let localData   = loadStorage(LS_DATA, {});
 let checked     = loadStorage(LS_CHECKED, {});
 let deletedDays = loadStorage(LS_DELETED, {});
+let pool        = loadStorage(LS_POOL, {});
 let activeDay = null, activeMonth = null;
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
-  // 当日以外の削除済み日付をブラックリストから除去
-  const today = new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Tokyo'});
-  Object.keys(deletedDays).forEach(d => {
-    if (d !== today) delete deletedDays[d];
-  });
-  saveStorage(LS_DELETED, deletedDays);
+// 当日以外の削除済み日付をブラックリストから除去
+const today = new Date().toLocaleDateString(‘sv-SE’, {timeZone: ‘Asia/Tokyo’});
+Object.keys(deletedDays).forEach(d => {
+if (d !== today) delete deletedDays[d];
+});
+saveStorage(LS_DELETED, deletedDays);
 
-  try {
-    const res = await fetch('data.json?t=' + Date.now());
-    if (!res.ok) throw new Error('fetch failed');
-    const groups = await res.json();
-    groups.forEach(g => {
-      if (deletedDays[g.date]) return; // 削除済み日付はスキップ
-      const key = g.date + '|' + g.category;
-      if (!localData[key]) {
-        localData[key] = g;
-      } else {
-        // 既存IDセット
-        const existingIds = new Set(localData[key].records.map(r => r.id));
-        const newRecs = g.records.filter(r => !existingIds.has(r.id));
-        if (newRecs.length > 0) {
-          localData[key].records.push(...newRecs);
-        }
-      }
-    });
-    saveStorage(LS_DATA, localData);
-    saveStorage(LS_FETCHED, Date.now());
-  } catch(e) {
-    console.log('data.json fetch failed:', e);
-  }
+try {
+const res = await fetch(‘data.json?t=’ + Date.now());
+if (!res.ok) throw new Error(‘fetch failed’);
+const groups = await res.json();
+groups.forEach(g => {
+if (deletedDays[g.date]) return; // 削除済み日付はスキップ
+const key = g.date + ‘|’ + g.category;
+if (!localData[key]) {
+localData[key] = g;
+} else {
+// 既存IDセット
+const existingIds = new Set(localData[key].records.map(r => r.id));
+const newRecs = g.records.filter(r => !existingIds.has(r.id));
+if (newRecs.length > 0) {
+localData[key].records.push(…newRecs);
+}
+}
+});
+saveStorage(LS_DATA, localData);
+saveStorage(LS_FETCHED, Date.now());
+} catch(e) {
+console.log(‘data.json fetch failed:’, e);
+}
 }
 
 // ── Build tree from localData ──
 function buildTree() {
-  const t = {};
-  Object.values(localData).forEach(g => {
-    const [y, mo] = g.date.split('-');
-    const m = y + '-' + mo;
-    if (!t[y]) t[y] = {};
-    if (!t[y][m]) t[y][m] = {};
-    if (!t[y][m][g.date]) t[y][m][g.date] = [];
-    t[y][m][g.date].push(...g.records.map(r => ({...r, category: g.category})));
-  });
-  // 重複除去
-  Object.keys(t).forEach(y => Object.keys(t[y]).forEach(m => Object.keys(t[y][m]).forEach(d => {
-    const seen = new Set();
-    t[y][m][d] = t[y][m][d].filter(r => { if(seen.has(r.id)) return false; seen.add(r.id); return true; });
-  })));
-  return t;
+const t = {};
+Object.values(localData).forEach(g => {
+const [y, mo] = g.date.split(’-’);
+const m = y + ‘-’ + mo;
+if (!t[y]) t[y] = {};
+if (!t[y][m]) t[y][m] = {};
+if (!t[y][m][g.date]) t[y][m][g.date] = [];
+t[y][m][g.date].push(…g.records.map(r => ({…r, category: g.category})));
+});
+// 重複除去
+Object.keys(t).forEach(y => Object.keys(t[y]).forEach(m => Object.keys(t[y][m]).forEach(d => {
+const seen = new Set();
+t[y][m][d] = t[y][m][d].filter(r => { if(seen.has(r.id)) return false; seen.add(r.id); return true; });
+})));
+return t;
 }
 
 let tree = {};
 
 function save() { saveStorage(LS_CHECKED, checked); }
 function dayChecked(recs) { return recs.filter(r => checked[r.id]).length; }
-const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function fmtMonth(ym) { const [y,m] = ym.split('-'); return MN[+m-1] + ' ' + y; }
-function fmtDay(date) { const d = new Date(date + 'T00:00:00'); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
+const MN = [‘Jan’,‘Feb’,‘Mar’,‘Apr’,‘May’,‘Jun’,‘Jul’,‘Aug’,‘Sep’,‘Oct’,‘Nov’,‘Dec’];
+function fmtMonth(ym) { const [y,m] = ym.split(’-’); return MN[+m-1] + ’ ’ + y; }
+function fmtDay(date) { const d = new Date(date + ‘T00:00:00’); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
+
+// ── Pool ──
+function savePool() { saveStorage(LS_POOL, pool); }
+
+function togglePool(id, record, event) {
+event.stopPropagation();
+if (pool[id]) {
+delete pool[id];
+} else {
+pool[id] = record;
+}
+savePool();
+// ハートボタンの見た目を更新
+const btn = document.getElementById(‘heart-’ + id);
+if (btn) {
+btn.classList.toggle(‘pooled’, !!pool[id]);
+btn.textContent = pool[id] ? ‘♥’ : ‘♡’;
+}
+renderPoolSection();
+}
+
+function renderPoolSection() {
+const poolList = document.getElementById(‘pool-list’);
+if (!poolList) return;
+const items = Object.values(pool);
+const header = document.getElementById(‘pool-header-btn’);
+if (header) {
+header.querySelector(’.pool-badge’).textContent = items.length;
+}
+if (items.length === 0) {
+poolList.innerHTML = ‘<div class="empty" style="padding:20px;font-size:12px;">プールは空です</div>’;
+return;
+}
+poolList.innerHTML = items.map(r => `<div class="pool-item"> <img class="pool-item-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy"> <div class="pool-item-info"> <div class="pool-item-title">${r.title||''}</div> <div class="pool-item-label">${r.artist||''}${r.label?' / '+r.label:''}</div> </div> <button class="pool-remove-btn" onclick="removeFromPool('${r.id}')">×</button> </div>`).join(’’);
+}
+
+function removeFromPool(id) {
+delete pool[id];
+savePool();
+// ハートボタンの見た目を更新
+const btn = document.getElementById(‘heart-’ + id);
+if (btn) { btn.classList.remove(‘pooled’); btn.textContent = ‘♡’; }
+renderPoolSection();
+}
+
+function togglePoolSection() {
+const btn = document.getElementById(‘pool-header-btn’);
+const list = document.getElementById(‘pool-list’);
+btn.classList.toggle(‘collapsed’);
+list.style.display = btn.classList.contains(‘collapsed’) ? ‘none’ : ‘’;
+}
 
 // ── Render tree ──
 function renderTree() {
-  let html = '';
+const poolItems = Object.values(pool);
+let html = `<div class="pool-section">
+<button class="pool-header-btn" id="pool-header-btn" onclick="togglePoolSection()">
+<span>POOL <span class="pool-badge">${poolItems.length}</span></span>
+<span class="arrow">▼</span>
+</button>
+<div id="pool-list"></div>
+
+  </div>`;
   Object.keys(tree).sort().reverse().forEach(y => {
     html += `<button class="tree-year-btn" onclick="toggleYear('${y}')" data-year="${y}">${y}<span class="arrow">▼</span></button><div id="ym-${y}">`;
     Object.keys(tree[y]).sort().reverse().forEach(m => {
@@ -522,218 +684,206 @@ function renderTree() {
     });
     html += `</div>`;
   });
-  if (!html) html = '<div class="empty">データがありません</div>';
+  if (Object.keys(tree).length === 0) html += '<div class="empty">データがありません</div>';
   document.getElementById('tree').innerHTML = html;
+  renderPoolSection();
 }
 
 function toggleYear(y) {
-  const btn = document.querySelector(`[data-year="${y}"]`);
-  const list = document.getElementById('ym-' + y);
-  btn.classList.toggle('collapsed');
-  list.style.display = btn.classList.contains('collapsed') ? 'none' : '';
+const btn = document.querySelector(`[data-year="${y}"]`);
+const list = document.getElementById(‘ym-’ + y);
+btn.classList.toggle(‘collapsed’);
+list.style.display = btn.classList.contains(‘collapsed’) ? ‘none’ : ‘’;
 }
 
 function toggleMonth(m, y) {
-  if (activeMonth === m) {
-    activeMonth = null;
-    document.getElementById('dl-' + m)?.classList.add('collapsed');
-    document.getElementById('mbtn-' + m)?.classList.remove('active');
-  } else {
-    if (activeMonth) {
-      document.getElementById('dl-' + activeMonth)?.classList.add('collapsed');
-      document.getElementById('mbtn-' + activeMonth)?.classList.remove('active');
-    }
-    activeMonth = m;
-    document.getElementById('dl-' + m)?.classList.remove('collapsed');
-    document.getElementById('mbtn-' + m)?.classList.add('active');
-  }
+if (activeMonth === m) {
+activeMonth = null;
+document.getElementById(‘dl-’ + m)?.classList.add(‘collapsed’);
+document.getElementById(‘mbtn-’ + m)?.classList.remove(‘active’);
+} else {
+if (activeMonth) {
+document.getElementById(‘dl-’ + activeMonth)?.classList.add(‘collapsed’);
+document.getElementById(‘mbtn-’ + activeMonth)?.classList.remove(‘active’);
+}
+activeMonth = m;
+document.getElementById(‘dl-’ + m)?.classList.remove(‘collapsed’);
+document.getElementById(‘mbtn-’ + m)?.classList.add(‘active’);
+}
 }
 
 // ── Day view ──
-const catLabels = {thisweek:'今週入荷', new:'新入荷', preorder:'予約受付中', used:'中古盤'};
-const catOrder  = ['thisweek','new','preorder','used'];
+const catLabels = {thisweek:‘今週入荷’, new:‘新入荷’, preorder:‘予約受付中’, used:‘中古盤’};
+const catOrder  = [‘thisweek’,‘new’,‘preorder’,‘used’];
 
 function selectDay(date) {
-  activeDay = date;
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  if (activeMonth !== m) toggleMonth(m, y);
-  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('dbtn-' + date)?.classList.add('active');
-  renderDay(date);
-  if (window.innerWidth < 680) {
-    document.getElementById('day-panel').classList.add('visible');
-    document.getElementById('list-panel').classList.add('hidden');
-    document.getElementById('back-btn').style.display = 'flex';
-    document.getElementById('header-sub').textContent = fmtDay(date);
-  }
+activeDay = date;
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+if (activeMonth !== m) toggleMonth(m, y);
+document.querySelectorAll(’.day-btn’).forEach(b => b.classList.remove(‘active’));
+document.getElementById(‘dbtn-’ + date)?.classList.add(‘active’);
+renderDay(date);
+if (window.innerWidth < 680) {
+document.getElementById(‘day-panel’).classList.add(‘visible’);
+document.getElementById(‘list-panel’).classList.add(‘hidden’);
+document.getElementById(‘back-btn’).style.display = ‘flex’;
+document.getElementById(‘header-sub’).textContent = fmtDay(date);
+}
 }
 
 function showList() {
-  document.getElementById('day-panel').classList.remove('visible');
-  document.getElementById('list-panel').classList.remove('hidden');
-  document.getElementById('back-btn').style.display = 'none';
-  document.getElementById('header-sub').textContent = '新譜チェック';
+document.getElementById(‘day-panel’).classList.remove(‘visible’);
+document.getElementById(‘list-panel’).classList.remove(‘hidden’);
+document.getElementById(‘back-btn’).style.display = ‘none’;
+document.getElementById(‘header-sub’).textContent = ‘新譜チェック’;
 }
 
 function renderDay(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
-  const chk = dayChecked(recs);
-  const pct = recs.length ? Math.round(chk / recs.length * 100) : 0;
-  const groups = {};
-  recs.forEach(r => { if (!groups[r.category]) groups[r.category] = []; groups[r.category].push(r); });
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
+const chk = dayChecked(recs);
+const pct = recs.length ? Math.round(chk / recs.length * 100) : 0;
+const groups = {};
+recs.forEach(r => { if (!groups[r.category]) groups[r.category] = []; groups[r.category].push(r); });
 
-  let html = `<div class="day-header">
-    <div class="day-title">${date} — ${fmtDay(date)}</div>
-    <div class="progress-row">
-      <div class="progress-bar"><div class="progress-fill" id="pfill" style="width:${pct}%"></div></div>
-      <div class="progress-label" id="plabel">${chk} / ${recs.length}</div>
-    </div>
+let html = `<div class="day-header">
+<div class="day-title">${date} — ${fmtDay(date)}</div>
+<div class="progress-row">
+<div class="progress-bar"><div class="progress-fill" id="pfill" style="width:${pct}%"></div></div>
+<div class="progress-label" id="plabel">${chk} / ${recs.length}</div>
+</div>
+
   </div>
   <div class="toolbar">
     <button class="btn" onclick="checkAll('${date}')">すべてチェック</button>
     <button class="btn danger" onclick="uncheckAll('${date}')">リセット</button>
   </div>`;
 
-  catOrder.filter(c => groups[c]).forEach(cat => {
-    const cr = groups[cat]; const cc = dayChecked(cr);
-    html += `<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
-    cr.forEach(r => {
-      const ck = !!checked[r.id];
-      html += `<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
-        <div class="check-circle">${ck?'✓':''}</div>
-        <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy">
-        <div class="record-info">
-          <div class="record-artist">${r.artist||''}</div>
-          <div class="record-title">${r.title||''}</div>
-          <div class="record-tags">
-            ${r.format?`<span class="tag">${r.format}</span>`:''}
-            ${r.label?`<span class="tag">${r.label}</span>`:''}
-            ${r.genre?`<span class="tag">${r.genre}</span>`:''}
-            ${r.used?`<span class="tag used">USED</span>`:''}
-            ${r.preorder?`<span class="tag preorder">予約</span>`:''}
-          </div>
-        </div>
-        <a class="record-link-btn" href="${r.url}" target="_self" onclick="event.stopPropagation()">↗</a>
-      </div>`;
-    });
-  });
+catOrder.filter(c => groups[c]).forEach(cat => {
+const cr = groups[cat]; const cc = dayChecked(cr);
+html += `<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
+cr.forEach(r => {
+const ck = !!checked[r.id];
+html += `<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')"> <div class="check-circle">${ck?'✓':''}</div> <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy"> <div class="record-info"> <div class="record-artist">${r.artist||''}</div> <div class="record-title">${r.title||''}</div> <div class="record-tags"> ${r.format?`<span class="tag">${r.format}</span>`:''} ${r.label?`<span class="tag">${r.label}</span>`:''} ${r.genre?`<span class="tag">${r.genre}</span>`:''} ${r.used?`<span class="tag used">USED</span>`:''} ${r.preorder?`<span class="tag preorder">予約</span>`:''} </div> </div> <div class="record-actions"> <a class="record-link-btn" href="${r.url}" target="_self" onclick="event.stopPropagation()">↗</a> <button class="heart-btn ${pool[r.id]?'pooled':''}" id="heart-${r.id}" onclick="togglePool('${r.id}',r,event)">${pool[r.id]?'♥':'♡'}</button> </div> </div>`;
+});
+});
 
-  document.getElementById('day-content').innerHTML = html;
-  document.getElementById('day-panel').scrollTop = 0;
+document.getElementById(‘day-content’).innerHTML = html;
+document.getElementById(‘day-panel’).scrollTop = 0;
 }
 
 function toggle(id, date) {
-  checked[id] = !checked[id]; save();
-  const row = document.getElementById('row-' + id);
-  const circle = row.querySelector('.check-circle');
-  if (checked[id]) { row.classList.add('checked'); circle.textContent = '✓'; }
-  else { row.classList.remove('checked'); circle.textContent = ''; }
-  updateCatCounts(date);
-  updateProgress(date);
-  updateDayBadge(date);
+checked[id] = !checked[id]; save();
+const row = document.getElementById(‘row-’ + id);
+const circle = row.querySelector(’.check-circle’);
+if (checked[id]) { row.classList.add(‘checked’); circle.textContent = ‘✓’; }
+else { row.classList.remove(‘checked’); circle.textContent = ‘’; }
+updateCatCounts(date);
+updateProgress(date);
+updateDayBadge(date);
 
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
-  const allChecked = recs.length > 0 && recs.every(r => checked[r.id]);
-  if (allChecked) {
-    setTimeout(() => {
-      if (confirm(`${date} のチェックが完了しました。リストから削除しますか？`)) {
-        deleteDay(date);
-      }
-    }, 300);
-  }
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
+const allChecked = recs.length > 0 && recs.every(r => checked[r.id]);
+if (allChecked) {
+setTimeout(() => {
+if (confirm(`${date} のチェックが完了しました。リストから削除しますか？`)) {
+deleteDay(date);
+}
+}, 300);
+}
 }
 
 function deleteDay(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
 
-  // 削除済み日付として記録（当日のみ有効、翌日自動解除）
-  deletedDays[date] = true;
-  saveStorage(LS_DELETED, deletedDays);
+// 削除済み日付として記録（当日のみ有効、翌日自動解除）
+deletedDays[date] = true;
+saveStorage(LS_DELETED, deletedDays);
 
-  // localStorageからデータ削除
-  Object.keys(localData).forEach(key => {
-    if (key.startsWith(date + '|')) delete localData[key];
-  });
-  saveStorage(LS_DATA, localData);
+// localStorageからデータ削除
+Object.keys(localData).forEach(key => {
+if (key.startsWith(date + ‘|’)) delete localData[key];
+});
+saveStorage(LS_DATA, localData);
 
-  // チェック状態も削除
-  recs.forEach(r => { delete checked[r.id]; });
-  save();
+// チェック状態も削除
+recs.forEach(r => { delete checked[r.id]; });
+save();
 
-  // treeから削除
-  delete tree[y][m][date];
-  if (Object.keys(tree[y][m]).length === 0) delete tree[y][m];
-  if (Object.keys(tree[y]).length === 0) delete tree[y];
+// treeから削除
+delete tree[y][m][date];
+if (Object.keys(tree[y][m]).length === 0) delete tree[y][m];
+if (Object.keys(tree[y]).length === 0) delete tree[y];
 
-  activeDay = null;
-  showList();
-  renderTree();
-  document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
+activeDay = null;
+showList();
+renderTree();
+document.getElementById(‘day-content’).innerHTML = ‘<div class="empty">日付を選んでください</div>’;
 }
 
 function updateProgress(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
-  const chk = dayChecked(recs); const pct = recs.length ? Math.round(chk/recs.length*100) : 0;
-  const pf = document.getElementById('pfill'); if(pf) pf.style.width = pct + '%';
-  const pl = document.getElementById('plabel'); if(pl) pl.textContent = chk + ' / ' + recs.length;
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
+const chk = dayChecked(recs); const pct = recs.length ? Math.round(chk/recs.length*100) : 0;
+const pf = document.getElementById(‘pfill’); if(pf) pf.style.width = pct + ‘%’;
+const pl = document.getElementById(‘plabel’); if(pl) pl.textContent = chk + ’ / ’ + recs.length;
 }
 
 function updateCatCounts(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
-  const groups = {};
-  recs.forEach(r => { if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
-  document.querySelectorAll('.cat-header').forEach(h => {
-    const label = h.querySelector('span:first-child').textContent;
-    const cat = Object.keys(catLabels).find(k => catLabels[k] === label);
-    if (cat && groups[cat]) h.querySelector('.cat-count').textContent = dayChecked(groups[cat]) + '/' + groups[cat].length;
-  });
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
+const groups = {};
+recs.forEach(r => { if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
+document.querySelectorAll(’.cat-header’).forEach(h => {
+const label = h.querySelector(‘span:first-child’).textContent;
+const cat = Object.keys(catLabels).find(k => catLabels[k] === label);
+if (cat && groups[cat]) h.querySelector(’.cat-count’).textContent = dayChecked(groups[cat]) + ‘/’ + groups[cat].length;
+});
 }
 
 function updateDayBadge(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  const recs = tree[y]?.[m]?.[date] || [];
-  const chk = dayChecked(recs);
-  const badge = document.querySelector('#dbtn-' + date + ' .badge');
-  if (badge) badge.textContent = chk + '/' + recs.length;
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+const recs = tree[y]?.[m]?.[date] || [];
+const chk = dayChecked(recs);
+const badge = document.querySelector(’#dbtn-’ + date + ’ .badge’);
+if (badge) badge.textContent = chk + ‘/’ + recs.length;
 }
 
 function checkAll(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; }); save(); renderDay(date);
-  updateDayBadge(date);
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+(tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; }); save(); renderDay(date);
+updateDayBadge(date);
 }
 
 function uncheckAll(date) {
-  const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; }); save(); renderDay(date);
-  updateDayBadge(date);
+const [y,mo] = date.split(’-’); const m = y + ‘-’ + mo;
+(tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; }); save(); renderDay(date);
+updateDayBadge(date);
 }
 
 // ── Init ──
 async function init() {
-  await fetchAndMerge();
-  tree = buildTree();
-  renderTree();
+await fetchAndMerge();
+tree = buildTree();
+renderTree();
 
-  const allDays = [];
-  Object.keys(tree).forEach(y => Object.keys(tree[y]).forEach(m => Object.keys(tree[y][m]).forEach(d => allDays.push(d))));
-  allDays.sort().reverse();
+const allDays = [];
+Object.keys(tree).forEach(y => Object.keys(tree[y]).forEach(m => Object.keys(tree[y][m]).forEach(d => allDays.push(d))));
+allDays.sort().reverse();
 
-  if (allDays.length) {
-    const latest = allDays[0];
-    const [y,mo] = latest.split('-'); activeMonth = y + '-' + mo;
-    renderTree();
-    if (window.innerWidth >= 680) selectDay(latest);
-    else document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
-  }
+if (allDays.length) {
+const latest = allDays[0];
+const [y,mo] = latest.split(’-’); activeMonth = y + ‘-’ + mo;
+renderTree();
+if (window.innerWidth >= 680) selectDay(latest);
+else document.getElementById(‘day-content’).innerHTML = ‘<div class="empty">日付を選んでください</div>’;
+}
 }
 
 init();
 </script>
+
 </body>
 </html>
