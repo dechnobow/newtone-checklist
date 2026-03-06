@@ -36,7 +36,6 @@ def parse_products(soup, category):
                 continue
             rid = m.group(1)
 
-            # 親要素をさかのぼって情報を取得
             item = title_el.parent
             for _ in range(4):
                 if item is None:
@@ -69,7 +68,6 @@ def parse_products(soup, category):
             if not title:
                 continue
 
-            # フォーマット（li直下のテキストノードやspanから）
             fmt = ''
             if item:
                 for child in item.children:
@@ -93,7 +91,6 @@ def parse_products(soup, category):
         except Exception as e:
             print(f'Parse error: {e}')
 
-    # 重複除去（同じカテゴリ内のみ）
     seen = set()
     unique = []
     for r in records:
@@ -121,51 +118,26 @@ def scrape_all():
             })
     return all_groups
 
-def load_existing_data(html_path):
-    if not os.path.exists(html_path):
-        print('index.html not found')
+def load_existing_data():
+    data_path = 'data.json'
+    if not os.path.exists(data_path):
+        print('data.json not found, starting fresh')
         return []
-    with open(html_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    m = re.search(r'const rawData = (\[[\s\S]*?\]);\s*\n', content)
-    if not m:
-        print('rawData not found in index.html')
-        return []
-
-    raw = m.group(1)
-
-    # JSON形式で試す
     try:
-        data = json.loads(raw)
-        print(f'Loaded {len(data)} existing groups (JSON)')
-        return data
-    except:
-        pass
-
-    # JS形式をJSONに変換
-    try:
-        # キー名にダブルクォートを追加
-        json_str = re.sub(r'(?<=[{,])\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'"\1":', raw)
-        # シングルクォートをダブルクォートに
-        json_str = re.sub(r"'([^'\\]*(?:\\.[^'\\]*)*)'", lambda mo: json.dumps(mo.group(1)), json_str)
-        # 末尾カンマを除去
-        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
-        data = json.loads(json_str)
-        print(f'Loaded {len(data)} existing groups (JS converted)')
+        with open(data_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        print(f'Loaded {len(data)} existing groups from data.json')
         return data
     except Exception as e:
-        print(f'Failed to parse existing data: {e}')
+        print(f'Failed to load data.json: {e}')
         return []
 
 def merge_data(existing, new_groups):
-    # 既存データ全体のIDセットを作成
     existing_ids = set()
     for g in existing:
         for r in g.get('records', []):
             existing_ids.add(r.get('id'))
 
-    # 今日のデータから既存IDと重複するものを除去
     deduped_groups = []
     for g in new_groups:
         new_records = [r for r in g.get('records', []) if r.get('id') not in existing_ids]
@@ -173,7 +145,6 @@ def merge_data(existing, new_groups):
         if new_records:
             deduped_groups.append({**g, 'records': new_records})
 
-    # 今日のデータを除いた既存データに新データを追加
     merged = [g for g in existing if g.get('date') != today]
     merged.extend(deduped_groups)
     merged.sort(key=lambda g: (g.get('date', ''), g.get('category', '')), reverse=True)
@@ -182,36 +153,18 @@ def merge_data(existing, new_groups):
     print(f'Total groups after merge: {len(merged)}')
     return merged
 
-def update_html(data):
-    html_path = 'index.html'
-    if not os.path.exists(html_path):
-        print('index.html not found')
-        return
-
-    with open(html_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    data_json = json.dumps(data, ensure_ascii=False, indent=2)
-    new_content = re.sub(
-        r'const rawData = \[[\s\S]*?\];\s*\n',
-        f'const rawData = {data_json};\n',
-        content
-    )
-
-    if new_content == content:
-        print('WARNING: rawData pattern not matched')
-    else:
-        with open(html_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print('Updated index.html successfully')
+def save_data(data):
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print('Saved data.json successfully')
 
 if __name__ == '__main__':
     print(f'Date: {today}')
     new_groups = scrape_all()
     if new_groups:
-        existing = load_existing_data('index.html')
+        existing = load_existing_data()
         merged = merge_data(existing, new_groups)
-        update_html(merged)
+        save_data(merged)
         print('Done.')
     else:
         print('No data scraped — skipping update')
