@@ -1451,7 +1451,7 @@ function renderDay(date){
             ${r.preorder?`<span class="tag preorder">予約</span>`:''}
           </div>
         </div>
-        <a class="record-link-btn" href="${r.url}" target="_blank" onclick="event.stopPropagation()">↗</a>
+        <a class="record-link-btn" href="${r.url}" target="_self" onclick="event.stopPropagation()">↗</a>
       </div>`;
     });
   });
@@ -1466,20 +1466,38 @@ function toggle(id,date){
   const circle=row.querySelector('.check-circle');
   if(checked[id]){row.classList.add('checked');circle.textContent='✓';}
   else{row.classList.remove('checked');circle.textContent='';}
-  // update counts
+  updateCatCounts(date);
+  updateProgress(date);
+  updateDayBadge(date);
+
+  // 全アイテムにチェックが入ったか確認
   const [y,mo]=date.split('-'); const m=y+'-'+mo;
   const recs=tree[y][m][date]||[];
-  const chk=dayChecked(recs); const pct=recs.length?Math.round(chk/recs.length*100):0;
-  const pf=document.getElementById('pfill'); if(pf) pf.style.width=pct+'%';
-  const pl=document.getElementById('plabel'); if(pl) pl.textContent=chk+' / '+recs.length;
-  const groups={}; recs.forEach(r=>{if(!groups[r.category])groups[r.category]=[];groups[r.category].push(r);});
-  document.querySelectorAll('.cat-header').forEach(h=>{
-    const label=h.querySelector('span:first-child').textContent;
-    const cat=Object.keys(catLabels).find(k=>catLabels[k]===label);
-    if(cat&&groups[cat]) h.querySelector('.cat-count').textContent=dayChecked(groups[cat])+'/'+groups[cat].length;
-  });
-  const badge=document.querySelector('#dbtn-'+date+' .badge');
-  if(badge) badge.textContent=chk+'/'+recs.length;
+  const allChecked=recs.every(r=>checked[r.id]);
+  if(allChecked && recs.length > 0){
+    setTimeout(()=>{
+      if(confirm(`${date} のチェックが完了しました。リストから削除しますか？`)){
+        deleteDay(date);
+      }
+    }, 300);
+  }
+}
+
+function deleteDay(date){
+  const [y,mo]=date.split('-'); const m=y+'-'+mo;
+  const recs=tree[y][m][date]||[];
+  // チェック状態を削除
+  recs.forEach(r=>{ delete checked[r.id]; });
+  save();
+  // treeから削除
+  delete tree[y][m][date];
+  if(Object.keys(tree[y][m]).length===0) delete tree[y][m];
+  if(Object.keys(tree[y]).length===0) delete tree[y];
+  // リストに戻る
+  activeDay=null;
+  showList();
+  renderTree();
+  document.getElementById('day-content').innerHTML='<div class="empty">日付を選んでください</div>';
 }
 
 function checkAll(date){
