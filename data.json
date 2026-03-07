@@ -141,6 +141,32 @@
         "used": false,
         "preorder": false,
         "inStock": true
+      },
+      {
+        "id": "0116935",
+        "artist": "Otis",
+        "title": "Storm In The Matrix",
+        "label": "Art Of Dark",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116935.jpg",
+        "url": "https://newtone-records.com/product/0116935",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0111406",
+        "artist": "Paul Cut",
+        "title": "Memorize Your Face EP(Incl. Aline Umber Rework)",
+        "label": "Automatic Writing",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/11_11/n_t0111406.jpg",
+        "url": "https://newtone-records.com/product/0111406",
+        "used": false,
+        "preorder": false,
+        "inStock": false
       }
     ]
   }
