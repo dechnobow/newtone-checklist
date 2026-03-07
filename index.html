@@ -644,7 +644,10 @@ function renderPoolSection() {
         <div class="pool-item-title">${r.title||''}</div>
         <div class="pool-item-label">${r.artist||''}${r.label?' / '+r.label:''}</div>
       </div>
-      <button class="pool-remove-btn" onclick="removeFromPool('${r.id}')">×</button>
+      <div class="record-actions">
+        <a class="record-link-btn" href="${r.url}" target="_self" style="text-decoration:none">↗</a>
+        <button class="pool-remove-btn" onclick="removeFromPool('${r.id}')">×</button>
+      </div>
     </div>
   `).join('');
 }
