@@ -495,6 +495,19 @@
     letter-spacing: 0.05em;
   }
   .pool-clear-btn:active { color: #ff4b00; border-color: #ff4b00; }
+
+  .pool-close-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 15px;
+    padding: 4px 8px 4px 0;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    flex-shrink: 0;
+    min-width: 60px;
+    min-height: 44px;
+  }
 </style>
 </head>
 <body>
@@ -656,6 +669,7 @@ function clearPool() {
 function renderPoolPage() {
   const items = Object.values(pool);
   let html = `<div class="pool-page-header">
+    <button class="pool-close-btn" onclick="togglePoolPage()">‹ 戻る</button>
     <div class="pool-page-title">POOL — ${items.length} items</div>
     ${items.length > 0 ? '<button class="pool-clear-btn" onclick="clearPool()">すべて削除</button>' : ''}
   </div>`;
