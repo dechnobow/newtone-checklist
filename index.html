@@ -508,6 +508,128 @@
     min-width: 60px;
     min-height: 44px;
   }
+
+  /* ── 設定ページ ── */
+  #settings-page {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  #settings-page.visible { display: block; }
+
+  .settings-header {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .settings-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    flex: 1;
+  }
+  .settings-body {
+    padding: 24px 20px;
+  }
+  .settings-section-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  .settings-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .settings-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Courier Prime', monospace;
+    min-width: 60px;
+  }
+  .settings-input {
+    background: #1a1a1a;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Courier Prime', monospace;
+    flex: 1;
+    min-width: 130px;
+  }
+  .settings-input:focus { outline: none; border-color: var(--accent); }
+  .settings-btn {
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    padding: 9px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier Prime', monospace;
+    letter-spacing: 0.08em;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .settings-btn:active { background: #1a2a00; }
+  .settings-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .settings-token-row {
+    margin-bottom: 14px;
+  }
+  .settings-token-input {
+    background: #1a1a1a;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .settings-token-input:focus { outline: none; border-color: var(--accent); }
+  .settings-status {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+    font-family: 'Courier Prime', monospace;
+    min-height: 18px;
+  }
+  .settings-status.ok { color: var(--accent); }
+  .settings-status.err { color: #ff4b00; }
+  #gear-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  #gear-btn:hover { color: var(--fg); }
 </style>
 </head>
 <body>
@@ -518,6 +640,7 @@
     <div class="header-title">Newtone Records</div>
     <div id="header-sub">新譜チェック</div>
     <button id="pool-tab-btn" onclick="togglePoolPage()">♡ <span id="pool-tab-count">0</span></button>
+    <button id="gear-btn" onclick="toggleSettingsPage()" title="設定">⚙</button>
   </header>
 
   <div id="panels">
@@ -528,6 +651,40 @@
   <!-- プールページ（オーバーレイ） -->
   <div id="pool-page">
     <div id="pool-page-content"></div>
+  </div>
+
+  <!-- 設定ページ（オーバーレイ） -->
+  <div id="settings-page">
+    <div class="settings-header">
+      <button class="pool-close-btn" onclick="toggleSettingsPage()">‹ 戻る</button>
+      <div class="settings-title">Settings</div>
+    </div>
+    <div class="settings-body">
+
+      <div class="settings-section-title">GitHub Token</div>
+      <div class="settings-token-row">
+        <input class="settings-token-input" type="password" id="gh-token-input"
+          placeholder="ghp_xxxxxxxxxxxx"
+          oninput="saveToken(this.value)" />
+      </div>
+      <div style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace;margin-bottom:24px;">
+        Settings → Developer settings → Personal access tokens → Fine-grained<br>
+        権限: Actions (Read and write)
+      </div>
+
+      <div class="settings-section-title">過去データ取得</div>
+      <div class="settings-row">
+        <span class="settings-label">開始日</span>
+        <input class="settings-input" type="date" id="date-from-input" />
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">終了日</span>
+        <input class="settings-input" type="date" id="date-to-input" />
+      </div>
+      <button class="settings-btn" id="fetch-range-btn" onclick="triggerRangeScrape()">取得する</button>
+      <div class="settings-status" id="settings-status"></div>
+
+    </div>
   </div>
 
 </div>
@@ -705,6 +862,112 @@ function togglePoolPage() {
     btn.classList.add('active');
     page.scrollTop = 0;
   }
+}
+
+// ── 設定ページ ──
+const LS_TOKEN = 'nt_gh_token';
+const GH_OWNER = 'dechnobow';
+const GH_REPO  = 'newtone-checklist';
+const GH_WORKFLOW = 'update.yml';
+
+function saveToken(val) {
+  saveStorage(LS_TOKEN, val.trim());
+}
+
+function toggleSettingsPage() {
+  const page = document.getElementById('settings-page');
+  const isVisible = page.classList.contains('visible');
+  if (isVisible) {
+    page.classList.remove('visible');
+  } else {
+    // トークンをinputに反映
+    const token = loadStorage(LS_TOKEN, '');
+    document.getElementById('gh-token-input').value = token;
+    // 日付のデフォルト（今日）
+    const today = new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Tokyo'});
+    if (!document.getElementById('date-from-input').value) {
+      document.getElementById('date-from-input').value = today;
+    }
+    if (!document.getElementById('date-to-input').value) {
+      document.getElementById('date-to-input').value = today;
+    }
+    page.classList.add('visible');
+    page.scrollTop = 0;
+    setStatus('', '');
+  }
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('settings-status');
+  el.textContent = msg;
+  el.className = 'settings-status' + (type ? ' ' + type : '');
+}
+
+async function triggerRangeScrape() {
+  const token = loadStorage(LS_TOKEN, '');
+  const dateFrom = document.getElementById('date-from-input').value;
+  const dateTo   = document.getElementById('date-to-input').value;
+
+  if (!token) { setStatus('GitHub Tokenを入力してください', 'err'); return; }
+  if (!dateFrom || !dateTo) { setStatus('開始日と終了日を入力してください', 'err'); return; }
+  if (dateFrom > dateTo) { setStatus('開始日は終了日より前にしてください', 'err'); return; }
+
+  const btn = document.getElementById('fetch-range-btn');
+  btn.disabled = true;
+  setStatus('Actionsを起動中...', '');
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ref: 'main',
+          inputs: {
+            date_from: dateFrom,
+            date_to: dateTo,
+          }
+        })
+      }
+    );
+
+    if (res.status === 204) {
+      setStatus('✓ Actions起動しました。数分後に自動反映されます', 'ok');
+      pollForUpdate();
+    } else {
+      const err = await res.json().catch(() => ({}));
+      setStatus(`エラー: ${res.status} ${err.message || ''}`, 'err');
+      btn.disabled = false;
+    }
+  } catch(e) {
+    setStatus('通信エラー: ' + e.message, 'err');
+    btn.disabled = false;
+  }
+}
+
+let pollTimer = null;
+function pollForUpdate() {
+  let count = 0;
+  const maxTries = 24; // 最大2分
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(async () => {
+    count++;
+    setStatus(`⏳ 完了待機中... (${count * 5}秒経過)`, '');
+    await fetchAndMerge();
+    tree = buildTree();
+    renderTree();
+    if (count >= maxTries) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+      setStatus('タイムアウト。しばらく後にリロードしてください', 'err');
+      document.getElementById('fetch-range-btn').disabled = false;
+    }
+  }, 5000);
 }
 
 // ── Render tree ──

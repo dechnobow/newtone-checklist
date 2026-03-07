@@ -224,9 +224,27 @@ def save_data(data):
 
 if __name__ == '__main__':
     full_scrape = '--full' in sys.argv
+    date_from = None
+    date_to = None
+    if '--from' in sys.argv:
+        idx = sys.argv.index('--from')
+        date_from = sys.argv[idx + 1]
+    if '--to' in sys.argv:
+        idx = sys.argv.index('--to')
+        date_to = sys.argv[idx + 1]
+
     print(f'Date: {today}')
 
-    if full_scrape:
+    if date_from and date_to:
+        print(f'=== RANGE SCRAPE MODE: {date_from} ~ {date_to} ===')
+        records_by_date = scrape_all_pages()
+        # 期間外を除外
+        records_by_date = {
+            d: recs for d, recs in records_by_date.items()
+            if date_from <= d <= date_to
+        }
+        print(f'After filtering: {len(records_by_date)} dates in range')
+    elif full_scrape:
         print('=== FULL SCRAPE MODE (all pages) ===')
         records_by_date = scrape_all_pages()
     else:

@@ -10,6 +10,16 @@ on:
         required: false
         default: 'false'
         type: boolean
+      date_from:
+        description: 'Date from (YYYY-MM-DD) for range scrape'
+        required: false
+        default: ''
+        type: string
+      date_to:
+        description: 'Date to (YYYY-MM-DD) for range scrape'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   update:
@@ -31,7 +41,10 @@ jobs:
 
       - name: Run scraper
         run: |
-          if [ "${{ github.event.inputs.full_scrape }}" = "true" ]; then
+          if [ -n "${{ github.event.inputs.date_from }}" ] && [ -n "${{ github.event.inputs.date_to }}" ]; then
+            echo "Running range scrape: ${{ github.event.inputs.date_from }} ~ ${{ github.event.inputs.date_to }}"
+            python scraper.py --from ${{ github.event.inputs.date_from }} --to ${{ github.event.inputs.date_to }}
+          elif [ "${{ github.event.inputs.full_scrape }}" = "true" ]; then
             echo "Running full scrape..."
             python scraper.py --full
           else
