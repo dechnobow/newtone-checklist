@@ -536,7 +536,6 @@
 const LS_DATA    = 'nt_data';    // {date|category: {date, category, records[]}}
 const LS_CHECKED = 'nt_checked'; // {id: true}
 const LS_FETCHED = 'nt_fetched'; // last fetched timestamp
-const LS_DELETED = 'nt_deleted'; // {date: true} 削除済み日付（当日のみ保持）
 const LS_POOL    = 'nt_pool';    // {id: {record}} プールしたレコード
 
 function loadStorage(key, def) {
@@ -548,36 +547,33 @@ function saveStorage(key, val) {
 
 let localData   = loadStorage(LS_DATA, {});
 let checked     = loadStorage(LS_CHECKED, {});
-let deletedDays = loadStorage(LS_DELETED, {});
 let pool        = loadStorage(LS_POOL, {});
 let activeDay = null, activeMonth = null;
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
-  // 当日以外の削除済み日付をブラックリストから除去
-  const today = new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Tokyo'});
-  Object.keys(deletedDays).forEach(d => {
-    if (d !== today) delete deletedDays[d];
-  });
-  saveStorage(LS_DELETED, deletedDays);
-
+  // localStorageが唯一の情報源。新規IDのみ追加し、削除済みは復活しない。
   try {
     const res = await fetch('data.json?t=' + Date.now());
     if (!res.ok) throw new Error('fetch failed');
     const groups = await res.json();
+
+    // 現在のlocalStorage上の全IDセットを作成
+    const existingIds = new Set();
+    Object.values(localData).forEach(g => {
+      g.records.forEach(r => existingIds.add(r.id));
+    });
+
     groups.forEach(g => {
-      if (deletedDays[g.date]) return; // 削除済み日付はスキップ
       const key = g.date + '|' + g.category;
+      const newRecs = g.records.filter(r => !existingIds.has(r.id));
+      if (newRecs.length === 0) return;
       if (!localData[key]) {
-        localData[key] = g;
+        localData[key] = { ...g, records: newRecs };
       } else {
-        // 既存IDセット
-        const existingIds = new Set(localData[key].records.map(r => r.id));
-        const newRecs = g.records.filter(r => !existingIds.has(r.id));
-        if (newRecs.length > 0) {
-          localData[key].records.push(...newRecs);
-        }
+        localData[key].records.push(...newRecs);
       }
+      newRecs.forEach(r => existingIds.add(r.id));
     });
     saveStorage(LS_DATA, localData);
     saveStorage(LS_FETCHED, Date.now());
@@ -862,10 +858,6 @@ function toggle(id, date) {
 function deleteDay(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
   const recs = tree[y]?.[m]?.[date] || [];
-
-  // 削除済み日付として記録（当日のみ有効、翌日自動解除）
-  deletedDays[date] = true;
-  saveStorage(LS_DELETED, deletedDays);
 
   // localStorageからデータ削除
   Object.keys(localData).forEach(key => {
