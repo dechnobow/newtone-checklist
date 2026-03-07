@@ -40,5 +40,108 @@
         "preorder": false
       }
     ]
+  },
+  {
+    "date": "2026-02-13",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116934",
+        "artist": "Blu:sh",
+        "title": "Yapping After Dawn",
+        "label": "Kalahari Oyster Cult",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116934.jpg",
+        "url": "https://newtone-records.com/product/0116934",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116646",
+        "artist": "Moodymann",
+        "title": "Black Mahogani II",
+        "label": "Peacefrog Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_22/n_t0116646.jpg",
+        "url": "https://newtone-records.com/product/0116646",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0112876",
+        "artist": "RICARDO VILLALOBOS",
+        "title": "Heike",
+        "label": "RAWAX",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_05/n_t0112876.jpg",
+        "url": "https://newtone-records.com/product/0112876",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115373",
+        "artist": "Lori Vambe",
+        "title": "Drumland Dreamland",
+        "label": "STRUT",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/09_16/n_t0115373.jpg",
+        "url": "https://newtone-records.com/product/0115373",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116830",
+        "artist": "Running Out Of Time",
+        "title": "Cash Back",
+        "label": "Tax Free",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_03/n_t0116830.jpg",
+        "url": "https://newtone-records.com/product/0116830",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
+    "date": "2026-02-12",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116876",
+        "artist": "Various Artists",
+        "title": "9finity006",
+        "label": "9Finity",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_04/n_t0116876.jpg",
+        "url": "https://newtone-records.com/product/0116876",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116739",
+        "artist": "FLML",
+        "title": "Heavy Land",
+        "label": "Alley Version",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_12/n_t0116739.jpg",
+        "url": "https://newtone-records.com/product/0116739",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
   }
 ]
