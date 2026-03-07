@@ -4,119 +4,166 @@ from datetime import datetime, timezone, timedelta
 import json
 import re
 import os
+import sys
 
 JST = timezone(timedelta(hours=9))
 today = datetime.now(JST).strftime('%Y-%m-%d')
 
 BASE_URL = 'https://newtone-records.com'
-HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'}
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    'Content-Type': 'application/json',
+    'Referer': 'https://newtone-records.com/store/',
+}
 
-def fetch(url):
+GRID_LIST_URL = 'https://www.newtone-records.com/include/grid_list.php'
+
+
+def fetch_page_via_grid_list(page_index, total):
+    payload = {
+        "path": "/store/",
+        "page": "",
+        "total": total,
+        "pp": 20,
+        "dbl": 0,
+        "products": page_index,
+        "mode": "view-more",
+        "active": "sort-list",
+        "showmode": "",
+        "pagesrc": ""
+    }
     try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
+        r = requests.post(GRID_LIST_URL, headers=HEADERS, json=payload, timeout=20)
         r.raise_for_status()
-        return BeautifulSoup(r.text, 'html.parser')
+        data = r.json()
+        return data
     except Exception as e:
-        print(f'Error fetching {url}: {e}')
+        print(f'  Error fetching page {page_index}: {e}')
         return None
 
-def parse_products(soup, category):
-    records = []
-    if not soup:
-        return records
 
-    for title_el in soup.select('a[href*="/product/"]'):
+def parse_articles(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    records_by_date = {}
+
+    for article in soup.select('article.list-single'):
         try:
-            href = title_el.get('href', '')
-            if not href.startswith('http'):
-                href = BASE_URL + '/' + href.lstrip('/')
-
-            m = re.search(r'/product/(\d+)', href)
+            article_id = article.get('id', '')
+            m = re.search(r'n_t(\d+)hr', article_id)
             if not m:
                 continue
             rid = m.group(1)
 
-            item = title_el.parent
-            for _ in range(4):
-                if item is None:
-                    break
-                if item.name == 'li':
-                    break
-                item = item.parent
-            if item is None:
-                item = title_el.parent
+            date_el = article.select_one('li.updated')
+            date = date_el.get_text(strip=True) if date_el else today
 
-            img_el = item.select_one('img') if item else None
-            img = ''
-            if img_el:
-                img = img_el.get('src', '')
-                if img and not img.startswith('http'):
-                    img = BASE_URL + img
-
-            artist_el = item.select_one('h3') if item else None
+            artist_el = article.select_one('h1.item_title strong')
             artist = artist_el.get_text(strip=True) if artist_el else ''
 
-            label_els = item.select('a') if item else []
-            label = ''
-            for a in label_els:
-                ahref = a.get('href', '')
-                if '/label/' in ahref and a != title_el:
-                    label = a.get_text(strip=True)
-                    break
-
-            title = title_el.get_text(strip=True)
+            title_el = article.select_one('h1.item_title a[href*="/product/"]')
+            title = title_el.get_text(strip=True) if title_el else ''
             if not title:
                 continue
 
-            fmt = ''
-            if item:
-                for child in item.children:
-                    text = child.get_text(strip=True) if hasattr(child, 'get_text') else str(child).strip()
-                    if text and len(text) < 30 and text not in (title, artist, label):
-                        fmt = text
-                        break
+            label_el = article.select_one('a.btn-label')
+            label = label_el.get_text(strip=True) if label_el else ''
 
-            records.append({
-                'id':       rid,
-                'artist':   artist,
-                'title':    title,
-                'label':    label,
-                'format':   fmt,
-                'genre':    '',
-                'img':      img,
-                'url':      href,
-                'used':     category == 'used',
-                'preorder': category == 'preorder',
-            })
+            img_el = article.select_one('img')
+            img = img_el.get('src', '') if img_el else ''
+            if img and not img.startswith('http'):
+                img = BASE_URL + img
+
+            fmt_el = article.select_one('ul.tab-list li')
+            fmt = fmt_el.get('tab', '') if fmt_el else ''
+
+            url = f'{BASE_URL}/product/{rid}'
+
+            instock_el = article.select_one('.instock')
+            outstock_el = article.select_one('.outofstock')
+            in_stock = instock_el is not None and outstock_el is None
+
+            record = {
+                'id':      rid,
+                'artist':  artist,
+                'title':   title,
+                'label':   label,
+                'format':  fmt,
+                'genre':   '',
+                'img':     img,
+                'url':     url,
+                'used':    False,
+                'preorder': False,
+                'inStock': in_stock,
+            }
+
+            if date not in records_by_date:
+                records_by_date[date] = []
+            records_by_date[date].append(record)
+
         except Exception as e:
-            print(f'Parse error: {e}')
+            print(f'  Parse error: {e}')
 
-    seen = set()
-    unique = []
-    for r in records:
-        if r['id'] not in seen:
-            seen.add(r['id'])
-            unique.append(r)
-    print(f'  Found {len(unique)} items')
-    return unique
+    return records_by_date
 
-def scrape_all():
-    categories = {
-        'new': '/store/',
-    }
-    all_groups = []
-    for cat, path in categories.items():
-        url = BASE_URL + path
-        print(f'Scraping {cat}...')
-        soup = fetch(url)
-        records = parse_products(soup, cat)
-        if records:
-            all_groups.append({
-                'date': today,
-                'category': cat,
-                'records': records
-            })
-    return all_groups
+
+def scrape_all_pages():
+    print('Fetching page 1 to get total count...')
+    first = fetch_page_via_grid_list(1, 500)
+    if not first:
+        print('Failed to fetch first page')
+        return {}
+
+    total = first.get('total', 0)
+    pp = 20
+    total_pages = (total + pp - 1) // pp
+    print(f'Total items: {total}, pages: {total_pages}')
+
+    all_records_by_date = {}
+
+    content = first.get('content', '')
+    if content:
+        page_records = parse_articles(content)
+        for date, recs in page_records.items():
+            if date not in all_records_by_date:
+                all_records_by_date[date] = []
+            all_records_by_date[date].extend(recs)
+        count = sum(len(v) for v in page_records.values())
+        print(f'  Page 1: {count} items')
+
+    for page_idx in range(2, total_pages + 1):
+        print(f'  Fetching page {page_idx}/{total_pages}...')
+        data = fetch_page_via_grid_list(page_idx, total)
+        if not data:
+            continue
+        content = data.get('content', '')
+        if not content:
+            continue
+        page_records = parse_articles(content)
+        for date, recs in page_records.items():
+            if date not in all_records_by_date:
+                all_records_by_date[date] = []
+            all_records_by_date[date].extend(recs)
+        count = sum(len(v) for v in page_records.values())
+        print(f'  Page {page_idx}: {count} items')
+
+    return all_records_by_date
+
+
+def scrape_today_only():
+    print('Fetching today only (page 1)...')
+    first = fetch_page_via_grid_list(1, 500)
+    if not first:
+        print('Failed to fetch page 1')
+        return {}
+
+    content = first.get('content', '')
+    if not content:
+        return {}
+
+    records_by_date = parse_articles(content)
+    print(f'  Page 1: {sum(len(v) for v in records_by_date.values())} items')
+    return records_by_date
+
 
 def load_existing_data():
     data_path = 'data.json'
@@ -132,39 +179,66 @@ def load_existing_data():
         print(f'Failed to load data.json: {e}')
         return []
 
-def merge_data(existing, new_groups):
+
+def merge_with_existing(existing, new_records_by_date):
     existing_ids = set()
     for g in existing:
         for r in g.get('records', []):
             existing_ids.add(r.get('id'))
 
-    deduped_groups = []
-    for g in new_groups:
-        new_records = [r for r in g.get('records', []) if r.get('id') not in existing_ids]
-        print(f"  {g['category']}: {len(g['records'])} items -> {len(new_records)} new items after dedup")
-        if new_records:
-            deduped_groups.append({**g, 'records': new_records})
+    existing_by_date = {}
+    for g in existing:
+        d = g.get('date', '')
+        existing_by_date[d] = g
 
-    merged = [g for g in existing if g.get('date') != today]
-    merged.extend(deduped_groups)
-    merged.sort(key=lambda g: (g.get('date', ''), g.get('category', '')), reverse=True)
+    for date, new_recs in new_records_by_date.items():
+        truly_new = [r for r in new_recs if r.get('id') not in existing_ids]
+        if not truly_new:
+            print(f'  {date}: 0 new items (all already exist)')
+            continue
+        print(f'  {date}: {len(truly_new)} new items')
+        if date in existing_by_date:
+            existing_by_date[date]['records'].extend(truly_new)
+        else:
+            existing_by_date[date] = {
+                'date': date,
+                'category': 'new',
+                'records': truly_new,
+            }
+        for r in truly_new:
+            existing_ids.add(r.get('id'))
+
+    merged = list(existing_by_date.values())
+    merged.sort(key=lambda g: g.get('date', ''), reverse=True)
     cutoff = (datetime.now(JST) - timedelta(days=90)).strftime('%Y-%m-%d')
     merged = [g for g in merged if g.get('date', '') >= cutoff]
     print(f'Total groups after merge: {len(merged)}')
     return merged
+
 
 def save_data(data):
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     print('Saved data.json successfully')
 
+
 if __name__ == '__main__':
+    full_scrape = '--full' in sys.argv
     print(f'Date: {today}')
-    new_groups = scrape_all()
-    if new_groups:
+
+    if full_scrape:
+        print('=== FULL SCRAPE MODE (all pages) ===')
+        records_by_date = scrape_all_pages()
+    else:
+        print('=== DAILY MODE (today only) ===')
+        records_by_date = scrape_today_only()
+
+    if not records_by_date:
+        print('No data scraped — skipping update')
+    else:
+        total = sum(len(v) for v in records_by_date.values())
+        print(f'Scraped {total} items across {len(records_by_date)} dates')
         existing = load_existing_data()
-        merged = merge_data(existing, new_groups)
+        merged = merge_with_existing(existing, records_by_date)
         save_data(merged)
         print('Done.')
-    else:
-        print('No data scraped — skipping update')
