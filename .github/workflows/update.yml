@@ -4,6 +4,22 @@ on:
   schedule:
     - cron: '0 22 * * *'
   workflow_dispatch:
+    inputs:
+      full_scrape:
+        description: 'Full scrape (all pages / past history)'
+        required: false
+        default: 'false'
+        type: boolean
+      date_from:
+        description: 'Date from (YYYY-MM-DD) for range scrape'
+        required: false
+        default: ''
+        type: string
+      date_to:
+        description: 'Date to (YYYY-MM-DD) for range scrape'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   update:
@@ -24,7 +40,17 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Run scraper
-        run: python scraper.py
+        run: |
+          if [ -n "${{ github.event.inputs.date_from }}" ] && [ -n "${{ github.event.inputs.date_to }}" ]; then
+            echo "Running range scrape: ${{ github.event.inputs.date_from }} ~ ${{ github.event.inputs.date_to }}"
+            python scraper.py --from ${{ github.event.inputs.date_from }} --to ${{ github.event.inputs.date_to }}
+          elif [ "${{ github.event.inputs.full_scrape }}" = "true" ]; then
+            echo "Running full scrape..."
+            python scraper.py --full
+          else
+            echo "Running daily scrape..."
+            python scraper.py
+          fi
 
       - name: Commit and push
         run: |
