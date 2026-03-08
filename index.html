@@ -1039,14 +1039,6 @@ async function triggerRangeScrape() {
   }
 }
 
-let pollTimer = null;
-
-function countRangeRecords() {
-  return Object.values(localData)
-    .filter(g => g.category === 'range')
-    .reduce((sum, g) => sum + ((g.records || []).length), 0);
-}
-
 // ── Render tree ──
 function renderTree() {
   let html = '';
