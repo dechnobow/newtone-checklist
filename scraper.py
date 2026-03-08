@@ -16,36 +16,38 @@ GRID_LIST_URL = 'https://newtone-records.com/include/grid_list.php'
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
-    'Accept': '*/*',
     'Accept-Language': 'ja,en-US;q=0.9',
     'Referer': STORE_URL,
     'Origin': BASE_URL,
 }
 
 
-def create_session():
-    """セッションを作成し、/store/にアクセスしてPHPSESSIDを取得する"""
+def make_session():
+    """セッションを作成し /store/ をGETしてCookieとHTMLを取得"""
     session = requests.Session()
     session.headers.update(HEADERS)
     try:
-        print('Initializing session...')
         r = session.get(STORE_URL, timeout=20)
         r.raise_for_status()
-        print(f'  Session initialized. Cookies: {dict(session.cookies)}')
+        print(f'  Session established. Cookies: {list(session.cookies.keys())}')
         return session, r.text
     except Exception as e:
-        print(f'  Error initializing session: {e}')
-        return None, None
+        print(f'  Failed to establish session: {e}')
+        return None, ''
 
 
-def fetch_page_via_grid_list(session, page_index, total):
+def fetch_batch(session, offset, total_so_far):
+    """
+    offset: 次のバッチの開始番号（初回=1）
+    total_so_far: 現在表示済みのアイテム数（初回=0）
+    """
     payload = {
         "path": "/store/",
         "page": "",
-        "total": total,
+        "total": total_so_far,
         "pp": 20,
         "dbl": 0,
-        "products": page_index,
+        "products": offset,
         "mode": "view-more",
         "active": "sort-list",
         "showmode": "",
@@ -54,10 +56,9 @@ def fetch_page_via_grid_list(session, page_index, total):
     try:
         r = session.post(GRID_LIST_URL, json=payload, timeout=20)
         r.raise_for_status()
-        data = r.json()
-        return data
+        return r.json()
     except Exception as e:
-        print(f'  Error fetching page {page_index}: {e}')
+        print(f'  Error fetching offset {offset}: {e}')
         return None
 
 
@@ -128,56 +129,74 @@ def parse_articles(html_content):
 
 
 def scrape_all_pages():
-    session, first_html = create_session()
+    session, first_html = make_session()
     if not session:
         return {}
 
-    # page 1はセッション初期化時のHTMLから取得
     all_records_by_date = {}
+
+    # page 1はセッション確立時のHTMLから取得
     page1_records = parse_articles(first_html)
     for date, recs in page1_records.items():
         if date not in all_records_by_date:
             all_records_by_date[date] = []
         all_records_by_date[date].extend(recs)
-    count1 = sum(len(v) for v in page1_records.values())
-    print(f'  Page 1: {count1} items, dates: {sorted(page1_records.keys())}')
+    fetched_so_far = sum(len(v) for v in page1_records.values())
+    print(f'  Batch 1 (from HTML): {fetched_so_far} items, dates: {sorted(page1_records.keys())}')
 
-    # totalを取得するためにgrid_list.phpを1回叩く
-    first_api = fetch_page_via_grid_list(session, 1, 500)
+    # totalを取得するために最初のAPIリクエスト
+    first_api = fetch_batch(session, 1, 0)
     if not first_api:
         return all_records_by_date
 
-    total = first_api.get('total', 0)
-    pp = 20
-    total_pages = (total + pp - 1) // pp
-    print(f'Total items: {total}, pages: {total_pages}')
+    grand_total = first_api.get('total', 0)
+    print(f'Grand total: {grand_total}')
 
-    for page_idx in range(2, total_pages + 1):
-        print(f'  Fetching page {page_idx}/{total_pages}...')
+    # API 1回目のコンテンツも追加
+    api1_content = first_api.get('content', '')
+    if api1_content:
+        api1_records = parse_articles(api1_content)
+        for date, recs in api1_records.items():
+            if date not in all_records_by_date:
+                all_records_by_date[date] = []
+            all_records_by_date[date].extend(recs)
+        api1_count = sum(len(v) for v in api1_records.values())
+        print(f'  Batch 1 (API): {api1_count} items, dates: {sorted(api1_records.keys())}')
+        # 重複を避けるため fetched_so_far は増やさない（page1と被る可能性）
+
+    batch = 2
+    while fetched_so_far < grand_total:
         time.sleep(0.5)
-        data = fetch_page_via_grid_list(session, page_idx, total)
+        offset = fetched_so_far + 1
+        print(f'  Fetching batch {batch} (offset={offset}, total_so_far={fetched_so_far})...')
+        data = fetch_batch(session, offset, fetched_so_far)
         if not data:
-            continue
-        content = data.get('content', '')
-        if not content:
-            continue
-        page_records = parse_articles(content)
+            break
+        html_content = data.get('content', '')
+        if not html_content:
+            print('  Empty content, stopping.')
+            break
+        page_records = parse_articles(html_content)
+        if not page_records:
+            print('  No records parsed, stopping.')
+            break
+        new_count = sum(len(v) for v in page_records.values())
         for date, recs in page_records.items():
             if date not in all_records_by_date:
                 all_records_by_date[date] = []
             all_records_by_date[date].extend(recs)
-        count = sum(len(v) for v in page_records.values())
-        print(f'  Page {page_idx}: {count} items, dates: {sorted(page_records.keys())}')
+        fetched_so_far += new_count
+        print(f'  Batch {batch}: {new_count} items, dates: {sorted(page_records.keys())}, total: {fetched_so_far}')
+        batch += 1
 
     return all_records_by_date
 
 
 def scrape_today_only():
-    print('Fetching today only (page 1)...')
-    session, first_html = create_session()
+    session, first_html = make_session()
     if not session:
         return {}
-
+    print('Parsing today only (page 1 HTML)...')
     records_by_date = parse_articles(first_html)
     print(f'  Page 1: {sum(len(v) for v in records_by_date.values())} items')
     return records_by_date
@@ -256,6 +275,8 @@ if __name__ == '__main__':
     if date_from and date_to:
         print(f'=== RANGE SCRAPE MODE: {date_from} ~ {date_to} ===')
         records_by_date = scrape_all_pages()
+        all_dates = sorted(records_by_date.keys())
+        print(f'All dates found: {all_dates}')
         records_by_date = {
             d: recs for d, recs in records_by_date.items()
             if date_from <= d <= date_to
