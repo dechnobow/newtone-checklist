@@ -56,6 +56,10 @@ def parse_articles(html_content):
 
             date_el = article.select_one('li.updated')
             date = date_el.get_text(strip=True) if date_el else today
+            if not date_el:
+                print(f'  [DEBUG] No li.updated found for id={article_id}')
+            elif not date:
+                print(f'  [DEBUG] li.updated is empty for id={article_id}')
 
             artist_el = article.select_one('h1.item_title strong')
             artist = artist_el.get_text(strip=True) if artist_el else ''
@@ -239,6 +243,8 @@ if __name__ == '__main__':
         print(f'=== RANGE SCRAPE MODE: {date_from} ~ {date_to} ===')
         records_by_date = scrape_all_pages()
         # 期間外を除外
+        all_dates = sorted(records_by_date.keys())
+        print(f'  [DEBUG] All dates found: {all_dates[:10]} (showing first 10)')
         records_by_date = {
             d: recs for d, recs in records_by_date.items()
             if date_from <= d <= date_to
