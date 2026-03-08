@@ -780,6 +780,52 @@ async function fetchAndMerge() {
   }
 }
 
+function mergeRangeGroups(groups) {
+  if (!Array.isArray(groups) || groups.length === 0) return 0;
+
+  const targetDates = new Set(
+    groups
+      .map(g => g.date)
+      .filter(date => date && !removedDays[date])
+  );
+
+  Object.keys(localData).forEach(key => {
+    const date = key.split('|')[0];
+    if (targetDates.has(date)) {
+      delete localData[key];
+    }
+  });
+
+  let added = 0;
+
+  groups.forEach(g => {
+    const date = g.date;
+    if (!date || removedDays[date]) return;
+
+    const incomingRecords = (Array.isArray(g.records) ? g.records : []).filter(r => {
+      if (!r || !r.id) return false;
+      if (removedIds[r.id]) return false;
+      return true;
+    });
+
+    if (incomingRecords.length === 0) return;
+
+    const key = `${date}|range`;
+    localData[key] = {
+      date,
+      category: 'range',
+      records: incomingRecords
+    };
+
+    added += incomingRecords.length;
+  });
+
+  saveStorage(LS_DATA, localData);
+  saveStorage(LS_FETCHED, Date.now());
+
+  return added;
+}
+
 // ── Build tree from localData ──
 function buildTree() {
   const t = {};
@@ -914,8 +960,6 @@ function toggleSettingsPage() {
   if (isVisible) {
     page.classList.remove('visible');
   } else {
-    const token = loadStorage(LS_TOKEN, '');
-    document.getElementById('gh-token-input').value = token;
     const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
     if (!document.getElementById('date-from-input').value) {
       document.getElementById('date-from-input').value = today;
@@ -936,48 +980,61 @@ function setStatus(msg, type) {
 }
 
 async function triggerRangeScrape() {
-  const token = loadStorage(LS_TOKEN, '');
   const dateFrom = document.getElementById('date-from-input').value;
   const dateTo   = document.getElementById('date-to-input').value;
 
-  if (!token) { setStatus('GitHub Tokenを入力してください', 'err'); return; }
-  if (!dateFrom || !dateTo) { setStatus('開始日と終了日を入力してください', 'err'); return; }
-  if (dateFrom > dateTo) { setStatus('開始日は終了日より前にしてください', 'err'); return; }
+  if (!dateFrom || !dateTo) {
+    setStatus('開始日と終了日を入力してください', 'err');
+    return;
+  }
+  if (dateFrom > dateTo) {
+    setStatus('開始日は終了日より前にしてください', 'err');
+    return;
+  }
 
   const btn = document.getElementById('fetch-range-btn');
   btn.disabled = true;
-  setStatus('Actionsを起動中...', '');
+  setStatus('過去データを取得中...', '');
 
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/vnd.github+json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ref: 'main',
-          inputs: {
-            date_from: dateFrom,
-            date_to: dateTo
+    const url = `${RANGE_API_BASE}/api/range?from=${encodeURIComponent(dateFrom)}&to=${encodeURIComponent(dateTo)}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    if (!res.ok || !json.ok) {
+      throw new Error(json.error || `取得失敗 (${res.status})`);
+    }
+
+    const added = mergeRangeGroups(json.data || []);
+    tree = buildTree();
+    renderTree();
+
+    const rangeDays = [];
+    Object.keys(tree).forEach(y =>
+      Object.keys(tree[y]).forEach(m =>
+        Object.keys(tree[y][m]).forEach(d => {
+          const recs = tree[y][m][d] || [];
+          if (recs.some(r => r.category === 'range')) {
+            rangeDays.push(d);
           }
         })
-      }
+      )
     );
 
-    if (res.status === 204) {
-      setStatus('✓ Actions起動しました。更新を待っています...', 'ok');
-      pollForUpdate();
-    } else {
-      const err = await res.json().catch(() => ({}));
-      setStatus(`エラー: ${res.status} ${err.message || ''}`, 'err');
-      btn.disabled = false;
+    rangeDays.sort().reverse();
+
+    if (rangeDays.length) {
+      const latest = rangeDays[0];
+      const [y, mo] = latest.split('-');
+      activeMonth = `${y}-${mo}`;
+      renderTree();
+      selectDay(latest);
     }
-  } catch(e) {
-    setStatus('通信エラー: ' + e.message, 'err');
+
+    setStatus(`✓ ${added}件を反映しました`, 'ok');
+  } catch (e) {
+    setStatus('エラー: ' + (e.message || String(e)), 'err');
+  } finally {
     btn.disabled = false;
   }
 }
@@ -988,62 +1045,6 @@ function countRangeRecords() {
   return Object.values(localData)
     .filter(g => g.category === 'range')
     .reduce((sum, g) => sum + ((g.records || []).length), 0);
-}
-
-function pollForUpdate() {
-  let count = 0;
-  const maxTries = 24;
-  const beforeCount = countRangeRecords();
-
-  if (pollTimer) clearInterval(pollTimer);
-
-  pollTimer = setInterval(async () => {
-    count++;
-    setStatus(`⏳ 完了待機中... (${count * 5}秒経過)`, '');
-
-    await fetchAndMerge();
-    tree = buildTree();
-    renderTree();
-
-    const afterCount = countRangeRecords();
-
-    if (afterCount > 0 && afterCount !== beforeCount) {
-      clearInterval(pollTimer);
-      pollTimer = null;
-      setStatus(`✓ 更新完了: ${afterCount}件を反映しました`, 'ok');
-      document.getElementById('fetch-range-btn').disabled = false;
-
-      const rangeDays = [];
-      Object.keys(tree).forEach(y =>
-        Object.keys(tree[y]).forEach(m =>
-          Object.keys(tree[y][m]).forEach(d => {
-            const recs = tree[y][m][d] || [];
-            if (recs.some(r => r.category === 'range')) {
-              rangeDays.push(d);
-            }
-          })
-        )
-      );
-
-      rangeDays.sort().reverse();
-      if (rangeDays.length) {
-        const latest = rangeDays[0];
-        const [y, mo] = latest.split('-');
-        activeMonth = `${y}-${mo}`;
-        renderTree();
-        selectDay(latest);
-      }
-
-      return;
-    }
-
-    if (count >= maxTries) {
-      clearInterval(pollTimer);
-      pollTimer = null;
-      setStatus('タイムアウト。しばらく後にリロードしてください', 'err');
-      document.getElementById('fetch-range-btn').disabled = false;
-    }
-  }, 5000);
 }
 
 // ── Render tree ──
