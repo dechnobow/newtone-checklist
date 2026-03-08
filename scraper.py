@@ -5,21 +5,40 @@ import json
 import re
 import os
 import sys
+import time
 
 JST = timezone(timedelta(hours=9))
 today = datetime.now(JST).strftime('%Y-%m-%d')
 
 BASE_URL = 'https://newtone-records.com'
+STORE_URL = 'https://newtone-records.com/store/'
+GRID_LIST_URL = 'https://newtone-records.com/include/grid_list.php'
+
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-    'Content-Type': 'application/json',
-    'Referer': 'https://newtone-records.com/store/',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+    'Accept': '*/*',
+    'Accept-Language': 'ja,en-US;q=0.9',
+    'Referer': STORE_URL,
+    'Origin': BASE_URL,
 }
 
-GRID_LIST_URL = 'https://www.newtone-records.com/include/grid_list.php'
+
+def create_session():
+    """セッションを作成し、/store/にアクセスしてPHPSESSIDを取得する"""
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    try:
+        print('Initializing session...')
+        r = session.get(STORE_URL, timeout=20)
+        r.raise_for_status()
+        print(f'  Session initialized. Cookies: {dict(session.cookies)}')
+        return session, r.text
+    except Exception as e:
+        print(f'  Error initializing session: {e}')
+        return None, None
 
 
-def fetch_page_via_grid_list(page_index, total):
+def fetch_page_via_grid_list(session, page_index, total):
     payload = {
         "path": "/store/",
         "page": "",
@@ -33,7 +52,7 @@ def fetch_page_via_grid_list(page_index, total):
         "pagesrc": ""
     }
     try:
-        r = requests.post(GRID_LIST_URL, headers=HEADERS, json=payload, timeout=20)
+        r = session.post(GRID_LIST_URL, json=payload, timeout=20)
         r.raise_for_status()
         data = r.json()
         return data
@@ -56,11 +75,6 @@ def parse_articles(html_content):
 
             date_el = article.select_one('li.updated')
             date = date_el.get_text(strip=True) if date_el else ''
-            if not hasattr(parse_articles, '_dumped'):
-                parse_articles._dumped = True
-                print(f'  [DEBUG] date_el outerHTML: {date_el}')
-                print(f'  [DEBUG] date value: "{date}"')
-                print(f'  [DEBUG] article snippet: {str(article)[:800]}')
             if not date:
                 date = today
 
@@ -114,32 +128,34 @@ def parse_articles(html_content):
 
 
 def scrape_all_pages():
-    print('Fetching page 1 to get total count...')
-    first = fetch_page_via_grid_list(1, 500)
-    if not first:
-        print('Failed to fetch first page')
+    session, first_html = create_session()
+    if not session:
         return {}
 
-    total = first.get('total', 0)
+    # page 1はセッション初期化時のHTMLから取得
+    all_records_by_date = {}
+    page1_records = parse_articles(first_html)
+    for date, recs in page1_records.items():
+        if date not in all_records_by_date:
+            all_records_by_date[date] = []
+        all_records_by_date[date].extend(recs)
+    count1 = sum(len(v) for v in page1_records.values())
+    print(f'  Page 1: {count1} items, dates: {sorted(page1_records.keys())}')
+
+    # totalを取得するためにgrid_list.phpを1回叩く
+    first_api = fetch_page_via_grid_list(session, 1, 500)
+    if not first_api:
+        return all_records_by_date
+
+    total = first_api.get('total', 0)
     pp = 20
     total_pages = (total + pp - 1) // pp
     print(f'Total items: {total}, pages: {total_pages}')
 
-    all_records_by_date = {}
-
-    content = first.get('content', '')
-    if content:
-        page_records = parse_articles(content)
-        for date, recs in page_records.items():
-            if date not in all_records_by_date:
-                all_records_by_date[date] = []
-            all_records_by_date[date].extend(recs)
-        count = sum(len(v) for v in page_records.values())
-        print(f'  Page 1: {count} items')
-
     for page_idx in range(2, total_pages + 1):
         print(f'  Fetching page {page_idx}/{total_pages}...')
-        data = fetch_page_via_grid_list(page_idx, total)
+        time.sleep(0.5)
+        data = fetch_page_via_grid_list(session, page_idx, total)
         if not data:
             continue
         content = data.get('content', '')
@@ -151,23 +167,18 @@ def scrape_all_pages():
                 all_records_by_date[date] = []
             all_records_by_date[date].extend(recs)
         count = sum(len(v) for v in page_records.values())
-        print(f'  Page {page_idx}: {count} items')
+        print(f'  Page {page_idx}: {count} items, dates: {sorted(page_records.keys())}')
 
     return all_records_by_date
 
 
 def scrape_today_only():
     print('Fetching today only (page 1)...')
-    first = fetch_page_via_grid_list(1, 500)
-    if not first:
-        print('Failed to fetch page 1')
+    session, first_html = create_session()
+    if not session:
         return {}
 
-    content = first.get('content', '')
-    if not content:
-        return {}
-
-    records_by_date = parse_articles(content)
+    records_by_date = parse_articles(first_html)
     print(f'  Page 1: {sum(len(v) for v in records_by_date.values())} items')
     return records_by_date
 
@@ -245,9 +256,6 @@ if __name__ == '__main__':
     if date_from and date_to:
         print(f'=== RANGE SCRAPE MODE: {date_from} ~ {date_to} ===')
         records_by_date = scrape_all_pages()
-        # 期間外を除外
-        all_dates = sorted(records_by_date.keys())
-        print(f'  [DEBUG] All dates found: {all_dates[:10]} (showing first 10)')
         records_by_date = {
             d: recs for d, recs in records_by_date.items()
             if date_from <= d <= date_to
