@@ -6,45 +6,52 @@ on:
   workflow_dispatch:
     inputs:
       full_scrape:
-        description: 'Full scrape (all pages / past history)'
+        description: 'Full scrape'
         required: false
-        default: 'false'
+        default: false
         type: boolean
       date_from:
-        description: 'Date from (YYYY-MM-DD) for range scrape'
+        description: 'Date from (YYYY-MM-DD)'
         required: false
         default: ''
         type: string
       date_to:
-        description: 'Date to (YYYY-MM-DD) for range scrape'
+        description: 'Date to (YYYY-MM-DD)'
         required: false
         default: ''
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install beautifulsoup4 playwright
+
+      - name: Install Playwright browser
+        run: |
+          python -m playwright install --with-deps chromium
 
       - name: Run scraper
         run: |
-          if [ -n "${{ github.event.inputs.date_from }}" ] && [ -n "${{ github.event.inputs.date_to }}" ]; then
-            echo "Running range scrape: ${{ github.event.inputs.date_from }} ~ ${{ github.event.inputs.date_to }}"
-            python scraper.py --from ${{ github.event.inputs.date_from }} --to ${{ github.event.inputs.date_to }}
-          elif [ "${{ github.event.inputs.full_scrape }}" = "true" ]; then
+          if [ -n "${{ inputs.date_from }}" ] && [ -n "${{ inputs.date_to }}" ]; then
+            echo "Running range scrape: ${{ inputs.date_from }} ~ ${{ inputs.date_to }}"
+            python scraper.py --from "${{ inputs.date_from }}" --to "${{ inputs.date_to }}"
+          elif [ "${{ inputs.full_scrape }}" = "true" ]; then
             echo "Running full scrape..."
             python scraper.py --full
           else
@@ -52,10 +59,13 @@ jobs:
             python scraper.py
           fi
 
-      - name: Commit and push
+      - name: Commit data
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data.json
-          git diff --staged --quiet || git commit -m "Update: $(date +'%Y-%m-%d')"
-          git push origin main
+          git diff --staged --quiet || git commit -m "update data"
+
+      - name: Push
+        run: |
+          git push
