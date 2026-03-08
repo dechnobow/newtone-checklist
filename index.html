@@ -420,8 +420,6 @@
   .heart-btn:active { color: #ff4b00; border-color: #ff4b00; }
   .heart-btn.pooled { color: #ff4b00; border-color: #ff4b00; }
 
-
-
   .empty {
     padding: 60px 20px;
     text-align: center;
@@ -509,7 +507,6 @@
     min-height: 44px;
   }
 
-  /* ── 設定ページ ── */
   #settings-page {
     display: none;
     position: absolute;
@@ -571,7 +568,7 @@
   .settings-input {
     background: #1a1a1a;
     border: 1px solid var(--border);
-    color: var(--fg);
+    color: var(--text);
     font-size: 13px;
     padding: 8px 12px;
     border-radius: 4px;
@@ -601,7 +598,7 @@
   .settings-token-input {
     background: #1a1a1a;
     border: 1px solid var(--border);
-    color: var(--fg);
+    color: var(--text);
     font-size: 12px;
     padding: 8px 12px;
     border-radius: 4px;
@@ -616,6 +613,7 @@
     margin-top: 12px;
     font-family: 'Courier Prime', monospace;
     min-height: 18px;
+    white-space: pre-wrap;
   }
   .settings-status.ok { color: var(--accent); }
   .settings-status.err { color: #ff4b00; }
@@ -629,7 +627,7 @@
     min-height: 44px;
     min-width: 44px;
   }
-  #gear-btn:hover { color: var(--fg); }
+  #gear-btn:hover { color: var(--text); }
 </style>
 </head>
 <body>
@@ -648,12 +646,10 @@
     <div id="day-panel"><div id="day-content"><div class="empty">読み込み中...</div></div></div>
   </div>
 
-  <!-- プールページ（オーバーレイ） -->
   <div id="pool-page">
     <div id="pool-page-content"></div>
   </div>
 
-  <!-- 設定ページ（オーバーレイ） -->
   <div id="settings-page">
     <div class="settings-header">
       <button class="pool-close-btn" onclick="toggleSettingsPage()">‹ 戻る</button>
@@ -690,10 +686,13 @@
 </div>
 <script>
 // ── Storage helpers ──
-const LS_DATA    = 'nt_data';    // {date|category: {date, category, records[]}}
-const LS_CHECKED = 'nt_checked'; // {id: true}
-const LS_FETCHED = 'nt_fetched'; // last fetched timestamp
-const LS_POOL    = 'nt_pool';    // {id: {record}} プールしたレコード
+const LS_DATA         = 'nt_data';
+const LS_CHECKED      = 'nt_checked';
+const LS_FETCHED      = 'nt_fetched';
+const LS_POOL         = 'nt_pool';
+const LS_REMOVED_IDS  = 'nt_removed_ids';
+const LS_REMOVED_DAYS = 'nt_removed_days';
+const LS_TOKEN        = 'nt_gh_token';
 
 function loadStorage(key, def) {
   try { return JSON.parse(localStorage.getItem(key) || 'null') ?? def; } catch(e) { return def; }
@@ -702,36 +701,92 @@ function saveStorage(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
 }
 
-let localData   = loadStorage(LS_DATA, {});
-let checked     = loadStorage(LS_CHECKED, {});
-let pool        = loadStorage(LS_POOL, {});
+let localData    = loadStorage(LS_DATA, {});
+let checked      = loadStorage(LS_CHECKED, {});
+let pool         = loadStorage(LS_POOL, {});
+let removedIds   = loadStorage(LS_REMOVED_IDS, {});
+let removedDays  = loadStorage(LS_REMOVED_DAYS, {});
 let activeDay = null, activeMonth = null;
+
+// ── GitHub settings ──
+const GH_OWNER = 'dechnobow';
+const GH_REPO  = 'newtone-checklist';
+const GH_WORKFLOW = 'update.yml';
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
-  // localStorageが唯一の情報源。新規IDのみ追加し、削除済みは復活しない。
   try {
-    const res = await fetch('data.json?t=' + Date.now());
+    const res = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('fetch failed');
     const groups = await res.json();
 
-    // 現在のlocalStorage上の全IDセットを作成
+    if (!Array.isArray(groups) || groups.length === 0) return;
+
+    const hasRange = groups.some(g => g.category === 'range');
+
+    if (hasRange) {
+      const targetDates = new Set(
+        groups
+          .map(g => g.date)
+          .filter(date => !removedDays[date])
+      );
+
+      Object.keys(localData).forEach(key => {
+        const date = key.split('|')[0];
+        if (targetDates.has(date)) {
+          delete localData[key];
+        }
+      });
+    }
+
     const existingIds = new Set();
     Object.values(localData).forEach(g => {
-      g.records.forEach(r => existingIds.add(r.id));
+      (g.records || []).forEach(r => {
+        if (r && r.id) existingIds.add(r.id);
+      });
     });
 
     groups.forEach(g => {
-      const key = g.date + '|' + g.category;
-      const newRecs = g.records.filter(r => !existingIds.has(r.id));
+      const date = g.date;
+      const category = g.category || 'new';
+
+      if (!date) return;
+      if (removedDays[date]) return;
+
+      const key = `${date}|${category}`;
+      const incomingRecords = (Array.isArray(g.records) ? g.records : []).filter(r => {
+        if (!r || !r.id) return false;
+        if (removedIds[r.id]) return false;
+        return true;
+      });
+
+      if (category === 'range') {
+        if (incomingRecords.length === 0) return;
+        localData[key] = {
+          ...g,
+          category,
+          records: incomingRecords
+        };
+        incomingRecords.forEach(r => existingIds.add(r.id));
+        return;
+      }
+
+      const newRecs = incomingRecords.filter(r => !existingIds.has(r.id));
       if (newRecs.length === 0) return;
+
       if (!localData[key]) {
-        localData[key] = { ...g, records: newRecs };
+        localData[key] = {
+          ...g,
+          category,
+          records: newRecs
+        };
       } else {
         localData[key].records.push(...newRecs);
       }
+
       newRecs.forEach(r => existingIds.add(r.id));
     });
+
     saveStorage(LS_DATA, localData);
     saveStorage(LS_FETCHED, Date.now());
   } catch(e) {
@@ -748,13 +803,18 @@ function buildTree() {
     if (!t[y]) t[y] = {};
     if (!t[y][m]) t[y][m] = {};
     if (!t[y][m][g.date]) t[y][m][g.date] = [];
-    t[y][m][g.date].push(...g.records.map(r => ({...r, category: g.category})));
+    t[y][m][g.date].push(...(g.records || []).map(r => ({ ...r, category: g.category })));
   });
-  // 重複除去
+
   Object.keys(t).forEach(y => Object.keys(t[y]).forEach(m => Object.keys(t[y][m]).forEach(d => {
     const seen = new Set();
-    t[y][m][d] = t[y][m][d].filter(r => { if(seen.has(r.id)) return false; seen.add(r.id); return true; });
+    t[y][m][d] = t[y][m][d].filter(r => {
+      if (seen.has(r.id)) return false;
+      seen.add(r.id);
+      return true;
+    });
   })));
+
   return t;
 }
 
@@ -786,13 +846,11 @@ function togglePool(id, record, event) {
   }
   savePool();
   updatePoolTabCount();
-  // ハートボタンの見た目を更新
   const btn = document.getElementById('heart-' + id);
   if (btn) {
     btn.classList.toggle('pooled', !!pool[id]);
     btn.textContent = pool[id] ? '♥' : '♡';
   }
-  // プールページが開いていれば更新
   if (document.getElementById('pool-page').classList.contains('visible')) {
     renderPoolPage();
   }
@@ -832,17 +890,17 @@ function renderPoolPage() {
     html += items.map(r => `
       <div class="record-item" id="pool-row-${r.id}">
         <button class="heart-btn pooled" onclick="removeFromPool('${r.id}')">♥</button>
-        <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy">
+        <img class="record-thumb" src="${r.img || ''}" onerror="this.style.opacity=0" loading="lazy">
         <div class="record-info">
-          <div class="record-artist">${r.artist||''}</div>
-          <div class="record-title">${r.title||''}</div>
+          <div class="record-artist">${r.artist || ''}</div>
+          <div class="record-title">${r.title || ''}</div>
           <div class="record-tags">
-            ${r.format?`<span class="tag">${r.format}</span>`:''}
-            ${r.label?`<span class="tag">${r.label}</span>`:''}
-            ${r.genre?`<span class="tag">${r.genre}</span>`:''}
+            ${r.format ? `<span class="tag">${r.format}</span>` : ''}
+            ${r.label ? `<span class="tag">${r.label}</span>` : ''}
+            ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
           </div>
         </div>
-        <a class="record-link-btn" href="${r.url}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
+        <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
       </div>
     `).join('');
   }
@@ -864,12 +922,7 @@ function togglePoolPage() {
   }
 }
 
-// ── 設定ページ ──
-const LS_TOKEN = 'nt_gh_token';
-const GH_OWNER = 'dechnobow';
-const GH_REPO  = 'newtone-checklist';
-const GH_WORKFLOW = 'update.yml';
-
+// ── Settings ──
 function saveToken(val) {
   saveStorage(LS_TOKEN, val.trim());
 }
@@ -880,11 +933,9 @@ function toggleSettingsPage() {
   if (isVisible) {
     page.classList.remove('visible');
   } else {
-    // トークンをinputに反映
     const token = loadStorage(LS_TOKEN, '');
     document.getElementById('gh-token-input').value = token;
-    // 日付のデフォルト（今日）
-    const today = new Date().toLocaleDateString('sv-SE', {timeZone: 'Asia/Tokyo'});
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
     if (!document.getElementById('date-from-input').value) {
       document.getElementById('date-from-input').value = today;
     }
@@ -930,14 +981,14 @@ async function triggerRangeScrape() {
           ref: 'main',
           inputs: {
             date_from: dateFrom,
-            date_to: dateTo,
+            date_to: dateTo
           }
         })
       }
     );
 
     if (res.status === 204) {
-      setStatus('✓ Actions起動しました。数分後に自動反映されます', 'ok');
+      setStatus('✓ Actions起動しました。更新を待っています...', 'ok');
       pollForUpdate();
     } else {
       const err = await res.json().catch(() => ({}));
@@ -951,16 +1002,60 @@ async function triggerRangeScrape() {
 }
 
 let pollTimer = null;
+
+function countRangeRecords() {
+  return Object.values(localData)
+    .filter(g => g.category === 'range')
+    .reduce((sum, g) => sum + ((g.records || []).length), 0);
+}
+
 function pollForUpdate() {
   let count = 0;
-  const maxTries = 24; // 最大2分
+  const maxTries = 24;
+  const beforeCount = countRangeRecords();
+
   if (pollTimer) clearInterval(pollTimer);
+
   pollTimer = setInterval(async () => {
     count++;
     setStatus(`⏳ 完了待機中... (${count * 5}秒経過)`, '');
+
     await fetchAndMerge();
     tree = buildTree();
     renderTree();
+
+    const afterCount = countRangeRecords();
+
+    if (afterCount > 0 && afterCount !== beforeCount) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+      setStatus(`✓ 更新完了: ${afterCount}件を反映しました`, 'ok');
+      document.getElementById('fetch-range-btn').disabled = false;
+
+      const rangeDays = [];
+      Object.keys(tree).forEach(y =>
+        Object.keys(tree[y]).forEach(m =>
+          Object.keys(tree[y][m]).forEach(d => {
+            const recs = tree[y][m][d] || [];
+            if (recs.some(r => r.category === 'range')) {
+              rangeDays.push(d);
+            }
+          })
+        )
+      );
+
+      rangeDays.sort().reverse();
+      if (rangeDays.length) {
+        const latest = rangeDays[0];
+        const [y, mo] = latest.split('-');
+        activeMonth = `${y}-${mo}`;
+        renderTree();
+        selectDay(latest);
+      }
+
+      return;
+    }
+
     if (count >= maxTries) {
       clearInterval(pollTimer);
       pollTimer = null;
@@ -1016,8 +1111,14 @@ function toggleMonth(m, y) {
 }
 
 // ── Day view ──
-const catLabels = {thisweek:'今週入荷', new:'新入荷', preorder:'予約受付中', used:'中古盤'};
-const catOrder  = ['thisweek','new','preorder','used'];
+const catLabels = {
+  range:'取得結果',
+  thisweek:'今週入荷',
+  new:'新入荷',
+  preorder:'予約受付中',
+  used:'中古盤'
+};
+const catOrder = ['range','thisweek','new','preorder','used'];
 
 function selectDay(date) {
   activeDay = date;
@@ -1041,7 +1142,6 @@ function showList() {
   document.getElementById('header-sub').textContent = '新譜チェック';
 }
 
-// レコードをIDで引けるグローバルマップ（togglePool用）
 let recordMap = {};
 
 function renderDay(date) {
@@ -1051,7 +1151,11 @@ function renderDay(date) {
   const chk = dayChecked(recs);
   const pct = recs.length ? Math.round(chk / recs.length * 100) : 0;
   const groups = {};
-  recs.forEach(r => { if (!groups[r.category]) groups[r.category] = []; groups[r.category].push(r); });
+  recs.forEach(r => {
+    const c = r.category || 'new';
+    if (!groups[c]) groups[c] = [];
+    groups[c].push(r);
+  });
 
   let html = `<div class="day-header">
     <div class="day-title">${date} — ${fmtDay(date)}</div>
@@ -1065,43 +1169,53 @@ function renderDay(date) {
     <button class="btn danger" onclick="uncheckAll('${date}')">リセット</button>
   </div>`;
 
-  catOrder.filter(c => groups[c]).forEach(cat => {
-    const cr = groups[cat]; const cc = dayChecked(cr);
-    html += `<div class="cat-header"><span>${catLabels[cat]}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
-    cr.forEach(r => {
-      const ck = !!checked[r.id];
-      html += `<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
-        <div class="check-circle">${ck?'✓':''}</div>
-        <img class="record-thumb" src="${r.img}" onerror="this.style.opacity=0" loading="lazy">
-        <div class="record-info">
-          <div class="record-artist">${r.artist||''}</div>
-          <div class="record-title">${r.title||''}</div>
-          <div class="record-tags">
-            ${r.format?`<span class="tag">${r.format}</span>`:''}
-            ${r.label?`<span class="tag">${r.label}</span>`:''}
-            ${r.genre?`<span class="tag">${r.genre}</span>`:''}
-            ${r.used?`<span class="tag used">USED</span>`:''}
-            ${r.preorder?`<span class="tag preorder">予約</span>`:''}
+  const visibleCats = catOrder.filter(c => groups[c] && groups[c].length);
+
+  if (!visibleCats.length) {
+    html += `<div class="empty">この日のレコードはありません</div>`;
+  } else {
+    visibleCats.forEach(cat => {
+      const cr = groups[cat];
+      const cc = dayChecked(cr);
+      html += `<div class="cat-header"><span>${catLabels[cat] || cat}</span><span class="cat-count">${cc}/${cr.length}</span></div>`;
+      cr.forEach(r => {
+        const ck = !!checked[r.id];
+        html += `<div class="record-item ${ck?'checked':''}" id="row-${r.id}" onclick="toggle('${r.id}','${date}')">
+          <div class="check-circle">${ck?'✓':''}</div>
+          <img class="record-thumb" src="${r.img || ''}" onerror="this.style.opacity=0" loading="lazy">
+          <div class="record-info">
+            <div class="record-artist">${r.artist || ''}</div>
+            <div class="record-title">${r.title || ''}</div>
+            <div class="record-tags">
+              ${r.format ? `<span class="tag">${r.format}</span>` : ''}
+              ${r.label ? `<span class="tag">${r.label}</span>` : ''}
+              ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
+              ${r.used ? `<span class="tag used">USED</span>` : ''}
+              ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
+            </div>
           </div>
-        </div>
-        <div class="record-actions">
-          <a class="record-link-btn" href="${r.url}" target="_self" onclick="event.stopPropagation()">↗</a>
-          <button class="heart-btn ${pool[r.id]?'pooled':''}" id="heart-${r.id}" onclick="togglePool('${r.id}',recordMap['${r.id}'],event)">${pool[r.id]?'♥':'♡'}</button>
-        </div>
-      </div>`;
+          <div class="record-actions">
+            <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()">↗</a>
+            <button class="heart-btn ${pool[r.id]?'pooled':''}" id="heart-${r.id}" onclick="togglePool('${r.id}',recordMap['${r.id}'],event)">${pool[r.id]?'♥':'♡'}</button>
+          </div>
+        </div>`;
+      });
     });
-  });
+  }
 
   document.getElementById('day-content').innerHTML = html;
   document.getElementById('day-panel').scrollTop = 0;
 }
 
 function toggle(id, date) {
-  checked[id] = !checked[id]; save();
+  checked[id] = !checked[id];
+  save();
   const row = document.getElementById('row-' + id);
-  const circle = row.querySelector('.check-circle');
-  if (checked[id]) { row.classList.add('checked'); circle.textContent = '✓'; }
-  else { row.classList.remove('checked'); circle.textContent = ''; }
+  if (row) {
+    const circle = row.querySelector('.check-circle');
+    if (checked[id]) { row.classList.add('checked'); circle.textContent = '✓'; }
+    else { row.classList.remove('checked'); circle.textContent = ''; }
+  }
   updateCatCounts(date);
   updateProgress(date);
   updateDayBadge(date);
@@ -1122,40 +1236,55 @@ function deleteDay(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
   const recs = tree[y]?.[m]?.[date] || [];
 
-  // localStorageからデータ削除
+  removedDays[date] = true;
+
+  recs.forEach(r => {
+    if (r.id) {
+      removedIds[r.id] = true;
+      delete checked[r.id];
+      delete pool[r.id];
+    }
+  });
+
+  saveStorage(LS_REMOVED_DAYS, removedDays);
+  saveStorage(LS_REMOVED_IDS, removedIds);
+  saveStorage(LS_CHECKED, checked);
+  saveStorage(LS_POOL, pool);
+
   Object.keys(localData).forEach(key => {
     if (key.startsWith(date + '|')) delete localData[key];
   });
   saveStorage(LS_DATA, localData);
 
-  // チェック状態も削除
-  recs.forEach(r => { delete checked[r.id]; });
-  save();
-
-  // treeから削除
-  delete tree[y][m][date];
-  if (Object.keys(tree[y][m]).length === 0) delete tree[y][m];
-  if (Object.keys(tree[y]).length === 0) delete tree[y];
+  if (tree[y]?.[m]?.[date]) delete tree[y][m][date];
+  if (tree[y]?.[m] && Object.keys(tree[y][m]).length === 0) delete tree[y][m];
+  if (tree[y] && Object.keys(tree[y]).length === 0) delete tree[y];
 
   activeDay = null;
   showList();
   renderTree();
+  updatePoolTabCount();
   document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
 }
 
 function updateProgress(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
   const recs = tree[y]?.[m]?.[date] || [];
-  const chk = dayChecked(recs); const pct = recs.length ? Math.round(chk/recs.length*100) : 0;
-  const pf = document.getElementById('pfill'); if(pf) pf.style.width = pct + '%';
-  const pl = document.getElementById('plabel'); if(pl) pl.textContent = chk + ' / ' + recs.length;
+  const chk = dayChecked(recs);
+  const pct = recs.length ? Math.round(chk / recs.length * 100) : 0;
+  const pf = document.getElementById('pfill'); if (pf) pf.style.width = pct + '%';
+  const pl = document.getElementById('plabel'); if (pl) pl.textContent = chk + ' / ' + recs.length;
 }
 
 function updateCatCounts(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
   const recs = tree[y]?.[m]?.[date] || [];
   const groups = {};
-  recs.forEach(r => { if(!groups[r.category]) groups[r.category]=[]; groups[r.category].push(r); });
+  recs.forEach(r => {
+    const c = r.category || 'new';
+    if (!groups[c]) groups[c] = [];
+    groups[c].push(r);
+  });
   document.querySelectorAll('.cat-header').forEach(h => {
     const label = h.querySelector('span:first-child').textContent;
     const cat = Object.keys(catLabels).find(k => catLabels[k] === label);
@@ -1173,13 +1302,17 @@ function updateDayBadge(date) {
 
 function checkAll(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; }); save(); renderDay(date);
+  (tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; });
+  save();
+  renderDay(date);
   updateDayBadge(date);
 }
 
 function uncheckAll(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; }); save(); renderDay(date);
+  (tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; });
+  save();
+  renderDay(date);
   updateDayBadge(date);
 }
 
@@ -1196,10 +1329,13 @@ async function init() {
 
   if (allDays.length) {
     const latest = allDays[0];
-    const [y,mo] = latest.split('-'); activeMonth = y + '-' + mo;
+    const [y,mo] = latest.split('-');
+    activeMonth = y + '-' + mo;
     renderTree();
     if (window.innerWidth >= 680) selectDay(latest);
     else document.getElementById('day-content').innerHTML = '<div class="empty">日付を選んでください</div>';
+  } else {
+    document.getElementById('day-content').innerHTML = '<div class="empty">データがありません</div>';
   }
 }
 
