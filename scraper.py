@@ -1,300 +1,325 @@
-import requests
-from bs4 import BeautifulSoup
-from datetime import datetime, timezone, timedelta
 import json
-import re
 import os
+import re
 import sys
-import time
+from collections import defaultdict
+from datetime import datetime, timezone, timedelta
+
+from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 JST = timezone(timedelta(hours=9))
-today = datetime.now(JST).strftime('%Y-%m-%d')
-
-BASE_URL = 'https://newtone-records.com'
-STORE_URL = 'https://newtone-records.com/store/'
-GRID_LIST_URL = 'https://newtone-records.com/include/grid_list.php'
-
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
-    'Accept-Language': 'ja,en-US;q=0.9',
-    'Referer': STORE_URL,
-    'Origin': BASE_URL,
-}
+BASE_URL = "https://newtone-records.com"
+STORE_URL = "https://newtone-records.com/store/"
 
 
-def make_session():
-    """セッションを作成し /store/ をGETしてCookieとHTMLを取得"""
-    session = requests.Session()
-    session.headers.update(HEADERS)
-    try:
-        r = session.get(STORE_URL, timeout=20)
-        r.raise_for_status()
-        print(f'  Session established. Cookies: {list(session.cookies.keys())}')
-        return session, r.text
-    except Exception as e:
-        print(f'  Failed to establish session: {e}')
-        return None, ''
+def today_jst_str() -> str:
+    return datetime.now(JST).strftime("%Y-%m-%d")
 
 
-def fetch_batch(session, offset, total_so_far):
-    """
-    offset: 次のバッチの開始番号（初回=1）
-    total_so_far: 現在表示済みのアイテム数（初回=0）
-    """
-    payload = {
-        "path": "/store/",
-        "page": "",
-        "total": total_so_far,
-        "pp": 20,
-        "dbl": 0,
-        "products": offset,
-        "mode": "view-more",
-        "active": "sort-list",
-        "showmode": "",
-        "pagesrc": ""
-    }
-    try:
-        r = session.post(GRID_LIST_URL, json=payload, timeout=20)
-        r.raise_for_status()
-        return r.json()
-    except Exception as e:
-        print(f'  Error fetching offset {offset}: {e}')
+def normalize_date(text: str) -> str:
+    if not text:
+        return ""
+    m = re.search(r"(\d{4}-\d{2}-\d{2})", text)
+    return m.group(1) if m else ""
+
+
+def absolute_url(url: str) -> str:
+    if not url:
+        return ""
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    if url.startswith("/"):
+        return BASE_URL + url
+    return BASE_URL + "/" + url
+
+
+def parse_article(article):
+    article_id = article.get("id", "") or ""
+
+    rid = ""
+    m = re.search(r"n_t(\d+)", article_id)
+    if m:
+        rid = m.group(1)
+
+    title = ""
+    url = ""
+
+    title_link = (
+        article.select_one('h1.item_title a[href*="/product/"]')
+        or article.select_one('a[href*="/product/"]')
+    )
+    if title_link:
+        title = title_link.get_text(" ", strip=True)
+        href = title_link.get("href", "")
+        url = absolute_url(href)
+        if not rid:
+            m = re.search(r"/product/(\d+)", href)
+            if m:
+                rid = m.group(1)
+
+    if not rid or not title:
         return None
 
+    artist = ""
+    artist_el = article.select_one("h1.item_title strong")
+    if artist_el:
+        artist = artist_el.get_text(" ", strip=True)
 
-def parse_articles(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    records_by_date = {}
+    label = ""
+    label_el = article.select_one("a.btn-label")
+    if label_el:
+        label = label_el.get_text(" ", strip=True)
 
-    for article in soup.select('article.list-single'):
+    date = ""
+    date_el = article.select_one("li.updated")
+    if date_el:
+        date = normalize_date(date_el.get_text(" ", strip=True))
+    if not date:
+        date = normalize_date(article.get_text("\n", strip=True))
+    if not date:
+        return None
+
+    img = ""
+    img_el = article.select_one("img")
+    if img_el and img_el.get("src"):
+        img = absolute_url(img_el.get("src"))
+
+    fmt = ""
+    fmt_el = article.select_one("ul.tab-list li[tab]")
+    if fmt_el:
+        fmt = (fmt_el.get("tab") or "").strip()
+    if not fmt:
+        text = article.get_text(" ", strip=True)
+        m = re.search(r"\b(12inch|LP|EP|CD|Cassette|Digital)\b", text, re.I)
+        if m:
+            fmt = m.group(1)
+
+    in_stock = article.select_one(".instock") is not None and article.select_one(".outofstock") is None
+
+    return {
+        "id": rid,
+        "artist": artist,
+        "title": title,
+        "label": label,
+        "format": fmt,
+        "genre": "",
+        "img": img,
+        "url": url or f"{BASE_URL}/product/{rid}",
+        "used": False,
+        "preorder": False,
+        "inStock": in_stock,
+        "_date": date,  # 内部処理用
+    }
+
+
+def parse_records_from_html(html: str):
+    soup = BeautifulSoup(html, "html.parser")
+
+    # 現行サイトで article.list-single が主ですが、保険で id も見る
+    articles = soup.select("article.list-single") or soup.select("article[id^='n_t']")
+
+    grouped = defaultdict(list)
+    seen_ids = set()
+
+    for article in articles:
+        rec = parse_article(article)
+        if not rec:
+            continue
+
+        rid = rec["id"]
+        if rid in seen_ids:
+            continue
+        seen_ids.add(rid)
+
+        date = rec.pop("_date")
+        grouped[date].append(rec)
+
+    return dict(grouped)
+
+
+def get_oldest_visible_date(html: str):
+    grouped = parse_records_from_html(html)
+    if not grouped:
+        return None
+    return min(grouped.keys())
+
+
+def click_view_more_until(page, target_from: str, max_clicks: int = 80):
+    target_from_date = datetime.strptime(target_from, "%Y-%m-%d").date()
+
+    for i in range(max_clicks):
+        html_before = page.content()
+        oldest = get_oldest_visible_date(html_before)
+
+        if oldest:
+            oldest_date = datetime.strptime(oldest, "%Y-%m-%d").date()
+            print(f"[{i}] oldest visible date: {oldest}")
+            if oldest_date <= target_from_date:
+                print("Target start date reached.")
+                break
+
+        button = page.locator("text=View More")
+        if button.count() == 0:
+            print("View More button not found. Stop.")
+            break
+
+        prev_count = len(parse_records_from_html(html_before))
+
         try:
-            article_id = article.get('id', '')
-            m = re.search(r'n_t(\d+)hr', article_id)
-            if not m:
-                continue
-            rid = m.group(1)
-
-            date_el = article.select_one('li.updated')
-            date = date_el.get_text(strip=True) if date_el else ''
-            if not date:
-                date = today
-
-            artist_el = article.select_one('h1.item_title strong')
-            artist = artist_el.get_text(strip=True) if artist_el else ''
-
-            title_el = article.select_one('h1.item_title a[href*="/product/"]')
-            title = title_el.get_text(strip=True) if title_el else ''
-            if not title:
-                continue
-
-            label_el = article.select_one('a.btn-label')
-            label = label_el.get_text(strip=True) if label_el else ''
-
-            img_el = article.select_one('img')
-            img = img_el.get('src', '') if img_el else ''
-            if img and not img.startswith('http'):
-                img = BASE_URL + img
-
-            fmt_el = article.select_one('ul.tab-list li')
-            fmt = fmt_el.get('tab', '') if fmt_el else ''
-
-            url = f'{BASE_URL}/product/{rid}'
-
-            instock_el = article.select_one('.instock')
-            outstock_el = article.select_one('.outofstock')
-            in_stock = instock_el is not None and outstock_el is None
-
-            record = {
-                'id':      rid,
-                'artist':  artist,
-                'title':   title,
-                'label':   label,
-                'format':  fmt,
-                'genre':   '',
-                'img':     img,
-                'url':     url,
-                'used':    False,
-                'preorder': False,
-                'inStock': in_stock,
-            }
-
-            if date not in records_by_date:
-                records_by_date[date] = []
-            records_by_date[date].append(record)
-
+            button.first.click(timeout=5000)
         except Exception as e:
-            print(f'  Parse error: {e}')
-
-    return records_by_date
-
-
-def scrape_all_pages():
-    session, first_html = make_session()
-    if not session:
-        return {}
-
-    all_records_by_date = {}
-
-    # page 1はセッション確立時のHTMLから取得
-    page1_records = parse_articles(first_html)
-    for date, recs in page1_records.items():
-        if date not in all_records_by_date:
-            all_records_by_date[date] = []
-        all_records_by_date[date].extend(recs)
-    fetched_so_far = sum(len(v) for v in page1_records.values())
-    print(f'  Batch 1 (from HTML): {fetched_so_far} items, dates: {sorted(page1_records.keys())}')
-
-    # totalを取得するために最初のAPIリクエスト
-    first_api = fetch_batch(session, 1, 0)
-    if not first_api:
-        return all_records_by_date
-
-    grand_total = first_api.get('total', 0)
-    print(f'Grand total: {grand_total}')
-
-    # API 1回目のコンテンツも追加
-    api1_content = first_api.get('content', '')
-    if api1_content:
-        api1_records = parse_articles(api1_content)
-        for date, recs in api1_records.items():
-            if date not in all_records_by_date:
-                all_records_by_date[date] = []
-            all_records_by_date[date].extend(recs)
-        api1_count = sum(len(v) for v in api1_records.values())
-        print(f'  Batch 1 (API): {api1_count} items, dates: {sorted(api1_records.keys())}')
-        # 重複を避けるため fetched_so_far は増やさない（page1と被る可能性）
-
-    batch = 2
-    while fetched_so_far < grand_total:
-        time.sleep(0.5)
-        offset = fetched_so_far + 1
-        print(f'  Fetching batch {batch} (offset={offset}, total_so_far={fetched_so_far})...')
-        data = fetch_batch(session, offset, fetched_so_far)
-        if not data:
+            print(f"Failed to click View More: {e}")
             break
-        html_content = data.get('content', '')
-        if not html_content:
-            print('  Empty content, stopping.')
-            break
-        page_records = parse_articles(html_content)
-        if not page_records:
-            print('  No records parsed, stopping.')
-            break
-        new_count = sum(len(v) for v in page_records.values())
-        for date, recs in page_records.items():
-            if date not in all_records_by_date:
-                all_records_by_date[date] = []
-            all_records_by_date[date].extend(recs)
-        fetched_so_far += new_count
-        print(f'  Batch {batch}: {new_count} items, dates: {sorted(page_records.keys())}, total: {fetched_so_far}')
-        batch += 1
 
-    return all_records_by_date
+        page.wait_for_timeout(1800)
+
+        html_after = page.content()
+        after_grouped = parse_records_from_html(html_after)
+        after_count = len(after_grouped)
+
+        if len(html_after) <= len(html_before) and after_count <= prev_count:
+            print("No further content increase after click. Stop.")
+            break
+
+
+def scrape_range(date_from: str, date_to: str):
+    print(f"Range scrape: {date_from} ~ {date_to}")
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": 1440, "height": 2200})
+
+        page.goto(STORE_URL, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(2500)
+
+        click_view_more_until(page, date_from)
+
+        final_html = page.content()
+        browser.close()
+
+    grouped = parse_records_from_html(final_html)
+
+    filtered = []
+    for d in sorted(grouped.keys(), reverse=True):
+        if date_from <= d <= date_to:
+            filtered.append({
+                "date": d,
+                "category": "range",
+                "records": grouped[d]
+            })
+
+    print(f"Filtered groups: {len(filtered)}")
+    total = sum(len(g["records"]) for g in filtered)
+    print(f"Filtered records: {total}")
+    return filtered
 
 
 def scrape_today_only():
-    session, first_html = make_session()
-    if not session:
-        return {}
-    print('Parsing today only (page 1 HTML)...')
-    records_by_date = parse_articles(first_html)
-    print(f'  Page 1: {sum(len(v) for v in records_by_date.values())} items')
-    return records_by_date
+    today = today_jst_str()
+    return scrape_range(today, today)
 
 
-def load_existing_data():
-    data_path = 'data.json'
-    if not os.path.exists(data_path):
-        print('data.json not found, starting fresh')
+def load_existing_data(path="data.json"):
+    if not os.path.exists(path):
+        print("data.json not found, starting fresh")
         return []
+
     try:
-        with open(data_path, 'r', encoding='utf-8') as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        print(f'Loaded {len(data)} existing groups from data.json')
+        print(f"Loaded {len(data)} existing groups from {path}")
         return data
     except Exception as e:
-        print(f'Failed to load data.json: {e}')
+        print(f"Failed to load {path}: {e}")
         return []
 
 
-def merge_with_existing(existing, new_records_by_date):
+def merge_groups(existing, incoming):
     existing_ids = set()
-    for g in existing:
-        for r in g.get('records', []):
-            existing_ids.add(r.get('id'))
+    by_date = {}
 
-    existing_by_date = {}
     for g in existing:
-        d = g.get('date', '')
-        existing_by_date[d] = g
+        by_date[g["date"]] = g
+        for r in g.get("records", []):
+            if r.get("id"):
+                existing_ids.add(r["id"])
 
-    for date, new_recs in new_records_by_date.items():
-        truly_new = [r for r in new_recs if r.get('id') not in existing_ids]
-        if not truly_new:
-            print(f'  {date}: 0 new items (all already exist)')
+    for g in incoming:
+        date = g["date"]
+        new_records = [r for r in g["records"] if r.get("id") not in existing_ids]
+
+        if not new_records:
             continue
-        print(f'  {date}: {len(truly_new)} new items')
-        if date in existing_by_date:
-            existing_by_date[date]['records'].extend(truly_new)
-        else:
-            existing_by_date[date] = {
-                'date': date,
-                'category': 'new',
-                'records': truly_new,
-            }
-        for r in truly_new:
-            existing_ids.add(r.get('id'))
 
-    merged = list(existing_by_date.values())
-    merged.sort(key=lambda g: g.get('date', ''), reverse=True)
-    cutoff = (datetime.now(JST) - timedelta(days=90)).strftime('%Y-%m-%d')
-    merged = [g for g in merged if g.get('date', '') >= cutoff]
-    print(f'Total groups after merge: {len(merged)}')
+        if date in by_date:
+            by_date[date]["records"].extend(new_records)
+        else:
+            by_date[date] = {
+                "date": date,
+                "category": "new",
+                "records": new_records
+            }
+
+        for r in new_records:
+            if r.get("id"):
+                existing_ids.add(r["id"])
+
+    merged = list(by_date.values())
+    merged.sort(key=lambda x: x["date"], reverse=True)
+
+    cutoff = (datetime.now(JST) - timedelta(days=90)).strftime("%Y-%m-%d")
+    merged = [g for g in merged if g.get("date", "") >= cutoff]
+
+    print(f"Total groups after merge: {len(merged)}")
     return merged
 
 
-def save_data(data):
-    with open('data.json', 'w', encoding='utf-8') as f:
+def save_data(data, path="data.json"):
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print('Saved data.json successfully')
+    print(f"Saved {path} successfully")
 
 
-if __name__ == '__main__':
-    full_scrape = '--full' in sys.argv
+if __name__ == "__main__":
     date_from = None
     date_to = None
-    if '--from' in sys.argv:
-        idx = sys.argv.index('--from')
-        date_from = sys.argv[idx + 1]
-    if '--to' in sys.argv:
-        idx = sys.argv.index('--to')
-        date_to = sys.argv[idx + 1]
+    full_scrape = "--full" in sys.argv
 
-    print(f'Date: {today}')
+    if "--from" in sys.argv:
+        i = sys.argv.index("--from")
+        if i + 1 < len(sys.argv):
+            date_from = sys.argv[i + 1]
 
+    if "--to" in sys.argv:
+        i = sys.argv.index("--to")
+        if i + 1 < len(sys.argv):
+            date_to = sys.argv[i + 1]
+
+    print(f"Today (JST): {today_jst_str()}")
+
+    # 期間指定時は、その範囲だけを data.json に保存
     if date_from and date_to:
-        print(f'=== RANGE SCRAPE MODE: {date_from} ~ {date_to} ===')
-        records_by_date = scrape_all_pages()
-        all_dates = sorted(records_by_date.keys())
-        print(f'All dates found: {all_dates}')
-        records_by_date = {
-            d: recs for d, recs in records_by_date.items()
-            if date_from <= d <= date_to
-        }
-        print(f'After filtering: {len(records_by_date)} dates in range')
-    elif full_scrape:
-        print('=== FULL SCRAPE MODE (all pages) ===')
-        records_by_date = scrape_all_pages()
-    else:
-        print('=== DAILY MODE (today only) ===')
-        records_by_date = scrape_today_only()
+        result = scrape_range(date_from, date_to)
+        save_data(result, "data.json")
+        print("Done.")
+        sys.exit(0)
 
-    if not records_by_date:
-        print('No data scraped — skipping update')
-    else:
-        total = sum(len(v) for v in records_by_date.values())
-        print(f'Scraped {total} items across {len(records_by_date)} dates')
-        existing = load_existing_data()
-        merged = merge_with_existing(existing, records_by_date)
-        save_data(merged)
-        print('Done.')
+    # full_scrape 指定時も、現状は View More を最大まで辿る全量取得として扱う
+    if full_scrape:
+        # 十分広めの期間を指定して全量寄りで取る
+        result = scrape_range("2000-01-01", today_jst_str())
+        save_data(result, "data.json")
+        print("Done.")
+        sys.exit(0)
+
+    # 通常の日次更新
+    today_groups = scrape_today_only()
+    if not today_groups:
+        print("No data scraped — skipping update")
+        sys.exit(0)
+
+    existing = load_existing_data("data.json")
+    merged = merge_groups(existing, today_groups)
+    save_data(merged, "data.json")
+    print("Done.")
