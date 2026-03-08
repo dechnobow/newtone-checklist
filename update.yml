@@ -6,17 +6,17 @@ on:
   workflow_dispatch:
     inputs:
       full_scrape:
-        description: 'Full scrape (all pages / past history)'
+        description: 'Full scrape'
         required: false
         default: false
         type: boolean
       date_from:
-        description: 'Date from (YYYY-MM-DD) for range scrape'
+        description: 'Date from (YYYY-MM-DD)'
         required: false
         default: ''
         type: string
       date_to:
-        description: 'Date to (YYYY-MM-DD) for range scrape'
+        description: 'Date to (YYYY-MM-DD)'
         required: false
         default: ''
         type: string
@@ -29,24 +29,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install Python packages
         run: |
-          python -m pip install --upgrade pip
           pip install beautifulsoup4 playwright
 
-      - name: Install Playwright Chromium
+      - name: Install Playwright browser
         run: |
-          python -m playwright install --with-deps chromium
+          python -m playwright install chromium
 
       - name: Run scraper
         run: |
@@ -54,27 +49,18 @@ jobs:
             echo "Running range scrape: ${{ inputs.date_from }} ~ ${{ inputs.date_to }}"
             python scraper.py --from "${{ inputs.date_from }}" --to "${{ inputs.date_to }}"
           elif [ "${{ inputs.full_scrape }}" = "true" ]; then
-            echo "Running full scrape..."
             python scraper.py --full
           else
-            echo "Running daily scrape..."
             python scraper.py
           fi
 
-      - name: Commit changes
+      - name: Commit data
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
+          git config user.name github-actions
+          git config user.email actions@github.com
           git add data.json
+          git diff --staged --quiet || git commit -m "update data"
 
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-
-          git commit -m "Update data.json"
-
-      - name: Push changes
+      - name: Push
         run: |
           git push
