@@ -657,17 +657,6 @@
     </div>
     <div class="settings-body">
 
-      <div class="settings-section-title">GitHub Token</div>
-      <div class="settings-token-row">
-        <input class="settings-token-input" type="password" id="gh-token-input"
-          placeholder="ghp_xxxxxxxxxxxx"
-          oninput="saveToken(this.value)" />
-      </div>
-      <div style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace;margin-bottom:24px;">
-        Settings → Developer settings → Personal access tokens → Fine-grained<br>
-        権限: Actions (Read and write)
-      </div>
-
       <div class="settings-section-title">過去データ取得</div>
       <div class="settings-row">
         <span class="settings-label">開始日</span>
@@ -692,7 +681,6 @@ const LS_FETCHED      = 'nt_fetched';
 const LS_POOL         = 'nt_pool';
 const LS_REMOVED_IDS  = 'nt_removed_ids';
 const LS_REMOVED_DAYS = 'nt_removed_days';
-const LS_TOKEN        = 'nt_gh_token';
 
 function loadStorage(key, def) {
   try { return JSON.parse(localStorage.getItem(key) || 'null') ?? def; } catch(e) { return def; }
@@ -709,9 +697,7 @@ let removedDays  = loadStorage(LS_REMOVED_DAYS, {});
 let activeDay = null, activeMonth = null;
 
 // ── GitHub settings ──
-const GH_OWNER = 'dechnobow';
-const GH_REPO  = 'newtone-checklist';
-const GH_WORKFLOW = 'update.yml';
+const RANGE_API_BASE = 'http://localhost:8787';
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
@@ -920,11 +906,6 @@ function togglePoolPage() {
     btn.classList.add('active');
     page.scrollTop = 0;
   }
-}
-
-// ── Settings ──
-function saveToken(val) {
-  saveStorage(LS_TOKEN, val.trim());
 }
 
 function toggleSettingsPage() {
