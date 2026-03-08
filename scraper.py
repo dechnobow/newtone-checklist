@@ -109,14 +109,12 @@ def parse_article(article):
         "used": False,
         "preorder": False,
         "inStock": in_stock,
-        "_date": date,  # 内部処理用
+        "_date": date,
     }
 
 
 def parse_records_from_html(html: str):
     soup = BeautifulSoup(html, "html.parser")
-
-    # 現行サイトで article.list-single が主ですが、保険で id も見る
     articles = soup.select("article.list-single") or soup.select("article[id^='n_t']")
 
     grouped = defaultdict(list)
@@ -138,11 +136,53 @@ def parse_records_from_html(html: str):
     return dict(grouped)
 
 
-def get_oldest_visible_date(html: str):
-    grouped = parse_records_from_html(html)
-    if not grouped:
+def extract_dates_in_dom_order(html: str):
+    """
+    DOM順に article を走査して date を配列で返す。
+    例: ['2026-03-07', '2026-03-07', '2026-03-07', '2024-07-03', ...]
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    articles = soup.select("article.list-single") or soup.select("article[id^='n_t']")
+
+    dates = []
+    for article in articles:
+        rec = parse_article(article)
+        if rec and rec.get("_date"):
+            dates.append(rec["_date"])
+    return dates
+
+
+def get_frontier_oldest_date(html: str):
+    """
+    先頭から連続して並んでいる“新着帯”の最古日付を返す。
+    ページ途中に古いおすすめ商品が混ざっても、そこで打ち切る。
+    """
+    dates = extract_dates_in_dom_order(html)
+    if not dates:
         return None
-    return min(grouped.keys())
+
+    first_date = dates[0]
+    frontier = first_date
+
+    # 先頭日付から徐々に遡っていく並びを想定
+    # 途中で大きく古い日付が飛び込んだら、新着帯が切れたとみなして打ち切る
+    prev = datetime.strptime(first_date, "%Y-%m-%d").date()
+
+    for d in dates:
+        cur = datetime.strptime(d, "%Y-%m-%d").date()
+
+        # 新しい日付に戻るなら異常セクション混入とみなして終了
+        if cur > prev:
+            break
+
+        # 30日以上飛んで古くなる場合は別セクション混入とみなして終了
+        if (prev - cur).days > 30:
+            break
+
+        frontier = d
+        prev = cur
+
+    return frontier
 
 
 def click_view_more_until(page, target_from: str, max_clicks: int = 80):
@@ -150,12 +190,13 @@ def click_view_more_until(page, target_from: str, max_clicks: int = 80):
 
     for i in range(max_clicks):
         html_before = page.content()
-        oldest = get_oldest_visible_date(html_before)
+        frontier = get_frontier_oldest_date(html_before)
 
-        if oldest:
-            oldest_date = datetime.strptime(oldest, "%Y-%m-%d").date()
-            print(f"[{i}] oldest visible date: {oldest}")
-            if oldest_date <= target_from_date:
+        if frontier:
+            frontier_date = datetime.strptime(frontier, "%Y-%m-%d").date()
+            print(f"[{i}] frontier oldest date: {frontier}")
+
+            if frontier_date <= target_from_date:
                 print("Target start date reached.")
                 break
 
@@ -164,21 +205,22 @@ def click_view_more_until(page, target_from: str, max_clicks: int = 80):
             print("View More button not found. Stop.")
             break
 
-        prev_count = len(parse_records_from_html(html_before))
+        before_html_len = len(html_before)
 
         try:
+            button.first.scroll_into_view_if_needed(timeout=5000)
+            page.wait_for_timeout(500)
             button.first.click(timeout=5000)
         except Exception as e:
             print(f"Failed to click View More: {e}")
             break
 
-        page.wait_for_timeout(1800)
+        page.wait_for_timeout(2000)
 
         html_after = page.content()
-        after_grouped = parse_records_from_html(html_after)
-        after_count = len(after_grouped)
+        after_html_len = len(html_after)
 
-        if len(html_after) <= len(html_before) and after_count <= prev_count:
+        if after_html_len <= before_html_len:
             print("No further content increase after click. Stop.")
             break
 
@@ -298,22 +340,18 @@ if __name__ == "__main__":
 
     print(f"Today (JST): {today_jst_str()}")
 
-    # 期間指定時は、その範囲だけを data.json に保存
     if date_from and date_to:
         result = scrape_range(date_from, date_to)
         save_data(result, "data.json")
         print("Done.")
         sys.exit(0)
 
-    # full_scrape 指定時も、現状は View More を最大まで辿る全量取得として扱う
     if full_scrape:
-        # 十分広めの期間を指定して全量寄りで取る
         result = scrape_range("2000-01-01", today_jst_str())
         save_data(result, "data.json")
         print("Done.")
         sys.exit(0)
 
-    # 通常の日次更新
     today_groups = scrape_today_only()
     if not today_groups:
         print("No data scraped — skipping update")
