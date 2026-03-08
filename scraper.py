@@ -55,11 +55,14 @@ def parse_articles(html_content):
             rid = m.group(1)
 
             date_el = article.select_one('li.updated')
-            date = date_el.get_text(strip=True) if date_el else today
-            if not date_el:
-                print(f'  [DEBUG] No li.updated found for id={article_id}')
-            elif not date:
-                print(f'  [DEBUG] li.updated is empty for id={article_id}')
+            date = date_el.get_text(strip=True) if date_el else ''
+            if not date:
+                # li.updatedが空の場合、ul.list-meta全体をダンプ（最初の1件のみ）
+                if not hasattr(parse_articles, '_dumped'):
+                    parse_articles._dumped = True
+                    meta_el = article.select_one('ul.list-meta')
+                    print(f'  [DEBUG] li.updated empty. ul.list-meta HTML: {meta_el}')
+                date = today
 
             artist_el = article.select_one('h1.item_title strong')
             artist = artist_el.get_text(strip=True) if artist_el else ''
