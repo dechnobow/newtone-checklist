@@ -340,6 +340,7 @@ if __name__ == "__main__":
     # 範囲取得は tmp-range.json に保存
     if date_from and date_to:
     result = scrape_range(date_from, date_to)
+
     save_data(result, "tmp-range.json")
 
     meta = {
@@ -349,6 +350,7 @@ if __name__ == "__main__":
         "count": sum(len(g.get("records", [])) for g in result),
         "generatedAt": datetime.now(JST).isoformat()
     }
+
     save_data(meta, "tmp-range-meta.json")
 
     print("Done.")
