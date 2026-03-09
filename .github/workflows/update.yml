@@ -63,7 +63,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data.json tmp-range.json
+          git add data.json tmp-range.json tmp-range-meta.json
           git diff --staged --quiet || git commit -m "update data"
 
       - name: Push
