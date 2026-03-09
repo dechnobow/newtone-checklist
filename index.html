@@ -994,47 +994,93 @@ async function triggerRangeScrape() {
 
   const btn = document.getElementById('fetch-range-btn');
   btn.disabled = true;
-  setStatus('過去データを取得中...', '');
+  setStatus('取得ジョブを開始しています...', '');
 
   try {
-    const url = `${RANGE_API_BASE}/api/range?from=${encodeURIComponent(dateFrom)}&to=${encodeURIComponent(dateTo)}`;
-    const res = await fetch(url);
-    const json = await res.json();
+    const startUrl = `${RANGE_API_BASE}/api/range/start?from=${encodeURIComponent(dateFrom)}&to=${encodeURIComponent(dateTo)}`;
+    const startRes = await fetch(startUrl);
+    const startJson = await startRes.json();
 
-    if (!res.ok || !json.ok) {
-      throw new Error(json.error || `取得失敗 (${res.status})`);
+    if (!startRes.ok || !startJson.ok) {
+      throw new Error(startJson.error || `開始失敗 (${startRes.status})`);
     }
 
-    const added = mergeRangeGroups(json.data || []);
-    tree = buildTree();
-    renderTree();
-
-    const rangeDays = [];
-    Object.keys(tree).forEach(y =>
-      Object.keys(tree[y]).forEach(m =>
-        Object.keys(tree[y][m]).forEach(d => {
-          const recs = tree[y][m][d] || [];
-          if (recs.some(r => r.category === 'range')) {
-            rangeDays.push(d);
-          }
-        })
-      )
-    );
-
-    rangeDays.sort().reverse();
-
-    if (rangeDays.length) {
-      const latest = rangeDays[0];
-      const [y, mo] = latest.split('-');
-      activeMonth = `${y}-${mo}`;
-      renderTree();
-      selectDay(latest);
+    const jobId = startJson.jobId;
+    if (!jobId) {
+      throw new Error('jobId を取得できませんでした');
     }
 
-    setStatus(`✓ ${added}件を反映しました`, 'ok');
+    setStatus('取得中です... しばらくお待ちください', '');
+
+    let tries = 0;
+    const maxTries = 24; // 約2分
+
+    const poll = async () => {
+      tries++;
+
+      const resultUrl = `${RANGE_API_BASE}/api/range/result?id=${encodeURIComponent(jobId)}`;
+      const resultRes = await fetch(resultUrl);
+      const resultJson = await resultRes.json();
+
+      if (!resultRes.ok) {
+        throw new Error(resultJson.error || `結果取得失敗 (${resultRes.status})`);
+      }
+
+      if (resultJson.status === 'done') {
+        const added = mergeRangeGroups(resultJson.data || []);
+        tree = buildTree();
+        renderTree();
+
+        const rangeDays = [];
+        Object.keys(tree).forEach(y =>
+          Object.keys(tree[y]).forEach(m =>
+            Object.keys(tree[y][m]).forEach(d => {
+              const recs = tree[y][m][d] || [];
+              if (recs.some(r => r.category === 'range')) {
+                rangeDays.push(d);
+              }
+            })
+          )
+        );
+
+        rangeDays.sort().reverse();
+
+        if (rangeDays.length) {
+          const latest = rangeDays[0];
+          const [y, mo] = latest.split('-');
+          activeMonth = `${y}-${mo}`;
+          renderTree();
+          selectDay(latest);
+        }
+
+        setStatus(`✓ ${added}件を反映しました`, 'ok');
+        btn.disabled = false;
+        return;
+      }
+
+      if (resultJson.status === 'error') {
+        throw new Error(resultJson.error || '取得処理でエラーが発生しました');
+      }
+
+      if (tries >= maxTries) {
+        throw new Error('タイムアウトしました。少し時間を置いて再度お試しください');
+      }
+
+      setStatus(`取得中です... (${tries * 5}秒経過)`, '');
+      setTimeout(async () => {
+        try {
+          await poll();
+        } catch (e) {
+          setStatus('エラー: ' + (e.message || String(e)), 'err');
+          btn.disabled = false;
+        }
+      }, 5000);
+    };
+
+    await poll();
+
   } catch (e) {
     setStatus('エラー: ' + (e.message || String(e)), 'err');
-  } finally {
     btn.disabled = false;
   }
 }
