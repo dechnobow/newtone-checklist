@@ -708,23 +708,6 @@ async function fetchAndMerge() {
 
     if (!Array.isArray(groups) || groups.length === 0) return;
 
-    const hasRange = groups.some(g => g.category === 'range');
-
-    if (hasRange) {
-      const targetDates = new Set(
-        groups
-          .map(g => g.date)
-          .filter(date => !removedDays[date])
-      );
-
-      Object.keys(localData).forEach(key => {
-        const date = key.split('|')[0];
-        if (targetDates.has(date)) {
-          delete localData[key];
-        }
-      });
-    }
-
     const existingIds = new Set();
     Object.values(localData).forEach(g => {
       (g.records || []).forEach(r => {
@@ -735,7 +718,8 @@ async function fetchAndMerge() {
     groups.forEach(g => {
       const date = g.date;
       const category = g.category || 'new';
-
+      
+      if (category === 'range') return;
       if (!date) return;
       if (removedDays[date]) return;
 
