@@ -843,30 +843,50 @@ function fmtMonth(ym) { const [y,m] = ym.split('-'); return MN[+m-1] + ' ' + y; 
 function fmtDay(date) { const d = new Date(date + 'T00:00:00'); return `${d.getDate()} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]}`; }
 
 // ── Pool ──
-function savePool() { saveStorage(LS_POOL, pool); }
-
+function savePool() {
+  const cleaned = {};
+  Object.entries(pool || {}).forEach(([id, record]) => {
+    if (record && typeof record === 'object' && record.id) {
+      cleaned[id] = record;
+    }
+  });
+  pool = cleaned;
+  saveStorage(LS_POOL, pool);
+}
+  
 function updatePoolTabCount() {
-  const c = Object.keys(pool).length;
+  const c = Object.values(pool || {}).filter(record => record && record.id).length;
   const el = document.getElementById('pool-tab-count');
-  if (el) el.textContent = c;
+  if (el) el.textContent = String(c);
+
   const btn = document.getElementById('pool-tab-btn');
   if (btn) btn.style.color = c > 0 ? '#ff4b00' : '';
 }
 
 function togglePool(id, record, event) {
   event.stopPropagation();
+
+  const actualRecord = record || recordMap[id];
+  if (!actualRecord || !actualRecord.id) {
+    console.warn('pool record not found:', id, record, recordMap[id]);
+    return;
+  }
+
   if (pool[id]) {
     delete pool[id];
   } else {
-    pool[id] = record;
+    pool[id] = actualRecord;
   }
+
   savePool();
   updatePoolTabCount();
+
   const btn = document.getElementById('heart-' + id);
   if (btn) {
     btn.classList.toggle('pooled', !!pool[id]);
     btn.textContent = pool[id] ? '♥' : '♡';
   }
+
   if (document.getElementById('pool-page').classList.contains('visible')) {
     renderPoolPage();
   }
@@ -894,12 +914,14 @@ function clearPool() {
 }
 
 function renderPoolPage() {
-  const items = Object.values(pool);
+  const items = Object.values(pool || {}).filter(r => r && r.id);
+
   let html = `<div class="pool-page-header">
     <button class="pool-close-btn" onclick="togglePoolPage()">‹ 戻る</button>
     <div class="pool-page-title">POOL — ${items.length} items</div>
     ${items.length > 0 ? '<button class="pool-clear-btn" onclick="clearPool()">すべて削除</button>' : ''}
   </div>`;
+
   if (items.length === 0) {
     html += '<div class="empty">プールは空です</div>';
   } else {
@@ -920,9 +942,10 @@ function renderPoolPage() {
       </div>
     `).join('');
   }
+
   document.getElementById('pool-page-content').innerHTML = html;
 }
-
+  
 function togglePoolPage() {
   const page = document.getElementById('pool-page');
   const btn = document.getElementById('pool-tab-btn');
