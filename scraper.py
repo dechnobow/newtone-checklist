@@ -339,22 +339,26 @@ if __name__ == "__main__":
 
     # 範囲取得は tmp-range.json に保存
     if date_from and date_to:
-    result = scrape_range(date_from, date_to)
+        print(f"Range scrape: {date_from} ~ {date_to}")
 
-    save_data(result, "tmp-range.json")
+        result = scrape_range(date_from, date_to)
 
-    meta = {
-        "from": date_from,
-        "to": date_to,
-        "groups": len(result),
-        "count": sum(len(g.get("records", [])) for g in result),
-        "generatedAt": datetime.now(JST).isoformat()
-    }
+        save_data(result, "tmp-range.json")
 
-    save_data(meta, "tmp-range-meta.json")
+        meta = {
+            "from": date_from,
+            "to": date_to,
+            "groups": len(result),
+            "count": sum(len(g.get("records", [])) for g in result),
+            "generatedAt": datetime.now(JST).isoformat()
+        }
 
-    print("Done.")
-    sys.exit(0)
+        save_data(meta, "tmp-range-meta.json")
+
+        print("Saved tmp-range.json successfully")
+        print("Saved tmp-range-meta.json successfully")
+
+        sys.exit(0)
 
     # full scrape は data.json 再構築扱い
     if full_scrape:
