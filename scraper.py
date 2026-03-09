@@ -91,7 +91,7 @@ def parse_article(article):
         fmt = (fmt_el.get("tab") or "").strip()
     if not fmt:
         text = article.get_text(" ", strip=True)
-        m = re.search(r"\b(12inch|LP|EP|CD|Cassette|Digital)\b", text, re.I)
+        m = re.search(r"\b(12inch|LP|EP|CD|Cassette|Digital|2LP|3LP|LP\+DL|CD＋DL)\b", text, re.I)
         if m:
             fmt = m.group(1)
 
@@ -137,10 +137,6 @@ def parse_records_from_html(html: str):
 
 
 def extract_dates_in_dom_order(html: str):
-    """
-    DOM順に article を走査して date を配列で返す。
-    例: ['2026-03-07', '2026-03-07', '2026-03-07', '2024-07-03', ...]
-    """
     soup = BeautifulSoup(html, "html.parser")
     articles = soup.select("article.list-single") or soup.select("article[id^='n_t']")
 
@@ -153,29 +149,20 @@ def extract_dates_in_dom_order(html: str):
 
 
 def get_frontier_oldest_date(html: str):
-    """
-    先頭から連続して並んでいる“新着帯”の最古日付を返す。
-    ページ途中に古いおすすめ商品が混ざっても、そこで打ち切る。
-    """
     dates = extract_dates_in_dom_order(html)
     if not dates:
         return None
 
     first_date = dates[0]
     frontier = first_date
-
-    # 先頭日付から徐々に遡っていく並びを想定
-    # 途中で大きく古い日付が飛び込んだら、新着帯が切れたとみなして打ち切る
     prev = datetime.strptime(first_date, "%Y-%m-%d").date()
 
     for d in dates:
         cur = datetime.strptime(d, "%Y-%m-%d").date()
 
-        # 新しい日付に戻るなら異常セクション混入とみなして終了
         if cur > prev:
             break
 
-        # 30日以上飛んで古くなる場合は別セクション混入とみなして終了
         if (prev - cur).days > 30:
             break
 
@@ -259,12 +246,22 @@ def scrape_range(date_from: str, date_to: str):
 
 def scrape_today_only():
     today = today_jst_str()
-    return scrape_range(today, today)
+    result = scrape_range(today, today)
+
+    # 通常データとして category を new に寄せる
+    normalized = []
+    for g in result:
+        normalized.append({
+            "date": g["date"],
+            "category": "new",
+            "records": g["records"]
+        })
+    return normalized
 
 
 def load_existing_data(path="data.json"):
     if not os.path.exists(path):
-        print("data.json not found, starting fresh")
+        print(f"{path} not found, starting fresh")
         return []
 
     try:
@@ -299,7 +296,7 @@ def merge_groups(existing, incoming):
         else:
             by_date[date] = {
                 "date": date,
-                "category": "new",
+                "category": g.get("category", "new"),
                 "records": new_records
             }
 
@@ -317,7 +314,7 @@ def merge_groups(existing, incoming):
     return merged
 
 
-def save_data(data, path="data.json"):
+def save_data(data, path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     print(f"Saved {path} successfully")
@@ -340,18 +337,28 @@ if __name__ == "__main__":
 
     print(f"Today (JST): {today_jst_str()}")
 
+    # 範囲取得は tmp-range.json に保存
     if date_from and date_to:
         result = scrape_range(date_from, date_to)
-        save_data(result, "data.json")
+        save_data(result, "tmp-range.json")
         print("Done.")
         sys.exit(0)
 
+    # full scrape は data.json 再構築扱い
     if full_scrape:
         result = scrape_range("2000-01-01", today_jst_str())
-        save_data(result, "data.json")
+        normalized = []
+        for g in result:
+            normalized.append({
+                "date": g["date"],
+                "category": "new",
+                "records": g["records"]
+            })
+        save_data(normalized, "data.json")
         print("Done.")
         sys.exit(0)
 
+    # 通常の日次更新
     today_groups = scrape_today_only()
     if not today_groups:
         print("No data scraped — skipping update")
