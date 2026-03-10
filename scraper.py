@@ -321,24 +321,19 @@ def save_data(data, path):
 
 
 if __name__ == "__main__":
-    date_from = None
-    date_to = None
-    full_scrape = "--full" in sys.argv
 
-    if "--from" in sys.argv:
-        i = sys.argv.index("--from")
-        if i + 1 < len(sys.argv):
-            date_from = sys.argv[i + 1]
+    date_from = os.getenv("DATE_FROM")
+    date_to   = os.getenv("DATE_TO")
 
-    if "--to" in sys.argv:
-        i = sys.argv.index("--to")
-        if i + 1 < len(sys.argv):
-            date_to = sys.argv[i + 1]
+    today = today_jst_str()
 
-    print(f"Today (JST): {today_jst_str()}")
+    print(f"Today (JST): {today}")
 
-    # 範囲取得は tmp-range.json に保存
+    # --------------------------------------
+    # Range scrape (アプリからの過去取得)
+    # --------------------------------------
     if date_from and date_to:
+
         print(f"Range scrape: {date_from} ~ {date_to}")
 
         result = scrape_range(date_from, date_to)
@@ -360,27 +355,34 @@ if __name__ == "__main__":
 
         sys.exit(0)
 
-    # full scrape は data.json 再構築扱い
-    if full_scrape:
-        result = scrape_range("2000-01-01", today_jst_str())
-        normalized = []
-        for g in result:
-            normalized.append({
-                "date": g["date"],
-                "category": "new",
-                "records": g["records"]
-            })
-        save_data(normalized, "data.json")
-        print("Done.")
-        sys.exit(0)
+    # --------------------------------------
+    # Daily scrape (毎朝の定期更新)
+    # 前日00:00〜当日00:00を今日更新として扱う
+    # --------------------------------------
 
-    # 通常の日次更新
-    today_groups = scrape_today_only()
-    if not today_groups:
+    target_date = (datetime.now(JST) - timedelta(days=1)).strftime("%Y-%m-%d")
+
+    print(f"Daily scrape target date: {target_date}")
+
+    result = scrape_range(target_date, target_date)
+
+    if not result:
         print("No data scraped — skipping update")
         sys.exit(0)
 
+    normalized = []
+
+    for g in result:
+        normalized.append({
+            "date": g["date"],
+            "category": "new",
+            "records": g["records"]
+        })
+
     existing = load_existing_data("data.json")
-    merged = merge_groups(existing, today_groups)
+
+    merged = merge_groups(existing, normalized)
+
     save_data(merged, "data.json")
-    print("Done.")
+
+    print("Saved data.json successfully")
