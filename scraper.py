@@ -91,11 +91,18 @@ def parse_article(article):
         fmt = (fmt_el.get("tab") or "").strip()
     if not fmt:
         text = article.get_text(" ", strip=True)
-        m = re.search(r"\b(12inch|LP|EP|CD|Cassette|Digital|2LP|3LP|LP\+DL|CD＋DL)\b", text, re.I)
+        m = re.search(
+            r"\b(12inch|LP|EP|CD|Cassette|Digital|2LP|3LP|LP\+DL|CD＋DL)\b",
+            text,
+            re.I,
+        )
         if m:
             fmt = m.group(1)
 
-    in_stock = article.select_one(".instock") is not None and article.select_one(".outofstock") is None
+    in_stock = (
+        article.select_one(".instock") is not None
+        and article.select_one(".outofstock") is None
+    )
 
     return {
         "id": rid,
@@ -183,8 +190,11 @@ def click_view_more_until(page, target_from: str, max_clicks: int = 80):
             frontier_date = datetime.strptime(frontier, "%Y-%m-%d").date()
             print(f"[{i}] frontier oldest date: {frontier}")
 
-            if frontier_date <= target_from_date:
-                print("Target start date reached.")
+            # target_from と同日が見えた段階ではまだ止めない。
+            # 同日の続きを View More 側に持っている可能性があるため、
+            # target_from より古い日付が見えて初めて十分読み込めたと判断する。
+            if frontier_date < target_from_date:
+                print("Target start date fully passed. Stop.")
                 break
 
         button = page.locator("text=View More")
@@ -235,28 +245,13 @@ def scrape_range(date_from: str, date_to: str):
             filtered.append({
                 "date": d,
                 "category": "range",
-                "records": grouped[d]
+                "records": grouped[d],
             })
 
     print(f"Filtered groups: {len(filtered)}")
     total = sum(len(g["records"]) for g in filtered)
     print(f"Filtered records: {total}")
     return filtered
-
-
-def scrape_today_only():
-    today = today_jst_str()
-    result = scrape_range(today, today)
-
-    # 通常データとして category を new に寄せる
-    normalized = []
-    for g in result:
-        normalized.append({
-            "date": g["date"],
-            "category": "new",
-            "records": g["records"]
-        })
-    return normalized
 
 
 def load_existing_data(path="data.json"):
@@ -297,7 +292,7 @@ def merge_groups(existing, incoming):
             by_date[date] = {
                 "date": date,
                 "category": g.get("category", "new"),
-                "records": new_records
+                "records": new_records,
             }
 
         for r in new_records:
@@ -323,17 +318,15 @@ def save_data(data, path):
 if __name__ == "__main__":
 
     date_from = os.getenv("DATE_FROM")
-    date_to   = os.getenv("DATE_TO")
+    date_to = os.getenv("DATE_TO")
 
     today = today_jst_str()
-
     print(f"Today (JST): {today}")
 
     # --------------------------------------
     # Range scrape (アプリからの過去取得)
     # --------------------------------------
     if date_from and date_to:
-
         print(f"Range scrape: {date_from} ~ {date_to}")
 
         result = scrape_range(date_from, date_to)
@@ -345,41 +338,56 @@ if __name__ == "__main__":
             "to": date_to,
             "groups": len(result),
             "count": sum(len(g.get("records", [])) for g in result),
-            "generatedAt": datetime.now(JST).isoformat()
+            "generatedAt": datetime.now(JST).isoformat(),
         }
 
         save_data(meta, "tmp-range-meta.json")
 
         print("Saved tmp-range.json successfully")
         print("Saved tmp-range-meta.json successfully")
-
         sys.exit(0)
 
     # --------------------------------------
     # Daily scrape (毎朝の定期更新)
-    # 前日00:00〜当日00:00を今日更新として扱う
+    # 最後に取得した日付の翌日〜昨日までをまとめて取得
     # --------------------------------------
+    existing = load_existing_data("data.json")
+    existing.sort(key=lambda x: x["date"], reverse=True)
 
-    target_date = (datetime.now(JST) - timedelta(days=1)).strftime("%Y-%m-%d")
+    yesterday = (datetime.now(JST) - timedelta(days=1)).date()
+    latest_date = existing[0]["date"] if existing else None
 
-    print(f"Daily scrape target date: {target_date}")
+    if latest_date:
+        target_from_date = (
+            datetime.strptime(latest_date, "%Y-%m-%d").date() + timedelta(days=1)
+        )
+    else:
+        target_from_date = yesterday
 
-    result = scrape_range(target_date, target_date)
+    target_to_date = yesterday
+
+    if target_from_date > target_to_date:
+        print("No missing daily range to scrape — skipping update")
+        sys.exit(0)
+
+    target_from = target_from_date.strftime("%Y-%m-%d")
+    target_to = target_to_date.strftime("%Y-%m-%d")
+
+    print(f"Daily scrape target range: {target_from} ~ {target_to}")
+
+    result = scrape_range(target_from, target_to)
 
     if not result:
-        print("No data scraped — skipping update")
+        print("No data scraped in missing daily range — skipping update")
         sys.exit(0)
 
     normalized = []
-
     for g in result:
         normalized.append({
             "date": g["date"],
             "category": "new",
-            "records": g["records"]
+            "records": g["records"],
         })
-
-    existing = load_existing_data("data.json")
 
     merged = merge_groups(existing, normalized)
 
