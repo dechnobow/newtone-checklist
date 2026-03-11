@@ -34,7 +34,29 @@ def absolute_url(url: str) -> str:
     return BASE_URL + "/" + url
 
 
+def should_include_article(article) -> bool:
+    text = article.get_text(" ", strip=True)
+
+    is_new_release = "New Release" in text
+    is_back_in = "Back In" in text
+
+    is_preorder = "予約" in text or "Pre-Order" in text or "Preorder" in text
+    is_used = "中古盤" in text or re.search(r"\bUsed\b", text, re.I) is not None
+
+    if not (is_new_release or is_back_in):
+        return False
+
+    if is_preorder or is_used:
+        return False
+
+    return True
+
+
 def parse_article(article):
+
+    if not should_include_article(article):
+        return None
+
     article_id = article.get("id", "") or ""
 
     rid = ""
