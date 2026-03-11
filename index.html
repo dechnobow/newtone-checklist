@@ -1421,6 +1421,9 @@ async function openAppleMusic(record, event) {
   const title = (record.title || '').trim();
 
   const query = [artist, title].filter(Boolean).join(' ');
+
+  console.log("AppleMusic query:", query);
+  
   if (!query) {
     alert('検索対象がありません');
     return;
