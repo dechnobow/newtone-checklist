@@ -966,6 +966,13 @@ function renderPoolPage() {
             ${r.used ? `<span class="tag used">USED</span>` : ''}
             ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
           </div>
+          <div class="record-links">
+            <button
+              class="apple-link js-apple-btn"
+              type="button"
+              data-record-id="${r.id}"
+            >Apple Music</button>
+          </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
       </div>
@@ -973,6 +980,7 @@ function renderPoolPage() {
   }
 
   document.getElementById('pool-page-content').innerHTML = html;
+  bindAppleMusicButtons(document.getElementById('pool-page-content'));
 }
   
 function togglePoolPage() {
@@ -1249,6 +1257,13 @@ function renderDay(date) {
               ${r.used ? `<span class="tag used">USED</span>` : ''}
               ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
             </div>
+            <div class="record-links">
+              <button
+                class="apple-link js-apple-btn"
+                type="button"
+                data-record-id="${r.id}"
+              >Apple Music</button>
+            </div>
           </div>
           <div class="record-actions">
             <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()">↗</a>
@@ -1260,6 +1275,7 @@ function renderDay(date) {
   }
 
   document.getElementById('day-content').innerHTML = html;
+  bindAppleMusicButtons(document.getElementById('day-content'));
   document.getElementById('day-panel').scrollTop = 0;
 }
 
