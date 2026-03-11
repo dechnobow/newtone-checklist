@@ -1249,15 +1249,6 @@ function renderDay(date) {
               ${r.used ? `<span class="tag used">USED</span>` : ''}
               ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
             </div>
-            <div class="record-links">
-              <a
-                class="apple-link"
-                href="${buildAppleMusicSearchUrl(r)}"
-                target="_blank"
-                rel="noopener noreferrer"
-                onclick="event.stopPropagation()"
-              >Apple Music</a>
-            </div>
           </div>
           <div class="record-actions">
             <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()">↗</a>
