@@ -1414,26 +1414,95 @@ async function init() {
 init();
 
 // ── Apple music ──
-function openAppleMusic(record, event) {
+async function openAppleMusic(record, event) {
   if (event) event.stopPropagation();
 
   const artist = (record.artist || '').trim();
   const title = (record.title || '').trim();
 
   const query = [artist, title].filter(Boolean).join(' ');
-
   if (!query) {
-    alert('検索できません');
+    alert('検索対象がありません');
     return;
   }
 
-  const url =
-    "https://music.apple.com/jp/search?term=" +
-    encodeURIComponent(query);
+  const normalize = (s) =>
+    (s || '')
+      .toLowerCase()
+      .normalize('NFKC')
+      .replace(/[^\p{L}\p{N}]+/gu, ' ')
+      .trim();
 
-  window.open(url, "_blank", "noopener,noreferrer");
+  const artistNorm = normalize(artist);
+  const titleNorm = normalize(title);
+
+  try {
+    const url =
+      'https://itunes.apple.com/search?' +
+      new URLSearchParams({
+        term: query,
+        country: 'JP',
+        media: 'music',
+        entity: 'album,song',
+        limit: '20'
+      }).toString();
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('search failed');
+
+    const data = await res.json();
+    const results = Array.isArray(data.results) ? data.results : [];
+
+    if (!results.length) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    function scoreResult(r) {
+      const rArtist = normalize(r.artistName || '');
+      const rAlbum = normalize(r.collectionName || '');
+      const rTrack = normalize(r.trackName || '');
+
+      let score = 0;
+
+      if (artistNorm && rArtist.includes(artistNorm)) score += 50;
+      if (titleNorm && rAlbum.includes(titleNorm)) score += 40;
+      if (titleNorm && rTrack.includes(titleNorm)) score += 40;
+
+      if (artistNorm && rArtist === artistNorm) score += 30;
+      if (titleNorm && rAlbum === titleNorm) score += 25;
+      if (titleNorm && rTrack === titleNorm) score += 25;
+
+      if (r.wrapperType === 'collection') score += 10;
+
+      return score;
+    }
+
+    const ranked = results
+      .map(r => ({ ...r, _score: scoreResult(r) }))
+      .sort((a, b) => b._score - a._score);
+
+    const best = ranked[0];
+
+    if (!best || best._score <= 0) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    const targetUrl =
+      best.collectionViewUrl ||
+      best.trackViewUrl ||
+      best.artistViewUrl;
+
+    if (!targetUrl) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+
+  } catch (err) {
+    console.error('Apple Music search error:', err);
+    alert('Apple Music検索に失敗しました');
+  }
 }
-
-</script>
-</body>
-</html>
