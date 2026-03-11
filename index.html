@@ -963,15 +963,8 @@ function renderPoolPage() {
             ${r.format ? `<span class="tag">${r.format}</span>` : ''}
             ${r.label ? `<span class="tag">${r.label}</span>` : ''}
             ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
-          </div>
-          <div class="record-links">
-            <a
-              class="apple-link"
-              href="${buildAppleMusicSearchUrl(r)}"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >Apple Music</a>
+            ${r.used ? `<span class="tag used">USED</span>` : ''}
+            ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
           </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
