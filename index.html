@@ -1275,7 +1275,20 @@ function renderDay(date) {
   }
 
   document.getElementById('day-content').innerHTML = html;
-  bindAppleMusicButtons(document.getElementById('day-content'));
+
+  document.querySelectorAll('#day-content .js-apple-btn').forEach(btn => {
+    btn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const id = btn.dataset.recordId;
+      const record = recordMap[id];
+      if (!record) {
+        alert('レコード情報を取得できませんでした');
+        return;
+      }
+      openAppleMusic(record);
+    });
+  });
+
   document.getElementById('day-panel').scrollTop = 0;
 }
 
@@ -1495,9 +1508,7 @@ function pickBestAppleResult(results, artist, title) {
     .sort((a, b) => b._score - a._score)[0];
 }
 
-async function openAppleMusic(record, event) {
-  if (event) event.stopPropagation();
-
+function openAppleMusic(record) {
   const artist = (record?.artist || '').trim();
   const title = (record?.title || '').trim();
   const query = [artist, title].filter(Boolean).join(' ');
@@ -1509,57 +1520,11 @@ async function openAppleMusic(record, event) {
     return;
   }
 
-  try {
-    const songData = await itunesJsonpSearch({
-      term: query,
-      country: 'JP',
-      media: 'music',
-      entity: 'song',
-      limit: '20',
-      lang: 'ja_jp'
-    });
+  const url =
+    'https://www.google.com/search?q=' +
+    encodeURIComponent(`site:music.apple.com ${query}`);
 
-    let results = Array.isArray(songData.results) ? songData.results : [];
-
-    if (!results.length) {
-      const albumData = await itunesJsonpSearch({
-        term: query,
-        country: 'JP',
-        media: 'music',
-        entity: 'album',
-        limit: '20',
-        lang: 'ja_jp'
-      });
-      results = Array.isArray(albumData.results) ? albumData.results : [];
-    }
-
-    if (!results.length) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    const best = pickBestAppleResult(results, artist, title);
-
-    if (!best || (best._score ?? 0) <= 0) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    const targetUrl =
-      best.trackViewUrl ||
-      best.collectionViewUrl ||
-      best.artistViewUrl;
-
-    if (!targetUrl) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    window.open(targetUrl, '_blank', 'noopener,noreferrer');
-  } catch (err) {
-    console.error('Apple Music search error:', err);
-    alert('Apple Music検索に失敗しました');
-  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 </script>
