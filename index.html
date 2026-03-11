@@ -1590,7 +1590,7 @@ function pickBestAppleResult(results, artist, title) {
     .sort((a, b) => b._score - a._score)[0];
 }
 
-async function openAppleMusic(record) {
+function openAppleMusic(record) {
   const title = (record?.title || '').trim();
   const artist = (record?.artist || '').trim();
   const query = title || artist;
@@ -1600,39 +1600,11 @@ async function openAppleMusic(record) {
     return;
   }
 
-  try {
-    const data = await itunesJsonpSearch({
-      term: query,
-      country: 'JP',
-      media: 'music',
-      entity: 'song',
-      limit: '10',
-      lang: 'ja_jp'
-    });
+  const url =
+    'https://www.google.com/search?q=' +
+    encodeURIComponent(`site:music.apple.com ${query}`);
 
-    const results = Array.isArray(data.results) ? data.results : [];
-
-    if (!results.length) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    const first = results[0];
-    const url =
-      first.trackViewUrl ||
-      first.collectionViewUrl ||
-      first.artistViewUrl;
-
-    if (!url) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    window.open(url, '_blank', 'noopener,noreferrer');
-  } catch (err) {
-    console.error(err);
-    alert('Apple Music検索に失敗しました');
-  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 </script>
