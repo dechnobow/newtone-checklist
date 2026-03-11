@@ -1414,7 +1414,7 @@ async function init() {
 init();
 
 // ── Apple music ──
-async function openAppleMusic(record, event) {
+function openAppleMusic(record, event) {
   if (event) event.stopPropagation();
 
   const artist = (record.artist || '').trim();
@@ -1422,66 +1422,16 @@ async function openAppleMusic(record, event) {
 
   const query = [artist, title].filter(Boolean).join(' ');
 
-  console.log("AppleMusic query:", query);
-  
   if (!query) {
-    alert('検索対象がありません');
+    alert('検索できません');
     return;
   }
 
-  try {
-    const url =
-      'https://itunes.apple.com/search?' +
-      new URLSearchParams({
-        term: query,
-        country: 'JP',
-        media: 'music',
-        entity: 'album',
-        limit: '10'
-      }).toString();
+  const url =
+    "https://music.apple.com/jp/search?term=" +
+    encodeURIComponent(query);
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('search failed');
-
-    const data = await res.json();
-    const results = Array.isArray(data.results) ? data.results : [];
-
-    if (!results.length) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    const norm = s =>
-      (s || '')
-        .toLowerCase()
-        .replace(/[^\p{L}\p{N}]+/gu, ' ')
-        .trim();
-
-    const artistNorm = norm(artist);
-    const titleNorm = norm(title);
-
-    let best =
-      results.find(r =>
-        norm(r.artistName).includes(artistNorm) &&
-        norm(r.collectionName).includes(titleNorm)
-      ) ||
-      results.find(r =>
-        norm(r.collectionName).includes(titleNorm)
-      ) ||
-      results[0];
-
-    const targetUrl = best.collectionViewUrl || best.trackViewUrl || best.artistViewUrl;
-
-    if (!targetUrl) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    window.open(targetUrl, '_blank', 'noopener,noreferrer');
-  } catch (err) {
-    console.error(err);
-    alert('Apple Music検索に失敗しました');
-  }
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 </script>
