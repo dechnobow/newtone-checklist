@@ -1591,11 +1591,9 @@ function pickBestAppleResult(results, artist, title) {
 }
 
 async function openAppleMusic(record) {
-  const artist = (record?.artist || '').trim();
   const title = (record?.title || '').trim();
-  const query = [artist, title].filter(Boolean).join(' ');
-
-  console.log('Apple Music query:', query);
+  const artist = (record?.artist || '').trim();
+  const query = title || artist;
 
   if (!query) {
     alert('検索対象がありません');
@@ -1603,54 +1601,36 @@ async function openAppleMusic(record) {
   }
 
   try {
-    const songData = await itunesJsonpSearch({
+    const data = await itunesJsonpSearch({
       term: query,
       country: 'JP',
       media: 'music',
       entity: 'song',
-      limit: '20',
+      limit: '10',
       lang: 'ja_jp'
     });
 
-    let results = Array.isArray(songData.results) ? songData.results : [];
-
-    if (!results.length) {
-      const albumData = await itunesJsonpSearch({
-        term: query,
-        country: 'JP',
-        media: 'music',
-        entity: 'album',
-        limit: '20',
-        lang: 'ja_jp'
-      });
-      results = Array.isArray(albumData.results) ? albumData.results : [];
-    }
+    const results = Array.isArray(data.results) ? data.results : [];
 
     if (!results.length) {
       alert('Apple Musicで見つかりません');
       return;
     }
 
-    const best = pickBestAppleResult(results, artist, title);
+    const first = results[0];
+    const url =
+      first.trackViewUrl ||
+      first.collectionViewUrl ||
+      first.artistViewUrl;
 
-    if (!best || (best._score ?? 0) <= 0) {
+    if (!url) {
       alert('Apple Musicで見つかりません');
       return;
     }
 
-    const targetUrl =
-      best.trackViewUrl ||
-      best.collectionViewUrl ||
-      best.artistViewUrl;
-
-    if (!targetUrl) {
-      alert('Apple Musicで見つかりません');
-      return;
-    }
-
-    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    window.open(url, '_blank', 'noopener,noreferrer');
   } catch (err) {
-    console.error('Apple Music search error:', err);
+    console.error(err);
     alert('Apple Music検索に失敗しました');
   }
 }
