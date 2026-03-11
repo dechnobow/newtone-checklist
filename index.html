@@ -628,6 +628,33 @@
     min-width: 44px;
   }
   #gear-btn:hover { color: var(--text); }
+
+  .record-links {
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .apple-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid #2a2a2a;
+    background: #181818;
+    color: #e8e8e8;
+    font-size: 12px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .apple-link:hover {
+    opacity: 0.85;
+  }
+
 </style>
 </head>
 <body>
@@ -937,6 +964,15 @@ function renderPoolPage() {
             ${r.label ? `<span class="tag">${r.label}</span>` : ''}
             ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
           </div>
+          <div class="record-links">
+            <a
+              class="apple-link"
+              href="${buildAppleMusicSearchUrl(r)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation()"
+            >Apple Music</a>
+          </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
       </div>
@@ -1220,6 +1256,15 @@ function renderDay(date) {
               ${r.used ? `<span class="tag used">USED</span>` : ''}
               ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
             </div>
+            <div class="record-links">
+              <a
+                class="apple-link"
+                href="${buildAppleMusicSearchUrl(r)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >Apple Music</a>
+            </div>
           </div>
           <div class="record-actions">
             <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()">↗</a>
@@ -1366,6 +1411,17 @@ async function init() {
 }
 
 init();
+
+// ── Apple music ──
+function buildAppleMusicSearchUrl(record) {
+  const artist = (record.artist || "").trim();
+  const title = (record.title || "").trim();
+  const label = (record.label || "").trim();
+  
+  const query = [artist, title, label].filter(Boolean).join(" ");
+  return `https://music.apple.com/jp/search?term=${encodeURIComponent(query)}`;
+}
+
 </script>
 </body>
 </html>
