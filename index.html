@@ -1593,7 +1593,7 @@ function pickBestAppleResult(results, artist, title) {
 function openAppleMusic(record) {
   const title = (record?.title || '').trim();
   const artist = (record?.artist || '').trim();
-  const query = title || artist;
+  const query = [artist, title].filter(Boolean).join(' ');
 
   if (!query) {
     alert('検索対象がありません');
@@ -1601,8 +1601,8 @@ function openAppleMusic(record) {
   }
 
   const url =
-    'https://www.google.com/search?q=' +
-    encodeURIComponent(`site:music.apple.com ${query}`);
+    'https://music.apple.com/jp/search?term=' +
+    encodeURIComponent(query);
 
   window.open(url, '_blank', 'noopener,noreferrer');
 }
