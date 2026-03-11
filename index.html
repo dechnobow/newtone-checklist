@@ -649,8 +649,6 @@
     line-height: 1;
     text-decoration: none;
     cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
   }
 
   .apple-link:hover {
@@ -954,9 +952,6 @@ function renderPoolPage() {
   if (items.length === 0) {
     html += '<div class="empty">プールは空です</div>';
   } else {
-  
-    items.forEach(r => { recordMap[r.id] = r; });
-  
     html += items.map(r => `
       <div class="record-item" id="pool-row-${r.id}">
         <button class="heart-btn pooled" onclick="removeFromPool('${r.id}')">♥</button>
@@ -970,11 +965,13 @@ function renderPoolPage() {
             ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
           </div>
           <div class="record-links">
-            <button
+            <a
               class="apple-link"
-              type="button"
-              onclick='openAppleMusic(recordMap["${r.id}"], event)'
-            >Apple Music</button>
+              href="${buildAppleMusicSearchUrl(r)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation()"
+            >Apple Music</a>
           </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
@@ -1260,11 +1257,13 @@ function renderDay(date) {
               ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
             </div>
             <div class="record-links">
-              <button
+              <a
                 class="apple-link"
-                type="button"
-                onclick='openAppleMusic(${JSON.stringify(r).replace(/'/g, "&apos;")}, event)'
-              >Apple Music</button>
+                href="${buildAppleMusicSearchUrl(r)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+              >Apple Music</a>
             </div>
           </div>
           <div class="record-actions">
@@ -1414,84 +1413,141 @@ async function init() {
 init();
 
 // ── Apple music ──
+function itunesJsonpSearch(params) {
+  return new Promise((resolve, reject) => {
+    const callbackName = `itunesJsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+    const script = document.createElement('script');
+
+    let finished = false;
+
+    const cleanup = () => {
+      finished = true;
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+    };
+
+    window[callbackName] = (data) => {
+      if (finished) return;
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror = () => {
+      if (finished) return;
+      cleanup();
+      reject(new Error('JSONP load failed'));
+    };
+
+    const qs = new URLSearchParams({
+      ...params,
+      callback: callbackName
+    }).toString();
+
+    script.src = `https://itunes.apple.com/search?${qs}`;
+    document.body.appendChild(script);
+
+    setTimeout(() => {
+      if (finished) return;
+      cleanup();
+      reject(new Error('JSONP timeout'));
+    }, 10000);
+  });
+}
+
+function normalizeAppleText(s) {
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFKC')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+
+function scoreAppleResult(result, artistNorm, titleNorm) {
+  const rArtist = normalizeAppleText(result.artistName || '');
+  const rAlbum = normalizeAppleText(result.collectionName || '');
+  const rTrack = normalizeAppleText(result.trackName || '');
+
+  let score = 0;
+
+  if (artistNorm && rArtist.includes(artistNorm)) score += 50;
+  if (titleNorm && rTrack.includes(titleNorm)) score += 45;
+  if (titleNorm && rAlbum.includes(titleNorm)) score += 35;
+
+  if (artistNorm && rArtist === artistNorm) score += 30;
+  if (titleNorm && rTrack === titleNorm) score += 30;
+  if (titleNorm && rAlbum === titleNorm) score += 20;
+
+  if (result.wrapperType === 'track') score += 8;
+  if (result.wrapperType === 'collection') score += 5;
+
+  return score;
+}
+
+function pickBestAppleResult(results, artist, title) {
+  const artistNorm = normalizeAppleText(artist);
+  const titleNorm = normalizeAppleText(title);
+
+  return results
+    .map(r => ({
+      ...r,
+      _score: scoreAppleResult(r, artistNorm, titleNorm)
+    }))
+    .sort((a, b) => b._score - a._score)[0];
+}
+
 async function openAppleMusic(record, event) {
   if (event) event.stopPropagation();
 
-  const artist = (record.artist || '').trim();
-  const title = (record.title || '').trim();
-
+  const artist = (record?.artist || '').trim();
+  const title = (record?.title || '').trim();
   const query = [artist, title].filter(Boolean).join(' ');
+
+  console.log('Apple Music query:', query);
+
   if (!query) {
     alert('検索対象がありません');
     return;
   }
 
-  const normalize = (s) =>
-    (s || '')
-      .toLowerCase()
-      .normalize('NFKC')
-      .replace(/[^\p{L}\p{N}]+/gu, ' ')
-      .trim();
-
-  const artistNorm = normalize(artist);
-  const titleNorm = normalize(title);
-
   try {
-    const url =
-      'https://itunes.apple.com/search?' +
-      new URLSearchParams({
+    const songData = await itunesJsonpSearch({
+      term: query,
+      country: 'JP',
+      media: 'music',
+      entity: 'song',
+      limit: '20',
+      lang: 'ja_jp'
+    });
+
+    let results = Array.isArray(songData.results) ? songData.results : [];
+
+    if (!results.length) {
+      const albumData = await itunesJsonpSearch({
         term: query,
         country: 'JP',
         media: 'music',
-        entity: 'album,song',
-        limit: '20'
-      }).toString();
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('search failed');
-
-    const data = await res.json();
-    const results = Array.isArray(data.results) ? data.results : [];
+        entity: 'album',
+        limit: '20',
+        lang: 'ja_jp'
+      });
+      results = Array.isArray(albumData.results) ? albumData.results : [];
+    }
 
     if (!results.length) {
       alert('Apple Musicで見つかりません');
       return;
     }
 
-    function scoreResult(r) {
-      const rArtist = normalize(r.artistName || '');
-      const rAlbum = normalize(r.collectionName || '');
-      const rTrack = normalize(r.trackName || '');
+    const best = pickBestAppleResult(results, artist, title);
 
-      let score = 0;
-
-      if (artistNorm && rArtist.includes(artistNorm)) score += 50;
-      if (titleNorm && rAlbum.includes(titleNorm)) score += 40;
-      if (titleNorm && rTrack.includes(titleNorm)) score += 40;
-
-      if (artistNorm && rArtist === artistNorm) score += 30;
-      if (titleNorm && rAlbum === titleNorm) score += 25;
-      if (titleNorm && rTrack === titleNorm) score += 25;
-
-      if (r.wrapperType === 'collection') score += 10;
-
-      return score;
-    }
-
-    const ranked = results
-      .map(r => ({ ...r, _score: scoreResult(r) }))
-      .sort((a, b) => b._score - a._score);
-
-    const best = ranked[0];
-
-    if (!best || best._score <= 0) {
+    if (!best || (best._score ?? 0) <= 0) {
       alert('Apple Musicで見つかりません');
       return;
     }
 
     const targetUrl =
-      best.collectionViewUrl ||
       best.trackViewUrl ||
+      best.collectionViewUrl ||
       best.artistViewUrl;
 
     if (!targetUrl) {
@@ -1500,12 +1556,12 @@ async function openAppleMusic(record, event) {
     }
 
     window.open(targetUrl, '_blank', 'noopener,noreferrer');
-
   } catch (err) {
     console.error('Apple Music search error:', err);
     alert('Apple Music検索に失敗しました');
   }
 }
+
 </script>
 </body>
 </html>
