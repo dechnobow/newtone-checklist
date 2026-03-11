@@ -965,13 +965,11 @@ function renderPoolPage() {
             ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
           </div>
           <div class="record-links">
-            <a
+            <button
               class="apple-link"
-              href="${buildAppleMusicSearchUrl(r)}"
-              target="_blank"
-              rel="noopener noreferrer"
-              onclick="event.stopPropagation()"
-            >Apple Music</a>
+              type="button"
+              onclick='openAppleMusic(recordMap["${r.id}"], event)'
+            >Apple Music</button>
           </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
