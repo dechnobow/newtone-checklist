@@ -1508,7 +1508,89 @@ function pickBestAppleResult(results, artist, title) {
     .sort((a, b) => b._score - a._score)[0];
 }
 
-function openAppleMusic(record) {
+function itunesJsonpSearch(params) {
+  return new Promise((resolve, reject) => {
+    const callbackName = `itunesJsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+    const script = document.createElement('script');
+    let finished = false;
+
+    const cleanup = () => {
+      finished = true;
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try {
+        delete window[callbackName];
+      } catch (_) {
+        window[callbackName] = undefined;
+      }
+    };
+
+    window[callbackName] = (data) => {
+      if (finished) return;
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror = () => {
+      if (finished) return;
+      cleanup();
+      reject(new Error('JSONP load failed'));
+    };
+
+    const qs = new URLSearchParams({
+      ...params,
+      callback: callbackName
+    }).toString();
+
+    script.src = `https://itunes.apple.com/search?${qs}`;
+    document.body.appendChild(script);
+
+    setTimeout(() => {
+      if (finished) return;
+      cleanup();
+      reject(new Error('JSONP timeout'));
+    }, 10000);
+  });
+}
+
+function normalizeAppleText(s) {
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFKC')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+
+function pickBestAppleResult(results, artist, title) {
+  const artistNorm = normalizeAppleText(artist);
+  const titleNorm = normalizeAppleText(title);
+
+  function score(result) {
+    const rArtist = normalizeAppleText(result.artistName || '');
+    const rAlbum = normalizeAppleText(result.collectionName || '');
+    const rTrack = normalizeAppleText(result.trackName || '');
+
+    let score = 0;
+
+    if (artistNorm && rArtist.includes(artistNorm)) score += 50;
+    if (titleNorm && rTrack.includes(titleNorm)) score += 45;
+    if (titleNorm && rAlbum.includes(titleNorm)) score += 35;
+
+    if (artistNorm && rArtist === artistNorm) score += 30;
+    if (titleNorm && rTrack === titleNorm) score += 30;
+    if (titleNorm && rAlbum === titleNorm) score += 20;
+
+    if (result.wrapperType === 'track') score += 8;
+    if (result.wrapperType === 'collection') score += 5;
+
+    return score;
+  }
+
+  return results
+    .map(r => ({ ...r, _score: score(r) }))
+    .sort((a, b) => b._score - a._score)[0];
+}
+
+async function openAppleMusic(record) {
   const artist = (record?.artist || '').trim();
   const title = (record?.title || '').trim();
   const query = [artist, title].filter(Boolean).join(' ');
@@ -1520,11 +1602,57 @@ function openAppleMusic(record) {
     return;
   }
 
-  const url =
-    'https://www.google.com/search?q=' +
-    encodeURIComponent(`site:music.apple.com ${query}`);
+  try {
+    const songData = await itunesJsonpSearch({
+      term: query,
+      country: 'JP',
+      media: 'music',
+      entity: 'song',
+      limit: '20',
+      lang: 'ja_jp'
+    });
 
-  window.open(url, '_blank', 'noopener,noreferrer');
+    let results = Array.isArray(songData.results) ? songData.results : [];
+
+    if (!results.length) {
+      const albumData = await itunesJsonpSearch({
+        term: query,
+        country: 'JP',
+        media: 'music',
+        entity: 'album',
+        limit: '20',
+        lang: 'ja_jp'
+      });
+      results = Array.isArray(albumData.results) ? albumData.results : [];
+    }
+
+    if (!results.length) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    const best = pickBestAppleResult(results, artist, title);
+
+    if (!best || (best._score ?? 0) <= 0) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    const targetUrl =
+      best.trackViewUrl ||
+      best.collectionViewUrl ||
+      best.artistViewUrl;
+
+    if (!targetUrl) {
+      alert('Apple Musicで見つかりません');
+      return;
+    }
+
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+  } catch (err) {
+    console.error('Apple Music search error:', err);
+    alert('Apple Music検索に失敗しました');
+  }
 }
 
 </script>
