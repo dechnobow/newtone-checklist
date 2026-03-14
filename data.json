@@ -1,5 +1,50 @@
 [
   {
+    "date": "2026-03-14",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116984",
+        "artist": "Trinidadian Deep",
+        "title": "Project Nasty EP",
+        "label": "Makin' Moves",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_15/n_t0116984.jpg",
+        "url": "https://newtone-records.com/product/0116984",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116982",
+        "artist": "Mark de Clive-Lowe / Andrea Lombardini / Tommaso Cappellato",
+        "title": "Dreamweavers II",
+        "label": "Mother Tongue Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_15/n_t0116982.jpg",
+        "url": "https://newtone-records.com/product/0116982",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116985",
+        "artist": "VARIOUS",
+        "title": "Title: Frisson Ep Part 1",
+        "label": "Ten Lovers Music",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_15/n_t0116985.png",
+        "url": "https://newtone-records.com/product/0116985",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-03-13",
     "category": "new",
     "records": [
