@@ -954,20 +954,46 @@ function renderPoolPage() {
   if (items.length === 0) {
     html += '<div class="empty">プールは空です</div>';
   } else {
+
+    // ★ Apple Music検索用
+    items.forEach(r => { recordMap[r.id] = r; });
+
     html += items.map(r => `
       <div class="record-item" id="pool-row-${r.id}">
         <button class="heart-btn pooled" onclick="removeFromPool('${r.id}')">♥</button>
-        <img class="record-thumb" src="${r.img || ''}" onerror="this.style.opacity=0" loading="lazy">
+
+        <img class="record-thumb"
+             src="${r.img || ''}"
+             onerror="this.style.opacity=0"
+             loading="lazy">
+
         <div class="record-info">
+
           <div class="record-artist">${r.artist || ''}</div>
+
           <div class="record-title">${r.title || ''}</div>
+
           <div class="record-tags">
             ${r.format ? `<span class="tag">${r.format}</span>` : ''}
             ${r.label ? `<span class="tag">${r.label}</span>` : ''}
             ${r.genre ? `<span class="tag">${r.genre}</span>` : ''}
           </div>
+
+          <div class="record-links">
+            <button
+              class="apple-link"
+              onclick="openAppleMusic(recordMap['${r.id}']); event.stopPropagation();"
+            >Apple Music</button>
+          </div>
+
         </div>
-        <a class="record-link-btn" href="${r.url || '#'}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">↗</a>
+
+        <a class="record-link-btn"
+           href="${r.url || '#'}"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="event.stopPropagation()">↗</a>
+
       </div>
     `).join('');
   }
