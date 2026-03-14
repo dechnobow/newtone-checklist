@@ -664,7 +664,7 @@
     <button id="back-btn" onclick="showList()">‹</button>
     <div class="header-title">Newtone Records</div>
     <div id="header-sub">新譜チェック</div>
-    <button id="pool-tab-btn" onclick="togglePoolPage()">♡ <span id="pool-tab-count">0</span></button>
+    <button id="pool-tab-btn" onclick="forceOpenPoolPage()">♡ <span id="pool-tab-count">0</span></button>
     <button id="gear-btn" onclick="toggleSettingsPage()" title="設定">⚙</button>
   </header>
 
@@ -1569,6 +1569,31 @@ function openAppleMusic(record) {
     encodeURIComponent(`site:music.apple.com ${query}`);
 
   window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function forceOpenPoolPage() {
+  const page = document.getElementById('pool-page');
+  const btn = document.getElementById('pool-tab-btn');
+  const content = document.getElementById('pool-page-content');
+
+  content.innerHTML = `
+    <div class="pool-page-header">
+      <button class="pool-close-btn" onclick="forceClosePoolPage()">‹ 戻る</button>
+      <div class="pool-page-title">POOL TEST</div>
+    </div>
+    <div class="empty">テスト表示です</div>
+  `;
+
+  page.classList.add('visible');
+  btn.classList.add('active');
+  page.scrollTop = 0;
+}
+
+function forceClosePoolPage() {
+  const page = document.getElementById('pool-page');
+  const btn = document.getElementById('pool-tab-btn');
+  page.classList.remove('visible');
+  btn.classList.remove('active');
 }
 
 </script>
