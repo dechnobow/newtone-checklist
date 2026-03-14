@@ -966,13 +966,6 @@ function renderPoolPage() {
             ${r.used ? `<span class="tag used">USED</span>` : ''}
             ${r.preorder ? `<span class="tag preorder">予約</span>` : ''}
           </div>
-          <div class="record-links">
-            <button
-              class="apple-link js-apple-btn"
-              type="button"
-              data-record-id="${r.id}"
-            >Apple Music</button>
-          </div>
         </div>
         <a class="record-link-btn" href="${r.url || '#'}" target="_self" onclick="event.stopPropagation()" style="text-decoration:none">↗</a>
       </div>
