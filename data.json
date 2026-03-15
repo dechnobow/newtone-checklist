@@ -1,5 +1,89 @@
 [
   {
+    "date": "2026-03-15",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117254",
+        "artist": "Hiss Is Bliss Feat. Ras Tweed",
+        "title": "Word Sound And Power",
+        "label": "777Hz",
+        "format": "10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_09/n_t0117254.jpg",
+        "url": "https://newtone-records.com/product/0117254",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116349",
+        "artist": "Kinzua",
+        "title": "Never Fret, Never Fail EP",
+        "label": "Confusion is next to happiness",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_15/n_t0116349.jpg",
+        "url": "https://newtone-records.com/product/0116349",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116994",
+        "artist": "Else Marie Pade",
+        "title": "Complete Electronic Works 1955-2012",
+        "label": "Dacapo Records",
+        "format": "Book+CD+Complete Digital Discography",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_16/n_t0116994.jpeg",
+        "url": "https://newtone-records.com/product/0116994",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117258",
+        "artist": "Various",
+        "title": "Ten Years Of Monologues Records Vol. 3: Acid Trip",
+        "label": "Monologues Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_15/n_t0117258.jpg",
+        "url": "https://newtone-records.com/product/0117258",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117178",
+        "artist": "Magazzini Criminali",
+        "title": "Notti Senza Fine",
+        "label": "Soave",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_02/n_t0117178.jpeg",
+        "url": "https://newtone-records.com/product/0117178",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116972",
+        "artist": "Special Characters",
+        "title": "Subsurface Incantat",
+        "label": "The Based Faith",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_09/n_t0116972.jpg",
+        "url": "https://newtone-records.com/product/0116972",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-03-14",
     "category": "new",
     "records": [
