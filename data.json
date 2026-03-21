@@ -1,5 +1,89 @@
 [
   {
+    "date": "2026-03-21",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116523",
+        "artist": "Trent",
+        "title": "Yūshū No Bi",
+        "label": "Bless You",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_08/n_t0116523.jpg",
+        "url": "https://newtone-records.com/product/0116523",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117199",
+        "artist": "Mong Tong",
+        "title": "Mystery 秘神",
+        "label": "Guruguru Brain",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0117199.jpg",
+        "url": "https://newtone-records.com/product/0117199",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117197",
+        "artist": "Kikagaku Moyo",
+        "title": "House in the Tall Grass",
+        "label": "Guruguru Brain",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0117197.jpg",
+        "url": "https://newtone-records.com/product/0117197",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116524",
+        "artist": "Ess O Ess",
+        "title": "Simply Nothing",
+        "label": "Lunatic Music",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_08/n_t0116524.jpg",
+        "url": "https://newtone-records.com/product/0116524",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117128",
+        "artist": "Henrik Raabe",
+        "title": "LDS",
+        "label": "Mule Musiq",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_24/n_t0117128.jpg",
+        "url": "https://newtone-records.com/product/0117128",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116474",
+        "artist": "Officer John",
+        "title": "The Return Of Officer John",
+        "label": "Wah Wah Wino",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_06/n_t0116474.jpg",
+        "url": "https://newtone-records.com/product/0116474",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-03-20",
     "category": "new",
     "records": [
