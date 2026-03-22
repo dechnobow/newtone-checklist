@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-03-22",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117001",
+        "artist": "DJ Alone Again",
+        "title": "Sense of Self EP",
+        "label": "Yore",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_16/n_t0117001.jpg",
+        "url": "https://newtone-records.com/product/0117001",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-03-21",
     "category": "new",
     "records": [
