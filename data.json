@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-03-29",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117373",
+        "artist": "Carlos Niño & Friends",
+        "title": "Bubble Bath for Giants",
+        "label": "CNF",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_17/n_t0117373.jpg",
+        "url": "https://newtone-records.com/product/0117373",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117489",
+        "artist": "Triana y Hermana Juana",
+        "title": "Bamboo Tango / Maracuya",
+        "label": "Panzón Records",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_25/n_t0117489.jpg",
+        "url": "https://newtone-records.com/product/0117489",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-03-28",
     "category": "new",
     "records": [
