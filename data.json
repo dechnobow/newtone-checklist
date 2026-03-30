@@ -1,5 +1,115 @@
 [
   {
+    "date": "2026-03-30",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117434",
+        "artist": "C3D-E",
+        "title": "The Perfect Memory",
+        "label": "MIDI_bug",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_23/n_t0117434.jpeg",
+        "url": "https://newtone-records.com/product/0117434",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117501",
+        "artist": "Hitam",
+        "title": "Vesturgata Gaze",
+        "label": "Omen Wapta",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_26/n_t0117501.jpg",
+        "url": "https://newtone-records.com/product/0117501",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117439",
+        "artist": "P Relief",
+        "title": "Fluff",
+        "label": "P&D",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_30/n_t0117439.jpeg",
+        "url": "https://newtone-records.com/product/0117439",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117437",
+        "artist": "Flørist",
+        "title": "p12_04",
+        "label": "Pavilion",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_23/n_t0117437.jpg",
+        "url": "https://newtone-records.com/product/0117437",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117365",
+        "artist": "Cherrie Bea",
+        "title": "Pearlescent EP",
+        "label": "Series Of Taboo",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_26/n_t0117365.jpg",
+        "url": "https://newtone-records.com/product/0117365",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117503",
+        "artist": "Maōh",
+        "title": "Nightfall",
+        "label": "The Third Room",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_26/n_t0117503.jpg",
+        "url": "https://newtone-records.com/product/0117503",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116496",
+        "artist": "El Combo Batanga",
+        "title": "Spanish Dogs",
+        "label": "Ubiquity",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_07/n_t0116496.jpg",
+        "url": "https://newtone-records.com/product/0116496",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117505",
+        "artist": "Scott Ferguson",
+        "title": "Future / The Detroit Contemporary Parties",
+        "label": "Velopized",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_26/n_t0117505.jpg",
+        "url": "https://newtone-records.com/product/0117505",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-03-29",
     "category": "new",
     "records": [
