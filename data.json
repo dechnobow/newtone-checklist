@@ -1,5 +1,89 @@
 [
   {
+    "date": "2026-04-04",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117495",
+        "artist": "Oker",
+        "title": "aerial",
+        "label": "Aspen Edities",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_01/n_t0117495.jpg",
+        "url": "https://newtone-records.com/product/0117495",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117270",
+        "artist": "Benedict Feat. So’Fierce",
+        "title": "Free",
+        "label": "Benedict",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_02/n_t0117270.jpg",
+        "url": "https://newtone-records.com/product/0117270",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117359",
+        "artist": "Shed",
+        "title": "Applications II",
+        "label": "Ilian Tape",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_03/n_t0117359.jpg?1775192586",
+        "url": "https://newtone-records.com/product/0117359",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117356",
+        "artist": "re:ni & BiggaBush",
+        "title": "Bass Is The Space",
+        "label": "Ilian Tape",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_03/n_t0117356.jpg?1775192686",
+        "url": "https://newtone-records.com/product/0117356",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0112003",
+        "artist": "Shed",
+        "title": "Applications",
+        "label": "Ilian Tape",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_03/n_t0112003.jpg",
+        "url": "https://newtone-records.com/product/0112003",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117297",
+        "artist": "pdqb",
+        "title": "Mutations, Modifications, And Other Alterations",
+        "label": "SYNAPTIC CLIFFS",
+        "format": "2x12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_10/n_t0117297.jpg",
+        "url": "https://newtone-records.com/product/0117297",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-03",
     "category": "new",
     "records": [
