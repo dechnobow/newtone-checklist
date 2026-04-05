@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-05",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117329",
+        "artist": "Quirke",
+        "title": "Configuration OT",
+        "label": "Dekmantel",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_16/n_t0117329.jpg?1773644175",
+        "url": "https://newtone-records.com/product/0117329",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117283",
+        "artist": "Melohman & Paco Colombas",
+        "title": "Modo Ritmo",
+        "label": "G.A.M.M",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_02/n_t0117283.jpg",
+        "url": "https://newtone-records.com/product/0117283",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116809",
+        "artist": "Project Gemini & Wendy Martinez",
+        "title": "Time Stands Still / Le temps s'arrête",
+        "label": "MR BONGO",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_18/n_t0116809.jpg?1771395114",
+        "url": "https://newtone-records.com/product/0116809",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117271",
+        "artist": "LJ SIMON feat. DENICE BROOKS",
+        "title": "GIVIN' UP",
+        "label": "RED MOTORBIKE",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_05/n_t0117271.jpg",
+        "url": "https://newtone-records.com/product/0117271",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-04",
     "category": "new",
     "records": [
