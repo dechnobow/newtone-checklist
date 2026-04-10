@@ -1,5 +1,115 @@
 [
   {
+    "date": "2026-04-10",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117508",
+        "artist": "KEN KEN",
+        "title": "TUTTETTUTETTE MIX Vol.2",
+        "label": "ARRROUND Wicked Sound Maker",
+        "format": "MIXCD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_27/n_t0117508.jpg?1774598971",
+        "url": "https://newtone-records.com/product/0117508",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117137",
+        "artist": "Erlend Oye & La Comitiva",
+        "title": "La Comitiva",
+        "label": "Bubbles",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_24/n_t0117137.jpg?1771934426",
+        "url": "https://newtone-records.com/product/0117137",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117235",
+        "artist": "Jesse Hackett",
+        "title": "Nocturnes",
+        "label": "Hive Mind",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_01/n_t0117235.jpg?1775022048",
+        "url": "https://newtone-records.com/product/0117235",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117653",
+        "artist": "Luca Lozano / Angel D'lite",
+        "title": "Cabbage Trax 1",
+        "label": "Klasse Wrecks",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117653.jpg?1775481126",
+        "url": "https://newtone-records.com/product/0117653",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117195",
+        "artist": "Resavoir",
+        "title": "Themes for Dreams",
+        "label": "L'UNIVERS",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0117195.jpg?1772518549",
+        "url": "https://newtone-records.com/product/0117195",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117656",
+        "artist": "Orlando Voorn",
+        "title": "Vibrations EP",
+        "label": "Lost Control 2097",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117656.jpg?1775482186",
+        "url": "https://newtone-records.com/product/0117656",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116751",
+        "artist": "Zulu Matrix",
+        "title": "Hyperspace (Incl. S.O.N.S Remix)",
+        "label": "Sex Tapes From Mars",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0116751.jpg?1775457602",
+        "url": "https://newtone-records.com/product/0116751",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117660",
+        "artist": "DJ Teeth",
+        "title": "VSION04",
+        "label": "V-Sion",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117660.jpg?1775483621",
+        "url": "https://newtone-records.com/product/0117660",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-09",
     "category": "new",
     "records": [
