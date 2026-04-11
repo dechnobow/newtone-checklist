@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-11",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117387",
+        "artist": "Dagmar Zuniga",
+        "title": "in filth your mystery is kingdom / far smile peasant in yellow music",
+        "label": "AD 93",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_17/n_t0117387.jpg?1773738679",
+        "url": "https://newtone-records.com/product/0117453",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117574",
+        "artist": "Zeb & Scotty",
+        "title": "Bring Di Sensi",
+        "label": "Jahtari",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_07/n_t0117574.jpg?1775555483",
+        "url": "https://newtone-records.com/product/0117574",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117573",
+        "artist": "DJ Slush / Dretraxx",
+        "title": "Signal Phase Decay EP",
+        "label": "Polytechnic",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_31/n_t0117573.png?1774945076",
+        "url": "https://newtone-records.com/product/0117573",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0071664",
+        "artist": "David Behrman",
+        "title": "Unforseen Events",
+        "label": "Xi",
+        "format": "CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/15/08_17/n_t0071664.jpg?1636473607",
+        "url": "https://newtone-records.com/product/0071664",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-10",
     "category": "new",
     "records": [
