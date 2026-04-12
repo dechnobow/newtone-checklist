@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-04-12",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117391",
+        "artist": "Sleep D",
+        "title": "Odyssey",
+        "label": "Magicwire",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_27/n_t0117391.jpg?1774614348",
+        "url": "https://newtone-records.com/product/0117391",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116191",
+        "artist": "Plevna",
+        "title": "Calypso",
+        "label": "Ton Ton",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_16/n_t0116191.jpg?1765872374",
+        "url": "https://newtone-records.com/product/0116191",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-11",
     "category": "new",
     "records": [
