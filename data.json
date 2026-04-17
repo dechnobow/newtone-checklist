@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-04-17",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117491",
+        "artist": "Les Imprimés",
+        "title": "Fading Forward",
+        "label": "BIG CROWN",
+        "format": "LP(Black)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_25/n_t0117491.jpg?1774425083",
+        "url": "https://newtone-records.com/product/0117491",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117441",
+        "artist": "The Rootsman",
+        "title": "Roots Return",
+        "label": "Crying Outcast",
+        "format": "12inch stickered sleeve",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117441.jpg?1775484197",
+        "url": "https://newtone-records.com/product/0117441",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117192",
+        "artist": "Jiyu",
+        "title": "Wild Things",
+        "label": "Dubsoul",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0117192.jpg?1772516731",
+        "url": "https://newtone-records.com/product/0117192",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117678",
+        "artist": "Other",
+        "title": "Unsteady Thoughts",
+        "label": "IMAGE Recordings",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117678.jpeg?1776252059",
+        "url": "https://newtone-records.com/product/0117678",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116796",
+        "artist": "8004",
+        "title": "800",
+        "label": "Kino Disk",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_06/n_t0116796.jpg?1770361093",
+        "url": "https://newtone-records.com/product/0116796",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116741",
+        "artist": "Weston Olencki",
+        "title": "Broadsides",
+        "label": "Outside Time",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_01/n_t0116741.jpg?1775021522",
+        "url": "https://newtone-records.com/product/0116741",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117612",
+        "artist": "Max F",
+        "title": "Hidden Atmospheres",
+        "label": "Peace World Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117612.png?1775484450",
+        "url": "https://newtone-records.com/product/0117612",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116280",
+        "artist": "PLAYER",
+        "title": "PLAYER THREE",
+        "label": "PLAYER",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_12/n_t0116280.jpg",
+        "url": "https://newtone-records.com/product/0116280",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116281",
+        "artist": "Ori Lichtik",
+        "title": "Half Life",
+        "label": "Vax Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_12/n_t0116281.jpg",
+        "url": "https://newtone-records.com/product/0116281",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-16",
     "category": "new",
     "records": [
