@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-04-18",
+    "category": "new",
+    "records": [
+      {
+        "id": "0115699",
+        "artist": "Massa Horie",
+        "title": "Life Force",
+        "label": "Elanvital Publishing",
+        "format": "BOOK",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/10_15/n_t0115699.jpeg",
+        "url": "https://newtone-records.com/product/0115699",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116969",
+        "artist": "Ketil Bjørnstad",
+        "title": "Early Piano Music",
+        "label": "Hubro",
+        "format": "2CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_03/n_t0116969.jpg?1775198070",
+        "url": "https://newtone-records.com/product/0116969",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117648",
+        "artist": "Billus",
+        "title": "Lobby Life",
+        "label": "Vessel Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117648.jpg",
+        "url": "https://newtone-records.com/product/0117648",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117523",
+        "artist": "Gak Sato and Tadahiko Yokogawa",
+        "title": "Renga",
+        "label": "WRWTFWW",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_28/n_t0117523.jpg?1774661823",
+        "url": "https://newtone-records.com/product/0117523",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116734",
+        "artist": "NONCHELEEE",
+        "title": "生魚[ホワイトカラーヴァイナル]",
+        "label": "株式会社ローソンエンタテインメント",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_28/n_t0116734.jpeg?1769585317",
+        "url": "https://newtone-records.com/product/0116734",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-17",
     "category": "new",
     "records": [
