@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-04-20",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117615",
+        "artist": "Thomas + James",
+        "title": "Real -Time EP",
+        "label": "Alt Dub Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117615.jpg?1776251729",
+        "url": "https://newtone-records.com/product/0117615",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117675",
+        "artist": "Paperclip Minimiser",
+        "title": "Topology Transform",
+        "label": "Blank Mind",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117675.jpg?1776251808",
+        "url": "https://newtone-records.com/product/0117675",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117518",
+        "artist": "Johannes Klingebiel",
+        "title": "Dolce",
+        "label": "Claptrap",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117518.jpg?1776251863",
+        "url": "https://newtone-records.com/product/0117518",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117614",
+        "artist": "Jackie Gritness",
+        "title": "Natural High / Fuc U Talmbout",
+        "label": "CQQL Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117614.jpg?1776251991",
+        "url": "https://newtone-records.com/product/0117614",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116730",
+        "artist": "ONEGRAM",
+        "title": "繋がったミュージック (2026 Remaster)",
+        "label": "Flower",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_19/n_t0116730.jpeg",
+        "url": "https://newtone-records.com/product/0116730",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116960",
+        "artist": "満島ひかり",
+        "title": "踊るノアール",
+        "label": "Rhapsodies",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_16/n_t0116960.jpg?1776333942",
+        "url": "https://newtone-records.com/product/0116960",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117662",
+        "artist": "HANKYOVAIN",
+        "title": "HANKYOVAIN'S GRAYTOWN MIX 2016",
+        "label": "VAIN堂",
+        "format": "CDR",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_18/n_t0117662.jpg?1776510885",
+        "url": "https://newtone-records.com/product/0117662",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117188",
+        "artist": "Cruzloma",
+        "title": "Mitos & Ritos",
+        "label": "ZZK Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_02/n_t0117188.jpg?1772460179",
+        "url": "https://newtone-records.com/product/0117188",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116616",
+        "artist": "DJ Mitsu the Beats",
+        "title": "New Horizon",
+        "label": "インセンス ミュージックワークス",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116616.jpg?1768914060",
+        "url": "https://newtone-records.com/product/0116616",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-18",
     "category": "new",
     "records": [
