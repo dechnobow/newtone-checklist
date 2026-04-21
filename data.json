@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-04-21",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117752",
+        "artist": "Mr. Fingers",
+        "title": "Leev Ur Mynd",
+        "label": "Alleviated Records",
+        "format": "2x12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117752.jpg?1776252841",
+        "url": "https://newtone-records.com/product/0117752",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0109162",
+        "artist": "Dorisburg",
+        "title": "Andakt",
+        "label": "Aniara Recordings",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/03_06/n_t0109162.jpg?1709656320",
+        "url": "https://newtone-records.com/product/0109162",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115280",
+        "artist": "Gaudi & The Brixton Heights Orchestra",
+        "title": "Am I The Same Man?",
+        "label": "Brixton Heights",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/09_10/n_t0115280.jpg?1757500770",
+        "url": "https://newtone-records.com/product/0115280",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113227",
+        "artist": "Silas & Snare",
+        "title": "Pressure EP",
+        "label": "Kaizen",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/03_11/n_t0113227.jpg?1741689165",
+        "url": "https://newtone-records.com/product/0113227",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117751",
+        "artist": "PST",
+        "title": "Kognitiv Discodans",
+        "label": "Kontra Musik",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117751.jpg?1776252769",
+        "url": "https://newtone-records.com/product/0117751",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0094577",
+        "artist": "Sub Basics",
+        "title": "Walk & Skank / Forward",
+        "label": "Lion Charge",
+        "format": "10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_03/n_t0094577.jpg?1772520100",
+        "url": "https://newtone-records.com/product/0094577",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116438",
+        "artist": "Mattias El Mansouri",
+        "title": "Struktur",
+        "label": "Nous klaer Audio",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_24/n_t0116438.jpg?1766594711",
+        "url": "https://newtone-records.com/product/0116438",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117314",
+        "artist": "PPP (Piezo, DJ Plead and DJ Python)",
+        "title": "Bborn Again",
+        "label": "Wisdom Teeth",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_11/n_t0117314.jpg",
+        "url": "https://newtone-records.com/product/0117314",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116055",
+        "artist": "Virgo",
+        "title": "Remnants",
+        "label": "WRWTFWW",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/11_18/n_t0116055.jpg?1763452556",
+        "url": "https://newtone-records.com/product/0116055",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-20",
     "category": "new",
     "records": [
