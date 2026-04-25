@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-04-25",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117537",
+        "artist": "Mitchum Yacoub",
+        "title": "A Way In",
+        "label": "All-Town Sound/Colemine Records",
+        "format": "LP(Black)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_30/n_t0117537.jpg?1774856664",
+        "url": "https://newtone-records.com/product/0117537",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117757",
+        "artist": "Tomos",
+        "title": "Soul Feels Good",
+        "label": "Noire & Blanche",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_16/n_t0117757.jpg?1776314751",
+        "url": "https://newtone-records.com/product/0117757",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-24",
     "category": "new",
     "records": [
