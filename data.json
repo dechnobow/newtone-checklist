@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-04-26",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116791",
+        "artist": "Discotecas",
+        "title": "Discotecas 008",
+        "label": "Discotecas",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_03/n_t0116791.jpg?1770091581",
+        "url": "https://newtone-records.com/product/0116791",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117101",
+        "artist": "Various Artists",
+        "title": "Paraiso (The True Spirit Of Ibiza)",
+        "label": "Rebirth",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_26/n_t0117101.jpg?1772082221",
+        "url": "https://newtone-records.com/product/0117101",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-25",
     "category": "new",
     "records": [
