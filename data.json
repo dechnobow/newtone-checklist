@@ -1,5 +1,141 @@
 [
   {
+    "date": "2026-05-01",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117720",
+        "artist": "Alek Lee",
+        "title": "Blue Bird",
+        "label": "Isle Of Jura",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_14/n_t0117720.jpeg?1776146834",
+        "url": "https://newtone-records.com/product/0117720",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116981",
+        "artist": "Disrupt",
+        "title": "The Bass Has Left The Building (2026 Edition)",
+        "label": "Jahtari",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0116981.jpg?1777362266",
+        "url": "https://newtone-records.com/product/0116981",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117861",
+        "artist": "Meitei / 冥丁",
+        "title": "AGATE / 瑪瑙",
+        "label": "Kitchen. Label",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_30/n_t0117861.jpg?1777553799",
+        "url": "https://newtone-records.com/product/0117861",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117630",
+        "artist": "Tim Paris",
+        "title": "That Boy Remixes feat. Foremost Poets",
+        "label": "Live at Robert Johnson",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_06/n_t0117630.jpg?1775450104",
+        "url": "https://newtone-records.com/product/0117630",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117778",
+        "artist": "Salamanda",
+        "title": "Music To Watch Seeds Grow By 008: Salamanda (Basil)",
+        "label": "Music To Watch Seeds Grow By",
+        "format": "Tape",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_17/n_t0117778.jpg?1776442747",
+        "url": "https://newtone-records.com/product/0117778",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115006",
+        "artist": "Serenda",
+        "title": "Second Skin",
+        "label": "Rhythm Section International",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/08_19/n_t0115006.jpg",
+        "url": "https://newtone-records.com/product/0115006",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0114168",
+        "artist": "Mayurashka",
+        "title": "LSI Dreaming",
+        "label": "Rhythm Section International",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/06_02/n_t0114168.jpg",
+        "url": "https://newtone-records.com/product/0114168",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117776",
+        "artist": "Stevie Cox And Ansboy",
+        "title": "Twice Like Rice",
+        "label": "Rhythm Section Internatonal",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_30/n_t0117776.jpg?1777554070",
+        "url": "https://newtone-records.com/product/0117776",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117457",
+        "artist": "Samo DJ",
+        "title": "Learns To Chill",
+        "label": "Studio Barnhus",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_24/n_t0117457.jpg?1774350831",
+        "url": "https://newtone-records.com/product/0117457",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117820",
+        "artist": "Extrawelt",
+        "title": "Bettermaker EP",
+        "label": "Traum",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_21/n_t0117820.jpg?1776762400",
+        "url": "https://newtone-records.com/product/0117820",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-04-30",
     "category": "new",
     "records": [
