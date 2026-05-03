@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-03",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117743",
+        "artist": "jazzbois",
+        "title": "Jazzbois Goes Blunt II",
+        "label": "Up Music Budapest",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117743.jpg?1776241065",
+        "url": "https://newtone-records.com/product/0117743",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-02",
     "category": "new",
     "records": [
