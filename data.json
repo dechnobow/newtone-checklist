@@ -1,5 +1,102 @@
 [
   {
+    "date": "2026-05-04",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117170",
+        "artist": "FROID DUB",
+        "title": "Positive And Natural",
+        "label": "DELODIO",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_01/n_t0117170.jpg?1777616969",
+        "url": "https://newtone-records.com/product/0117170",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117676",
+        "artist": "Bleaching Agent X Miles J Paralysis",
+        "title": "Double Vision EP",
+        "label": "Dream Space",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_30/n_t0117676.jpg?1777554463",
+        "url": "https://newtone-records.com/product/0117676",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117859",
+        "artist": "Various",
+        "title": "Musica Solida vol.3",
+        "label": "Flexi Cuts",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_30/n_t0117859.png?1777554544",
+        "url": "https://newtone-records.com/product/0117859",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117777",
+        "artist": "JÄK-87",
+        "title": "Acid Bath EP",
+        "label": "Free Universe",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_01/n_t0117777.jpg?1777617127",
+        "url": "https://newtone-records.com/product/0117777",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117592",
+        "artist": "Lew Hanson And The Islanders / Elements",
+        "title": "Soul Safari / Rainy Day",
+        "label": "GLADSOME",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_01/n_t0117592.jpg?1775039818",
+        "url": "https://newtone-records.com/product/0117592",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117165",
+        "artist": "Various Artists",
+        "title": "Incognito Trax 007",
+        "label": "Incognito Trax",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_27/n_t0117165.png?1772186021",
+        "url": "https://newtone-records.com/product/0117165",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117679",
+        "artist": "DJ 3000",
+        "title": "So Sheik",
+        "label": "Motech",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_30/n_t0117679.jpg?1777554703",
+        "url": "https://newtone-records.com/product/0117679",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-03",
     "category": "new",
     "records": [
