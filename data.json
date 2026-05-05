@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-05-05",
+    "category": "new",
+    "records": [
+      {
+        "id": "0111628",
+        "artist": "Sam Wilkes, Craig Weinrib, Dylan Day",
+        "title": "Sam Wilkes, Craig Weinrib, Dylan Day",
+        "label": "Leaving Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/10_08/n_t0111628.jpg?1728387421",
+        "url": "https://newtone-records.com/product/0111628",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117946",
+        "artist": "Compuma",
+        "title": "Senshin",
+        "label": "Something About",
+        "format": "MIXCD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_04/n_t0117946.?1777896547",
+        "url": "https://newtone-records.com/product/0117946",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-04",
     "category": "new",
     "records": [
