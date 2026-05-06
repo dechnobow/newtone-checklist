@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-05-06",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117741",
+        "artist": "La Compagnie Creole / The Reflex",
+        "title": "Le Bal Masque",
+        "label": "Discolidays",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0117741.jpg?1777382610",
+        "url": "https://newtone-records.com/product/0117741",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117750",
+        "artist": "Macha & Bedhead",
+        "title": "Macha Loved Bedhead - Bedhead Loved Macha",
+        "label": "NUMERO GROUP",
+        "format": "LP(White)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117750.jpg?1776248490",
+        "url": "https://newtone-records.com/product/0117750",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117749",
+        "artist": "Mickey & The Soul Generation",
+        "title": "Give Everybody Some",
+        "label": "NUMERO GROUP",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117749.jpg?1776248130",
+        "url": "https://newtone-records.com/product/0117749",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117492",
+        "artist": "Various Artists",
+        "title": "Eccentric Sweet Soul",
+        "label": "NUMERO GROUP",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_25/n_t0117492.jpg?1774427561",
+        "url": "https://newtone-records.com/product/0117492",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116691",
+        "artist": "Various",
+        "title": "Yoyaku Barcelona 2025",
+        "label": "Yoyaku",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_06/n_t0116691.jpg?1778068135",
+        "url": "https://newtone-records.com/product/0116691",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-05",
     "category": "new",
     "records": [
