@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-09",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117528",
+        "artist": "Galcher Lustwerk",
+        "title": "Vestibule EP",
+        "label": "Stratasonic",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_29/n_t0117528.jpg",
+        "url": "https://newtone-records.com/product/0117528",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-08",
     "category": "new",
     "records": [
