@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-10",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117769",
+        "artist": "Isaac Carter & Biyi",
+        "title": "Overdue EP",
+        "label": "Ochi",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_17/n_t0117769.jpg",
+        "url": "https://newtone-records.com/product/0117769",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-09",
     "category": "new",
     "records": [
