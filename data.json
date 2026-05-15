@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-05-15",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118000",
+        "artist": "Circus Operandi",
+        "title": "EP",
+        "label": "Customs & Faces",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_08/n_t0118000.jpg?1778225249",
+        "url": "https://newtone-records.com/product/0118000",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117605",
+        "artist": "Brennan",
+        "title": "Dubble 006",
+        "label": "Dubble",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_13/n_t0117605.jpg?1778649482",
+        "url": "https://newtone-records.com/product/0117605",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0092805",
+        "artist": "Gramm",
+        "title": "(Personal Rock)",
+        "label": "Faitiche",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/19/12_20/n_t0092805.jpg",
+        "url": "https://newtone-records.com/product/0092805",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117714",
+        "artist": "Sub Basics",
+        "title": "Live Free",
+        "label": "Lion Charge",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_13/n_t0117714.png?1776086110",
+        "url": "https://newtone-records.com/product/0117714",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117950",
+        "artist": "Mei Honeycomb",
+        "title": "Clairvoyant Dimensions",
+        "label": "Meakusma",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_05/n_t0117950.jpg?1777963122",
+        "url": "https://newtone-records.com/product/0117950",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-14",
     "category": "new",
     "records": [
