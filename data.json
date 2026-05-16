@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-16",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117857",
+        "artist": "Lexx",
+        "title": "In Between State",
+        "label": "International Feel",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_24/n_t0117857.jpg?1777010156",
+        "url": "https://newtone-records.com/product/0117857",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-15",
     "category": "new",
     "records": [
