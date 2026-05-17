@@ -1,5 +1,89 @@
 [
   {
+    "date": "2026-05-17",
+    "category": "new",
+    "records": [
+      {
+        "id": "0112059",
+        "artist": "Various",
+        "title": "ALMACKS04",
+        "label": "ALMACKS",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/02_06/n_t0112059.jpg",
+        "url": "https://newtone-records.com/product/0112059",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0092671",
+        "artist": "Ukokos & Jabco",
+        "title": "Keep Rising All Night Long (Sunday Service Mix)",
+        "label": "G.A.M.M",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/02_07/n_t0092671.jpg",
+        "url": "https://newtone-records.com/product/0092671",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0097946",
+        "artist": "Riddim Research Lab",
+        "title": "Dopewise",
+        "label": "Local Talk",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/21/08_12/n_t0097946.jpg",
+        "url": "https://newtone-records.com/product/0097946",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0093159",
+        "artist": "The Popular People’s Front",
+        "title": "AMMO 1",
+        "label": "Ppfammo",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/22/11_11/n_t0093159.jpeg",
+        "url": "https://newtone-records.com/product/0093159",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116606",
+        "artist": "マリヲ",
+        "title": "REMIXLIVEEDIT",
+        "label": "Record Records",
+        "format": "CD+DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_20/n_t0116606.JPG?1768907133",
+        "url": "https://newtone-records.com/product/0116606",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0094792",
+        "artist": "Various",
+        "title": "A Love That Never Dies 3",
+        "label": "SPUREVOC",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/23/05_29/n_t0094792.jpeg",
+        "url": "https://newtone-records.com/product/0094792",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-16",
     "category": "new",
     "records": [
