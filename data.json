@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-05-23",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117268",
+        "artist": "Alex Albrecht",
+        "title": "Hiriketiya",
+        "label": "Analogue Attic Recordings",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_17/n_t0117268.jpg",
+        "url": "https://newtone-records.com/product/0117268",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117888",
+        "artist": "Sam Goku",
+        "title": "Bliss Drift",
+        "label": "Dekmantel",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0117888.jpg",
+        "url": "https://newtone-records.com/product/0117888",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117525",
+        "artist": "Red Axes",
+        "title": "fabric presents Red Axes",
+        "label": "fabric Records",
+        "format": "2 x 12inch + 10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_28/n_t0117525.jpg?1774686169",
+        "url": "https://newtone-records.com/product/0117525",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116733",
+        "artist": "Brion Gysin",
+        "title": "Dreamachine",
+        "label": "Wewantsounds",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_27/n_t0116733.jpg?1769520592",
+        "url": "https://newtone-records.com/product/0116733",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-22",
     "category": "new",
     "records": [
