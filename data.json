@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-24",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118021",
+        "artist": "Sergio Gomez",
+        "title": "115 3",
+        "label": "Private Post",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_16/n_t0118021.jpg?1778935289",
+        "url": "https://newtone-records.com/product/0118021",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-05-23",
     "category": "new",
     "records": [
