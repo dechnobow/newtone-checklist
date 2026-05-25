@@ -1,5 +1,102 @@
 [
   {
+    "date": "2026-05-25",
+    "category": "new",
+    "records": [
+      {
+        "id": "0112959",
+        "artist": "Acid For The Grandma",
+        "title": "Light And Illusion",
+        "label": "Acid For The Grandma",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/05_22/n_t0112959.jpg",
+        "url": "https://newtone-records.com/product/0112959",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117536",
+        "artist": "Jnbo",
+        "title": "Jnbo & Friends",
+        "label": "College Of Knowledge/Colemine Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_30/n_t0117536.jpg?1774856463",
+        "url": "https://newtone-records.com/product/0117536",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117799",
+        "artist": "I Coccodrilli ft. Kashmere",
+        "title": "Love On The Rocks",
+        "label": "Futuribile",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0117799.jpg?1779703477",
+        "url": "https://newtone-records.com/product/0117799",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115702",
+        "artist": "Netinho",
+        "title": "Du Du Du Domingo (Joutro Mundo Edit)",
+        "label": "Onda Boa",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/10_15/n_t0115702.jpg?1760527041",
+        "url": "https://newtone-records.com/product/0115702",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0114581",
+        "artist": "Finn Logue",
+        "title": "Confused Apathetic",
+        "label": "RUKI",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/09_24/n_t0114581.jpg",
+        "url": "https://newtone-records.com/product/0114581",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0103604",
+        "artist": "Joana Queiroz",
+        "title": "Tempo Sem Tempo",
+        "label": "Squama",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/22/11_07/n_t0103604.jpeg?1667812279",
+        "url": "https://newtone-records.com/product/0103604",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0110681",
+        "artist": "Siamak Amidi vs hm505",
+        "title": "Crack A Love Ball",
+        "label": "Synapsis Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/10_17/n_t0110681.jpg",
+        "url": "https://newtone-records.com/product/0110681",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-24",
     "category": "new",
     "records": [
