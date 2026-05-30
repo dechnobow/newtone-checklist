@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-05-30",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118268",
+        "artist": "Demuja",
+        "title": "TITLE.TXT",
+        "label": "Peach Discs",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_27/n_t0118268.jpg?1779864879",
+        "url": "https://newtone-records.com/product/0118268",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117287",
+        "artist": "Boo Williams",
+        "title": "The Recovery",
+        "label": "Rush Hour",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_16/n_t0117287.jpg?1773642554",
+        "url": "https://newtone-records.com/product/0117287",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118224",
+        "artist": "El Kazed",
+        "title": "SXB Deep Tales Pt. 2",
+        "label": "Smallville Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118224.jpg?1779772186",
+        "url": "https://newtone-records.com/product/0118224",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118223",
+        "artist": "El Kazed",
+        "title": "SXB Deep Tales Pt. 1",
+        "label": "Smallville Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118223.jpg?1779772147",
+        "url": "https://newtone-records.com/product/0118223",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-29",
     "category": "new",
     "records": [
