@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-05-31",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117578",
+        "artist": "Cloud Management & Vivien Goldman",
+        "title": "Whoops Wrong Planet",
+        "label": "Altin Village & Mine",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_15/n_t0117578.jpg?1778831972",
+        "url": "https://newtone-records.com/product/0117578",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-05-30",
     "category": "new",
     "records": [
