@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-06-06",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117476",
+        "artist": "Buena Vista Social Club",
+        "title": "Lost and Found",
+        "label": "BMG",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_16/n_t0117476.jpg?1778902762",
+        "url": "https://newtone-records.com/product/0117476",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117879",
+        "artist": "Frits Wentink & Malin Genie / Wim Waldo / Quinn Davis / Fabian Feld",
+        "title": "BODO-ACE VA 006",
+        "label": "Bobby Donny",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0117879.jpg",
+        "url": "https://newtone-records.com/product/0117879",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117524",
+        "artist": "DJ Nobu",
+        "title": "Shō",
+        "label": "fabric Originals",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_28/n_t0117524.jpg",
+        "url": "https://newtone-records.com/product/0117524",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113773",
+        "artist": "Slowly feat. Mahina Apple",
+        "title": "Hatoba",
+        "label": "Flower",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/04_29/n_t0113773.jpg?1745921734",
+        "url": "https://newtone-records.com/product/0113773",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118222",
+        "artist": "Kat Davids",
+        "title": "winterswell",
+        "label": "Intercept",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118222.jpg",
+        "url": "https://newtone-records.com/product/0118222",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118049",
+        "artist": "Mick Harris",
+        "title": "Culvert Dubs Session 7",
+        "label": "L.I.E.S.",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_12/n_t0118049.png?1778577800",
+        "url": "https://newtone-records.com/product/0118049",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118158",
+        "artist": "Dor Wand",
+        "title": "Alchemy of Being",
+        "label": "MULTI CULTI",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_06/n_t0118158.jpg?1780734858",
+        "url": "https://newtone-records.com/product/0118158",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118091",
+        "artist": "Apiento & Tepper",
+        "title": "The Yellow Place / Le Tour",
+        "label": "Test Pressing Tracks",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_06/n_t0118091.jpg",
+        "url": "https://newtone-records.com/product/0118091",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0114478",
+        "artist": "Reggae Disco Rockers",
+        "title": "きみみたいにきれいな女の子",
+        "label": "株式会社ローソンエンタテインメント",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/06_24/n_t0114478.jpg?1750760448",
+        "url": "https://newtone-records.com/product/0114478",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-06-05",
     "category": "new",
     "records": [
