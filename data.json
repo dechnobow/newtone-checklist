@@ -1,5 +1,232 @@
 [
   {
+    "date": "2026-06-27",
+    "category": "new",
+    "records": [
+      {
+        "id": "0116523",
+        "artist": "Trent",
+        "title": "Yūshū No Bi",
+        "label": "Bless You",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/01_08/n_t0116523.jpg?1767869031",
+        "url": "https://newtone-records.com/product/0116523",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115739",
+        "artist": "Jonathan Kusuma",
+        "title": "Bank The Drums EP",
+        "label": "Bless You",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/10_20/n_t0115739.png?1760960934",
+        "url": "https://newtone-records.com/product/0115739",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118280",
+        "artist": "Shed",
+        "title": "Rave Echoes",
+        "label": "Dekmantel",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_26/n_t0118280.jpg?1782460970",
+        "url": "https://newtone-records.com/product/0118280",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118601",
+        "artist": "Benjamin Freeney",
+        "title": "We Are The 719 (DJ Richard Version)",
+        "label": "Foom",
+        "format": "12 Inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_25/n_t0118601.jpg",
+        "url": "https://newtone-records.com/product/0118601",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0111554",
+        "artist": "Pecqre",
+        "title": "Rasta Instantané Avec L'Effroyable Pecqre",
+        "label": "Miss You",
+        "format": "10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/10_04/n_t0111554.jpg?1728021413",
+        "url": "https://newtone-records.com/product/0111554",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118048",
+        "artist": "Turn On The Sunlight",
+        "title": "Iseo",
+        "label": "Music From Memory",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_12/n_t0118048.jpg?1778573407",
+        "url": "https://newtone-records.com/product/0118048",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118121",
+        "artist": "Jamiroquai",
+        "title": "Virtual Insanity [Transparent Yellow Vinyl]",
+        "label": "Sony Music UK",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_19/n_t0118121.jpg?1779194377",
+        "url": "https://newtone-records.com/product/0118121",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113731",
+        "artist": "Rick 8",
+        "title": "Interactive DJ'ng",
+        "label": "Sound Metaphors",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/04_23/n_t0113731.jpg?1745408189",
+        "url": "https://newtone-records.com/product/0113731",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113165",
+        "artist": "Eden Transmission",
+        "title": "I'm So High",
+        "label": "Sound Metaphors",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/03_06/n_t0113165.jpg",
+        "url": "https://newtone-records.com/product/0113165",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113159",
+        "artist": "Spacetime Continuum & Terence McKenna",
+        "title": "Alien Dreamtime",
+        "label": "Sound Metaphors",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/03_06/n_t0113159.jpg?1741243579",
+        "url": "https://newtone-records.com/product/0113159",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0112366",
+        "artist": "Francesco Farfa",
+        "title": "Learn To Fly Remix Pack",
+        "label": "Sound Metaphors",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/12_11/n_t0112366.jpg?1733917051",
+        "url": "https://newtone-records.com/product/0112366",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0112360",
+        "artist": "UVX",
+        "title": "Elevator",
+        "label": "Sound Migration",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/12_11/n_t0112360.jpg?1733916526",
+        "url": "https://newtone-records.com/product/0112360",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118310",
+        "artist": "The CJP Band",
+        "title": "We Must Believe",
+        "label": "Supa Jams",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_26/n_t0118310.jpeg?1782492863",
+        "url": "https://newtone-records.com/product/0118310",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118573",
+        "artist": "Stefano Breda",
+        "title": "Electric Fling",
+        "label": "THANK YOU",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_26/n_t0118573.jpeg",
+        "url": "https://newtone-records.com/product/0118573",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0109957",
+        "artist": "Filippini",
+        "title": "Listen To Your Heart",
+        "label": "THANK YOU",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/05_13/n_t0109957.jpg?1715586090",
+        "url": "https://newtone-records.com/product/0109957",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115435",
+        "artist": "Susumu Yokota",
+        "title": "Unreleased Works 94' - 97'",
+        "label": "Transmigration",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/09_22/n_t0115435.png?1758543188",
+        "url": "https://newtone-records.com/product/0115435",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0110344",
+        "artist": "Corrugated Silence / Thunderhead",
+        "title": "Elevate / Golden Eyed",
+        "label": "Transmigration",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/06_18/n_t0110344.jpg?1718640806",
+        "url": "https://newtone-records.com/product/0110344",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-06-26",
     "category": "new",
     "records": [
@@ -15383,38 +15610,6 @@
         "used": false,
         "preorder": false,
         "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-03-29",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117373",
-        "artist": "Carlos Niño & Friends",
-        "title": "Bubble Bath for Giants",
-        "label": "CNF",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_17/n_t0117373.jpg",
-        "url": "https://newtone-records.com/product/0117373",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117489",
-        "artist": "Triana y Hermana Juana",
-        "title": "Bamboo Tango / Maracuya",
-        "label": "Panzón Records",
-        "format": "7inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_25/n_t0117489.jpg",
-        "url": "https://newtone-records.com/product/0117489",
-        "used": false,
-        "preorder": false,
-        "inStock": false
       }
     ]
   }
