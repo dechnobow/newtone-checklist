@@ -1,5 +1,167 @@
 [
   {
+    "date": "2026-07-10",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117836",
+        "artist": "Abby Sundborn",
+        "title": "Holding Pattern",
+        "label": "A Colourful Storm",
+        "format": "Tape",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0117836.jpg?1782123218",
+        "url": "https://newtone-records.com/product/0117836",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117244",
+        "artist": "The Group Shower",
+        "title": "Live",
+        "label": "Beatbude",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_23/n_t0117244.jpg",
+        "url": "https://newtone-records.com/product/0117244",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118634",
+        "artist": "Contours",
+        "title": "Perc EP",
+        "label": "Context",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_10/n_t0118634.jpg?1783664330",
+        "url": "https://newtone-records.com/product/0118634",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118754",
+        "artist": "Abo Abo",
+        "title": "QUANTUM VACUUM",
+        "label": "De Rio",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_08/n_t0118754.jpg?1783488000",
+        "url": "https://newtone-records.com/product/0118754",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118322",
+        "artist": "Joseph Kamaru",
+        "title": "Further Combinations",
+        "label": "Disciples",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_02/n_t0118322.jpg?1780401621",
+        "url": "https://newtone-records.com/product/0118322",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118565",
+        "artist": "Stachun Bebach",
+        "title": "Byk",
+        "label": "Funky Mamas and Papas Recordings",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_23/n_t0118565.jpg?1782209395",
+        "url": "https://newtone-records.com/product/0118565",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113806",
+        "artist": "Chaos In The CBD",
+        "title": "A Deeper Life",
+        "label": "In Dust We Trust",
+        "format": "LP  (STANDARD SLEEVE)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/05_05/n_t0113806.jpg?1746439340",
+        "url": "https://newtone-records.com/product/113806",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0086660",
+        "artist": "Chaos In The Cbd",
+        "title": "Multiverse EP",
+        "label": "In Dust We Trust",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/18/07_07/n_t0086660.jpg",
+        "url": "https://newtone-records.com/product/0086660",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118758",
+        "artist": "Thrill",
+        "title": "Smoke Fueled Fantasies",
+        "label": "Kalahari Oyster Cult",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_08/n_t0118758.jpg?1783488801",
+        "url": "https://newtone-records.com/product/0118758",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118490",
+        "artist": "Erobique",
+        "title": "No. 2",
+        "label": "Legere",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_16/n_t0118490.jpg?1781599982",
+        "url": "https://newtone-records.com/product/0118490",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118146",
+        "artist": "Monaqee & Vanis",
+        "title": "Robo Wars + Bonus EP",
+        "label": "Stereophonk",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_20/n_t0118146.jpg?1779269262",
+        "url": "https://newtone-records.com/product/0118146",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118755",
+        "artist": "So-Fi",
+        "title": "Mind Migration",
+        "label": "Superliminal Music",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_08/n_t0118755.jpg?1783488091",
+        "url": "https://newtone-records.com/product/0118755",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-07-09",
     "category": "new",
     "records": [
@@ -15276,64 +15438,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/25/12_16/n_t0116191.jpg?1765872374",
         "url": "https://newtone-records.com/product/0116191",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-04-11",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117387",
-        "artist": "Dagmar Zuniga",
-        "title": "in filth your mystery is kingdom / far smile peasant in yellow music",
-        "label": "AD 93",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_17/n_t0117387.jpg?1773738679",
-        "url": "https://newtone-records.com/product/0117453",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117574",
-        "artist": "Zeb & Scotty",
-        "title": "Bring Di Sensi",
-        "label": "Jahtari",
-        "format": "7inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_07/n_t0117574.jpg?1775555483",
-        "url": "https://newtone-records.com/product/0117574",
-        "used": false,
-        "preorder": false,
-        "inStock": false
-      },
-      {
-        "id": "0117573",
-        "artist": "DJ Slush / Dretraxx",
-        "title": "Signal Phase Decay EP",
-        "label": "Polytechnic",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_31/n_t0117573.png?1774945076",
-        "url": "https://newtone-records.com/product/0117573",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0071664",
-        "artist": "David Behrman",
-        "title": "Unforseen Events",
-        "label": "Xi",
-        "format": "CD",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/15/08_17/n_t0071664.jpg?1636473607",
-        "url": "https://newtone-records.com/product/0071664",
         "used": false,
         "preorder": false,
         "inStock": true
