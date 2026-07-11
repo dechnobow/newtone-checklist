@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-07-11",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117382",
+        "artist": "Baby T",
+        "title": "Shee Punk 02",
+        "label": "Banshee",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_17/n_t0117382.jpg?1773737343",
+        "url": "https://newtone-records.com/product/0117382",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117867",
+        "artist": "Declan McDermott",
+        "title": "Why Don't You Believe Me?",
+        "label": "delusion of grandeur",
+        "format": "12inch(Golden Vinyl)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_25/n_t0117867.jpg?1777140391",
+        "url": "https://newtone-records.com/product/0117554",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118486",
+        "artist": "Love Is Yes",
+        "title": "Ghost and More Ghosts",
+        "label": "Kit",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_16/n_t0118486.jpg?1781598937",
+        "url": "https://newtone-records.com/product/0118486",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118308",
+        "artist": "Barreleye",
+        "title": "One Eye Glitters",
+        "label": "Kit",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_02/n_t0118308.jpg?1780389907",
+        "url": "https://newtone-records.com/product/0118308",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0115711",
+        "artist": "Jim Jarmusch & Anika",
+        "title": "Father Mother Sister Brother (Original Music From The Film)",
+        "label": "Sacred Bones Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/10_16/n_t0115711.jpg?1760593119",
+        "url": "https://newtone-records.com/product/0115711",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-07-10",
     "category": "new",
     "records": [
@@ -15406,38 +15477,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/25/11_04/n_t0115900.jpg",
         "url": "https://newtone-records.com/product/0115900",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-04-12",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117391",
-        "artist": "Sleep D",
-        "title": "Odyssey",
-        "label": "Magicwire",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_27/n_t0117391.jpg?1774614348",
-        "url": "https://newtone-records.com/product/0117391",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0116191",
-        "artist": "Plevna",
-        "title": "Calypso",
-        "label": "Ton Ton",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/12_16/n_t0116191.jpg?1765872374",
-        "url": "https://newtone-records.com/product/0116191",
         "used": false,
         "preorder": false,
         "inStock": true
