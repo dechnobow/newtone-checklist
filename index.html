@@ -1155,7 +1155,7 @@ async function triggerRangeScrape() {
     setStatus('取得中です... 初回は3〜4分かかることがあります', '');
 
     let tries = 0;
-    const maxTries = 60; // 約5分（初回はGitHub Actionsのブラウザ準備で3〜4分かかるため長めに確保）
+    const maxTries = 72; // 約6分（GitHub Actions側のリトライ・準備・結果反映まで見込んで確保）
 
     const poll = async () => {
       tries++;

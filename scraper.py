@@ -2,6 +2,7 @@ import json
 import os
 import re
 import sys
+import time
 from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 
@@ -244,12 +245,21 @@ def click_view_more_until(page, target_from: str, max_clicks: int = 80):
             break
 
 
-def scrape_range(date_from: str, date_to: str):
-    print(f"Range scrape: {date_from} ~ {date_to}")
-
+def _scrape_range_once(date_from: str, date_to: str):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1440, "height": 2200})
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+        # GitHub Actions のIPだと素のヘッドレスUAで弾かれる/遅延することがあるため、
+        # 実ブラウザ相当のUser-Agentとロケールを付与する。
+        context = browser.new_context(
+            viewport={"width": 1440, "height": 2200},
+            user_agent=(
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/124.0.0.0 Safari/537.36"
+            ),
+            locale="ja-JP",
+        )
+        page = context.new_page()
 
         page.goto(STORE_URL, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(2500)
@@ -274,6 +284,28 @@ def scrape_range(date_from: str, date_to: str):
     total = sum(len(g["records"]) for g in filtered)
     print(f"Filtered records: {total}")
     return filtered
+
+
+def scrape_range(date_from: str, date_to: str, attempts: int = 3):
+    print(f"Range scrape: {date_from} ~ {date_to}")
+
+    # GitHub Actions 上ではサイト側の断続的な遅延/ブロックで page.goto が
+    # タイムアウトすることがある（ローカルでは再現しない）。数回リトライして
+    # 一時的な失敗を吸収する。
+    last_err = None
+    for attempt in range(1, attempts + 1):
+        try:
+            print(f"[attempt {attempt}/{attempts}]")
+            return _scrape_range_once(date_from, date_to)
+        except Exception as e:
+            last_err = e
+            print(f"[attempt {attempt}] failed: {e}")
+            if attempt < attempts:
+                wait = 10 * attempt
+                print(f"retrying in {wait}s...")
+                time.sleep(wait)
+
+    raise last_err
 
 
 def load_existing_data(path="data.json"):
