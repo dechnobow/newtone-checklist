@@ -47,10 +47,15 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Run scraper
+        env:
+          # scraper.py は日付を環境変数 DATE_FROM / DATE_TO から読む（argparse 不使用）。
+          # そのため workflow_dispatch の入力を env として渡す。
+          DATE_FROM: ${{ inputs.date_from }}
+          DATE_TO: ${{ inputs.date_to }}
         run: |
           if [ -n "${{ inputs.date_from }}" ] && [ -n "${{ inputs.date_to }}" ]; then
             echo "Running range scrape: ${{ inputs.date_from }} ~ ${{ inputs.date_to }}"
-            python scraper.py --from "${{ inputs.date_from }}" --to "${{ inputs.date_to }}"
+            python scraper.py
           elif [ "${{ inputs.full_scrape }}" = "true" ]; then
             echo "Running full scrape..."
             python scraper.py --full
