@@ -1,5 +1,115 @@
 [
   {
+    "date": "2026-07-19",
+    "category": "range",
+    "records": [
+      {
+        "id": "0118664",
+        "artist": "Talking Drums",
+        "title": "Pier Pressure",
+        "label": "International Feel",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_29/n_t0118664.jpg?1782729252",
+        "url": "https://newtone-records.com/product/0118664",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118620",
+        "artist": "Vakula",
+        "title": "Times",
+        "label": "Oath",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_25/n_t0118620.jpg?1782374498",
+        "url": "https://newtone-records.com/product/0118620",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117767",
+        "artist": "The Coastal Commission / Boing",
+        "title": "The Conversation / Currency",
+        "label": "Pacific Coast House",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_17/n_t0117767.jpg",
+        "url": "https://newtone-records.com/product/0117767",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118539",
+        "artist": "Benjamin Fröhlich",
+        "title": "Muv It",
+        "label": "pleasure principle",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118539.jpg?1782118525",
+        "url": "https://newtone-records.com/product/0118539",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115616",
+        "artist": "空間現代 × 九里光 (Krikor)",
+        "title": "通勤者族",
+        "label": "Sixth Garden Records",
+        "format": "CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/10_16/n_t0115616.jpg?1760600541",
+        "url": "https://newtone-records.com/product/0115616",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118532",
+        "artist": "Joe Davies",
+        "title": "Wonderful Tempo",
+        "label": "Smallville Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118532.jpg",
+        "url": "https://newtone-records.com/product/0118532",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118843",
+        "artist": "Turn On The Sunlight",
+        "title": "Warm Waves",
+        "label": "Tokonoma Records",
+        "format": "LP(Clear Vinyl)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_14/n_t0118843.jpg?1784013398",
+        "url": "https://newtone-records.com/product/0118843",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118710",
+        "artist": "Function",
+        "title": "Aeternum (Existenz)",
+        "label": "Tresor Records",
+        "format": "12inch+DL COARD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_19/n_t0118710.jpg?1784450010",
+        "url": "https://newtone-records.com/product/0118710",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-07-18",
     "category": "range",
     "records": [
