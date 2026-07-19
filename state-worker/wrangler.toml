@@ -1,0 +1,9 @@
+name = "newtone-state"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# KV 名前空間のバインド。
+# 下の id は `wrangler kv namespace create NT_STATE` を実行して表示された ID に差し替える。
+[[kv_namespaces]]
+binding = "NT_STATE"
+id = "ここに wrangler kv namespace create で出た id を貼る"

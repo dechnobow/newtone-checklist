@@ -637,18 +637,26 @@
   }
 
   .apple-link {
-    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid #2a2a2a;
-    background: #181818;
-    color: #e8e8e8;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--muted);
+    background: none;
     font-size: 12px;
-    line-height: 1;
     text-decoration: none;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+  }
+
+  .apple-link:active {
+    color: var(--accent);
+    border-color: var(--accent);
   }
 
   .apple-link:hover {
@@ -725,6 +733,74 @@ let activeDay = null, activeMonth = null;
 
 // ── GitHub settings ──
 const RANGE_API_BASE = 'https://newtone-range-worker.dechnobow-newtone.workers.dev';
+
+// ── Server sync (iOS の localStorage 自動削除対策) ──
+// state-worker をデプロイして、その URL を SYNC_API_BASE に入れると同期が有効になる。
+// 空文字のままなら同期はオフで、これまで通りローカル保存のみで動作する。
+const SYNC_API_BASE = 'https://newtone-state.dechnobow-newtone.workers.dev'; // 状態保存 Worker
+const SYNC_KEY      = 'newtone-main'; // このアプリの保存スロット名（複数店舗で分けたい場合のみ変更）
+const LS_UPDATED    = 'nt_updated_at';
+
+let syncApplying   = false; // サーバー内容をローカルへ書き戻している最中は true（自動 push を止める）
+let syncReady      = false; // 初回 pull 完了後に true（それまで push しない）
+let syncPushTimer  = null;
+
+// ローカルに変更があったら、少し待ってからサーバーへ保存（連続チェックはまとめて1回）
+function scheduleSync() {
+  if (!SYNC_API_BASE || syncApplying || !syncReady) return;
+  saveStorage(LS_UPDATED, Date.now());
+  clearTimeout(syncPushTimer);
+  syncPushTimer = setTimeout(pushStateNow, 2000);
+}
+
+async function pushStateNow() {
+  if (!SYNC_API_BASE) return;
+  const bundle = {
+    updatedAt: loadStorage(LS_UPDATED, Date.now()),
+    data: localData, checked, pool, removedIds, removedDays
+  };
+  try {
+    await fetch(`${SYNC_API_BASE}/state?key=${encodeURIComponent(SYNC_KEY)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bundle)
+    });
+  } catch (e) { console.log('sync push failed:', e); }
+}
+
+// 起動時にサーバーから状態を取得。サーバーの方が新しい（＝ローカルが消えた等）なら復元する。
+async function pullState() {
+  if (!SYNC_API_BASE) { syncReady = true; return; }
+  try {
+    const res = await fetch(`${SYNC_API_BASE}/state?key=${encodeURIComponent(SYNC_KEY)}`, { cache: 'no-store' });
+    const j = await res.json();
+    const server = j && j.data;
+    if (server && typeof server === 'object') {
+      const localUpdated  = loadStorage(LS_UPDATED, 0);
+      const serverUpdated = server.updatedAt || 0;
+      const localEmpty =
+        Object.keys(checked).length === 0 &&
+        Object.keys(pool).length === 0 &&
+        Object.keys(localData).length === 0;
+      if (serverUpdated > localUpdated || localEmpty) {
+        syncApplying = true;
+        localData   = server.data       || {};
+        checked     = server.checked     || {};
+        pool        = server.pool        || {};
+        removedIds  = server.removedIds  || {};
+        removedDays = server.removedDays || {};
+        saveStorage(LS_DATA, localData);
+        saveStorage(LS_CHECKED, checked);
+        saveStorage(LS_POOL, pool);
+        saveStorage(LS_REMOVED_IDS, removedIds);
+        saveStorage(LS_REMOVED_DAYS, removedDays);
+        saveStorage(LS_UPDATED, serverUpdated || Date.now());
+        syncApplying = false;
+      }
+    }
+  } catch (e) { console.log('sync pull failed:', e); }
+  syncReady = true;
+}
 
 // ── Fetch data.json and merge into localStorage ──
 async function fetchAndMerge() {
@@ -833,6 +909,7 @@ function mergeRangeGroups(groups) {
 
   saveStorage(LS_DATA, localData);
   saveStorage(LS_FETCHED, Date.now());
+  scheduleSync();
 
   return added;
 }
@@ -863,7 +940,7 @@ function buildTree() {
 
 let tree = {};
 
-function save() { saveStorage(LS_CHECKED, checked); }
+function save() { saveStorage(LS_CHECKED, checked); scheduleSync(); }
 function dayChecked(recs) { return recs.filter(r => checked[r.id]).length; }
 const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function fmtMonth(ym) { const [y,m] = ym.split('-'); return MN[+m-1] + ' ' + y; }
@@ -879,6 +956,7 @@ function savePool() {
   });
   pool = cleaned;
   saveStorage(LS_POOL, pool);
+  scheduleSync();
 }
   
 function updatePoolTabCount() {
@@ -1358,6 +1436,7 @@ function deleteDay(date) {
     if (key.startsWith(date + '|')) delete localData[key];
   });
   saveStorage(LS_DATA, localData);
+  scheduleSync();
 
   if (tree[y]?.[m]?.[date]) delete tree[y][m][date];
   if (tree[y]?.[m] && Object.keys(tree[y][m]).length === 0) delete tree[y][m];
@@ -1421,7 +1500,9 @@ function uncheckAll(date) {
 
 // ── Init ──
 async function init() {
+  await pullState();
   await fetchAndMerge();
+  scheduleSync();
   tree = buildTree();
   renderTree();
   updatePoolTabCount();
@@ -1445,170 +1526,6 @@ async function init() {
 init();
 
 // ── Apple music ──
-function itunesJsonpSearch(params) {
-  return new Promise((resolve, reject) => {
-    const callbackName = `itunesJsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
-    const script = document.createElement('script');
-
-    let finished = false;
-
-    const cleanup = () => {
-      finished = true;
-      if (script.parentNode) script.parentNode.removeChild(script);
-      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
-    };
-
-    window[callbackName] = (data) => {
-      if (finished) return;
-      cleanup();
-      resolve(data);
-    };
-
-    script.onerror = () => {
-      if (finished) return;
-      cleanup();
-      reject(new Error('JSONP load failed'));
-    };
-
-    const qs = new URLSearchParams({
-      ...params,
-      callback: callbackName
-    }).toString();
-
-    script.src = `https://itunes.apple.com/search?${qs}`;
-    document.body.appendChild(script);
-
-    setTimeout(() => {
-      if (finished) return;
-      cleanup();
-      reject(new Error('JSONP timeout'));
-    }, 10000);
-  });
-}
-
-function normalizeAppleText(s) {
-  return (s || '')
-    .toLowerCase()
-    .normalize('NFKC')
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim();
-}
-
-function scoreAppleResult(result, artistNorm, titleNorm) {
-  const rArtist = normalizeAppleText(result.artistName || '');
-  const rAlbum = normalizeAppleText(result.collectionName || '');
-  const rTrack = normalizeAppleText(result.trackName || '');
-
-  let score = 0;
-
-  if (artistNorm && rArtist.includes(artistNorm)) score += 50;
-  if (titleNorm && rTrack.includes(titleNorm)) score += 45;
-  if (titleNorm && rAlbum.includes(titleNorm)) score += 35;
-
-  if (artistNorm && rArtist === artistNorm) score += 30;
-  if (titleNorm && rTrack === titleNorm) score += 30;
-  if (titleNorm && rAlbum === titleNorm) score += 20;
-
-  if (result.wrapperType === 'track') score += 8;
-  if (result.wrapperType === 'collection') score += 5;
-
-  return score;
-}
-
-function pickBestAppleResult(results, artist, title) {
-  const artistNorm = normalizeAppleText(artist);
-  const titleNorm = normalizeAppleText(title);
-
-  return results
-    .map(r => ({
-      ...r,
-      _score: scoreAppleResult(r, artistNorm, titleNorm)
-    }))
-    .sort((a, b) => b._score - a._score)[0];
-}
-
-function itunesJsonpSearch(params) {
-  return new Promise((resolve, reject) => {
-    const callbackName = `itunesJsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
-    const script = document.createElement('script');
-    let finished = false;
-
-    const cleanup = () => {
-      finished = true;
-      if (script.parentNode) script.parentNode.removeChild(script);
-      try {
-        delete window[callbackName];
-      } catch (_) {
-        window[callbackName] = undefined;
-      }
-    };
-
-    window[callbackName] = (data) => {
-      if (finished) return;
-      cleanup();
-      resolve(data);
-    };
-
-    script.onerror = () => {
-      if (finished) return;
-      cleanup();
-      reject(new Error('JSONP load failed'));
-    };
-
-    const qs = new URLSearchParams({
-      ...params,
-      callback: callbackName
-    }).toString();
-
-    script.src = `https://itunes.apple.com/search?${qs}`;
-    document.body.appendChild(script);
-
-    setTimeout(() => {
-      if (finished) return;
-      cleanup();
-      reject(new Error('JSONP timeout'));
-    }, 10000);
-  });
-}
-
-function normalizeAppleText(s) {
-  return (s || '')
-    .toLowerCase()
-    .normalize('NFKC')
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim();
-}
-
-function pickBestAppleResult(results, artist, title) {
-  const artistNorm = normalizeAppleText(artist);
-  const titleNorm = normalizeAppleText(title);
-
-  function score(result) {
-    const rArtist = normalizeAppleText(result.artistName || '');
-    const rAlbum = normalizeAppleText(result.collectionName || '');
-    const rTrack = normalizeAppleText(result.trackName || '');
-
-    let score = 0;
-
-    if (artistNorm && rArtist.includes(artistNorm)) score += 50;
-    if (titleNorm && rTrack.includes(titleNorm)) score += 45;
-    if (titleNorm && rAlbum.includes(titleNorm)) score += 35;
-
-    if (artistNorm && rArtist === artistNorm) score += 30;
-    if (titleNorm && rTrack === titleNorm) score += 30;
-    if (titleNorm && rAlbum === titleNorm) score += 20;
-
-    if (result.wrapperType === 'track') score += 8;
-    if (result.wrapperType === 'collection') score += 5;
-
-    return score;
-  }
-
-  return results
-    .map(r => ({ ...r, _score: score(r) }))
-    .sort((a, b) => b._score - a._score)[0];
-}
-
 function openAppleMusic(record) {
   const title = (record?.title || '').trim();
   const artist = (record?.artist || '').trim();
