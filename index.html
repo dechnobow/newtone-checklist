@@ -870,11 +870,13 @@ async function fetchAndMerge() {
 function mergeRangeGroups(groups) {
   if (!Array.isArray(groups) || groups.length === 0) return 0;
 
+  // 過去データ取得は「意図的に過去を呼び戻す」操作なので、削除履歴
+  // (removedDays / removedIds) による除外はかけず、対象範囲は除外を解除する。
   const targetDates = new Set(
-    groups
-      .map(g => g.date)
-      .filter(date => date && !removedDays[date])
+    groups.map(g => g.date).filter(Boolean)
   );
+
+  targetDates.forEach(date => { delete removedDays[date]; });
 
   Object.keys(localData).forEach(key => {
     const date = key.split('|')[0];
@@ -887,13 +889,10 @@ function mergeRangeGroups(groups) {
 
   groups.forEach(g => {
     const date = g.date;
-    if (!date || removedDays[date]) return;
+    if (!date) return;
 
-    const incomingRecords = (Array.isArray(g.records) ? g.records : []).filter(r => {
-      if (!r || !r.id) return false;
-      if (removedIds[r.id]) return false;
-      return true;
-    });
+    const incomingRecords = (Array.isArray(g.records) ? g.records : []).filter(r => r && r.id);
+    incomingRecords.forEach(r => { delete removedIds[r.id]; });
 
     if (incomingRecords.length === 0) return;
 
@@ -908,6 +907,8 @@ function mergeRangeGroups(groups) {
   });
 
   saveStorage(LS_DATA, localData);
+  saveStorage(LS_REMOVED_DAYS, removedDays);
+  saveStorage(LS_REMOVED_IDS, removedIds);
   saveStorage(LS_FETCHED, Date.now());
   scheduleSync();
 
