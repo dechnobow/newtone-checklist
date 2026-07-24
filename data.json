@@ -1,5 +1,154 @@
 [
   {
+    "date": "2026-07-24",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118911",
+        "artist": "Doltz",
+        "title": "Final Trace",
+        "label": "Bitta",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_21/n_t0118911.jpeg?1784617503",
+        "url": "https://newtone-records.com/product/0118911",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118790",
+        "artist": "Benabou",
+        "title": "Rise & Merge",
+        "label": "Blank Mind",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_24/n_t0118790.jpg?1784871838",
+        "url": "https://newtone-records.com/product/0118790",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117678",
+        "artist": "Other",
+        "title": "Unsteady Thoughts",
+        "label": "IMAGE Recordings",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_15/n_t0117678.jpeg",
+        "url": "https://newtone-records.com/product/0117678",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117793",
+        "artist": "Evil Graham Lee",
+        "title": "I Think I'm Alone Now",
+        "label": "Isle Of Jura",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_21/n_t0117793.jpg?1776752575",
+        "url": "https://newtone-records.com/product/0117793",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118955",
+        "artist": "Roman Flügel",
+        "title": "Solutions",
+        "label": "Moozikeh Analog Room",
+        "format": "12inch Grey Marble",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_24/n_t0118955.jpg?1784888627",
+        "url": "https://newtone-records.com/product/0118955",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118447",
+        "artist": "CURIO CURIO",
+        "title": "CURIO CURIO",
+        "label": "MR BONGO",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_26/n_t0118447.jpg?1782491005",
+        "url": "https://newtone-records.com/product/0118447",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118794",
+        "artist": "Session Victim",
+        "title": "The Disconnect",
+        "label": "Rhythm Section International",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_24/n_t0118794.jpg?1784872330",
+        "url": "https://newtone-records.com/product/0118794",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118439",
+        "artist": "Grant Dell",
+        "title": "From The Vault EP",
+        "label": "Rhythm Trax",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_22/n_t0118439.jpg?1784697873",
+        "url": "https://newtone-records.com/product/0118439",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118788",
+        "artist": "Picture",
+        "title": "Uuuuuuuu",
+        "label": "Short Span",
+        "format": "2x12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_24/n_t0118788.jpg?1784872405",
+        "url": "https://newtone-records.com/product/0118788",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118789",
+        "artist": "Newroomfreak",
+        "title": "NeWRoomfreaK",
+        "label": "So3ar",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_24/n_t0118789.jpg?1784871418",
+        "url": "https://newtone-records.com/product/0118789",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118666",
+        "artist": "Jura Soundsystem",
+        "title": "Morning Star",
+        "label": "Temples Of Jura",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_30/n_t0118666.jpg?1782798284",
+        "url": "https://newtone-records.com/product/0118666",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-07-23",
     "category": "new",
     "records": [
@@ -15750,38 +15899,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/02_26/n_t0117101.jpg?1772082221",
         "url": "https://newtone-records.com/product/0117101",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-04-25",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117537",
-        "artist": "Mitchum Yacoub",
-        "title": "A Way In",
-        "label": "All-Town Sound/Colemine Records",
-        "format": "LP(Black)",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_30/n_t0117537.jpg?1774856664",
-        "url": "https://newtone-records.com/product/0117537",
-        "used": false,
-        "preorder": false,
-        "inStock": false
-      },
-      {
-        "id": "0117757",
-        "artist": "Tomos",
-        "title": "Soul Feels Good",
-        "label": "Noire & Blanche",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_16/n_t0117757.jpg?1776314751",
-        "url": "https://newtone-records.com/product/0117757",
         "used": false,
         "preorder": false,
         "inStock": true
