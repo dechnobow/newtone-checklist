@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-08-07",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118892",
+        "artist": "Rhythm & Sound",
+        "title": "See Mi Yah",
+        "label": "Burial Mix",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_01/n_t0118892.jpg?1785568483",
+        "url": "https://newtone-records.com/product/0118892",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119023",
+        "artist": "DJ Homicide / Big Syphe",
+        "title": "Generational Flips",
+        "label": "CA",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_06/n_t0119023.jpg?1785998305",
+        "url": "https://newtone-records.com/product/0119023",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117619",
+        "artist": "DJ Homicide_",
+        "title": "DJ Homicide Presents Vic Hop",
+        "label": "CA US",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_06/n_t0117619.jpg?1785994657",
+        "url": "https://newtone-records.com/product/0117619",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118785",
+        "artist": "Orgone",
+        "title": "New You",
+        "label": "Colemine Records",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_04/n_t0118785.jpg?1785826239",
+        "url": "https://newtone-records.com/product/0118785",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118730",
+        "artist": "La Marr",
+        "title": "Mood Programs / Extended Play",
+        "label": "Music From Memory",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_07/n_t0118730.jpg?1783405914",
+        "url": "https://newtone-records.com/product/0118730",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117424",
+        "artist": "BLOXAM / KIITSU",
+        "title": "Split EP",
+        "label": "NOT ON LABEL",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_20/n_t0117424.jpeg?1774001497",
+        "url": "https://newtone-records.com/product/0117424",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118733",
+        "artist": "Sofie Birch",
+        "title": "Bivabippabualukka",
+        "label": "Stroom",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_07/n_t0118733.jpg?1783409750",
+        "url": "https://newtone-records.com/product/0118733",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119024",
+        "artist": "King Most / Marc Meistro",
+        "title": "Money In The Bag / Like A Moth To A Flame",
+        "label": "Sweet Breeze Sound",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_06/n_t0119024.jpg?1785999042",
+        "url": "https://newtone-records.com/product/0119024",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119039",
+        "artist": "Mamas Gun",
+        "title": "This Is The Day (Full Band Version)",
+        "label": "Ubiquity Recordings",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_29/n_t0119039.jpg?1785320196",
+        "url": "https://newtone-records.com/product/0119039",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-08-06",
     "category": "new",
     "records": [
@@ -16095,25 +16218,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/04_17/n_t0117769.jpg",
         "url": "https://newtone-records.com/product/0117769",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-05-09",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117528",
-        "artist": "Galcher Lustwerk",
-        "title": "Vestibule EP",
-        "label": "Stratasonic",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_29/n_t0117528.jpg",
-        "url": "https://newtone-records.com/product/0117528",
         "used": false,
         "preorder": false,
         "inStock": true
