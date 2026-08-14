@@ -1,5 +1,154 @@
 [
   {
+    "date": "2026-08-14",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117710",
+        "artist": "Pebble Seven",
+        "title": "Sheepsong Unlimited",
+        "label": "42far",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_13/n_t0117710.jpg?1786639757",
+        "url": "https://newtone-records.com/product/0117710",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0113129",
+        "artist": "Thee Marloes",
+        "title": "Not Today b/ w Over",
+        "label": "Big crown",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/03_11/n_t0113129.jpg?1741667029",
+        "url": "https://newtone-records.com/product/0113129",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118848",
+        "artist": "Cities Aviv",
+        "title": "Even Colder Spring",
+        "label": "Black Truffle",
+        "format": "LP＋DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_14/n_t0118848.jpg?1784015052",
+        "url": "https://newtone-records.com/product/0118848",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117709",
+        "artist": "Andrew Wasylyk",
+        "title": "Irreparable Parables (White Vinyl)",
+        "label": "Clay Pipe Music",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_13/n_t0117709.jpg?1776081879",
+        "url": "https://newtone-records.com/product/0117709",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118913",
+        "artist": "Der Zyklus",
+        "title": "...",
+        "label": "Clone Aqualung Series",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_21/n_t0118913.jpg?1784618982",
+        "url": "https://newtone-records.com/product/0118913",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118531",
+        "artist": "Doctor Bionic",
+        "title": "Expert Witness b/ w Mistake",
+        "label": "Colemine Records",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118531.jpg?1782117112",
+        "url": "https://newtone-records.com/product/0118531",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0118923",
+        "artist": "Gerd",
+        "title": "Palm Leaves (Remixes)",
+        "label": "Royal Oak",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_14/n_t0118923.jpg?1786706557",
+        "url": "https://newtone-records.com/product/0118923",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118898",
+        "artist": "Byard Lancaster",
+        "title": "Funny Funky Rib Crib",
+        "label": "Souffle Continu",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_05/n_t0118898.jpg?1785913228",
+        "url": "https://newtone-records.com/product/0118898",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118897",
+        "artist": "Byard Lancaster",
+        "title": "Exactement",
+        "label": "Souffle Continu",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_05/n_t0118897.jpg?1785913347",
+        "url": "https://newtone-records.com/product/0118897",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118697",
+        "artist": "Galcher Lustwerk",
+        "title": "Vestibule Remixes (Ricardo Villalobos, Skee Mask, Saoirse, Yaleesa Hall)",
+        "label": "Stratasonic",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_03/n_t0118697.jpg?1783076407",
+        "url": "https://newtone-records.com/product/0118697",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117548",
+        "artist": "Lay Llamas",
+        "title": "Time, Islands and Thresholds",
+        "label": "Zel Zele",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_30/n_t0117548.jpg?1774865184",
+        "url": "https://newtone-records.com/product/0117548",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-08-13",
     "category": "new",
     "records": [
@@ -16154,25 +16303,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/23/05_29/n_t0094792.jpeg",
         "url": "https://newtone-records.com/product/0094792",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-05-16",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117857",
-        "artist": "Lexx",
-        "title": "In Between State",
-        "label": "International Feel",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_24/n_t0117857.jpg?1777010156",
-        "url": "https://newtone-records.com/product/0117857",
         "used": false,
         "preorder": false,
         "inStock": true
