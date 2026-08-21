@@ -1,5 +1,154 @@
 [
   {
+    "date": "2026-08-21",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119041",
+        "artist": "Thee Heart Tones",
+        "title": "Don't Forget Me Love b/ w Sing Your Song",
+        "label": "BIG CROWN",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_29/n_t0119041.jpg?1785324850",
+        "url": "https://newtone-records.com/product/0119041",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119258",
+        "artist": "Sab-Chica",
+        "title": "Radio Days",
+        "label": "DICO MUSIC",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_19/n_t0119258.jpg?1787114025",
+        "url": "https://newtone-records.com/product/0119258",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118499",
+        "artist": "Tokiyo Ooto & Orhythmo",
+        "title": "童謡と子供の歌を唄う",
+        "label": "EM Records",
+        "format": "LP+DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_16/n_t0118499.png?1781609887",
+        "url": "https://newtone-records.com/product/0118500",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116131",
+        "artist": "I Am An Instrument",
+        "title": "Vol. 1",
+        "label": "IAAI Music",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/11_25/n_t0116131.jpg?1764068476",
+        "url": "https://newtone-records.com/product/0116131",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116173",
+        "artist": "NEW MANUKE",
+        "title": "SOUR VALLEY",
+        "label": "Leftbrain",
+        "format": "LP+DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/11_27/n_t0116173.jpg?1764238156",
+        "url": "https://newtone-records.com/product/0116173",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116175",
+        "artist": "空間現代",
+        "title": "Tracks Remixes",
+        "label": "Leftbrain/HEADZ",
+        "format": "LP+DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/11_27/n_t0116175.jpg?1764239063",
+        "url": "https://newtone-records.com/product/0116175",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118455",
+        "artist": "TOWA TEI",
+        "title": "ZAMBIENT[クリア・ヴァイナル]",
+        "label": "MACHBEAT.COM",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_20/n_t0118455.jpg?1787244359",
+        "url": "https://newtone-records.com/product/0118455",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119184",
+        "artist": "Barnt",
+        "title": "Geffen",
+        "label": "Magazine",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119184.jpg?1786440601",
+        "url": "https://newtone-records.com/product/0119184",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0096688",
+        "artist": "Kuniyuki Takahashi",
+        "title": "Feather World",
+        "label": "Mule Musiq",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0096688.jpg",
+        "url": "https://newtone-records.com/product/0096688",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0109705",
+        "artist": "Keith Hudson",
+        "title": "Playing It Cool & Playing It Right",
+        "label": "Week-End",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/04_23/n_t0109705.jpg",
+        "url": "https://newtone-records.com/product/0109705",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116299",
+        "artist": "Kolorit",
+        "title": "Lose Ideen",
+        "label": "Workshop",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_07/n_t0116299.jpg?1765132067",
+        "url": "https://newtone-records.com/product/0116299",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-08-20",
     "category": "new",
     "records": [
@@ -16170,64 +16319,6 @@
         "used": false,
         "preorder": false,
         "inStock": false
-      }
-    ]
-  },
-  {
-    "date": "2026-05-23",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117268",
-        "artist": "Alex Albrecht",
-        "title": "Hiriketiya",
-        "label": "Analogue Attic Recordings",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_17/n_t0117268.jpg",
-        "url": "https://newtone-records.com/product/0117268",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117888",
-        "artist": "Sam Goku",
-        "title": "Bliss Drift",
-        "label": "Dekmantel",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_28/n_t0117888.jpg",
-        "url": "https://newtone-records.com/product/0117888",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117525",
-        "artist": "Red Axes",
-        "title": "fabric presents Red Axes",
-        "label": "fabric Records",
-        "format": "2 x 12inch + 10inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_28/n_t0117525.jpg?1774686169",
-        "url": "https://newtone-records.com/product/0117525",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0116733",
-        "artist": "Brion Gysin",
-        "title": "Dreamachine",
-        "label": "Wewantsounds",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/01_27/n_t0116733.jpg?1769520592",
-        "url": "https://newtone-records.com/product/0116733",
-        "used": false,
-        "preorder": false,
-        "inStock": true
       }
     ]
   }
