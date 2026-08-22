@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-08-22",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119069",
+        "artist": "DJ Spence",
+        "title": "Meanwhile On Eart 2",
+        "label": "Doo",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_20/n_t0119069.jpg?1787209704",
+        "url": "https://newtone-records.com/product/0119069",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119070",
+        "artist": "Spencer & Alexander",
+        "title": "Personal Day",
+        "label": "Doo",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_20/n_t0119070.jpg?1787209611",
+        "url": "https://newtone-records.com/product/0119070",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118938",
+        "artist": "Fireground",
+        "title": "Core Waves",
+        "label": "Ilian Tape",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_22/n_t0118938.jpg?1784719276",
+        "url": "https://newtone-records.com/product/0118938",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119075",
+        "artist": "WAX",
+        "title": "No. 80008",
+        "label": "WAX",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_03/n_t0119075.jpeg?1785753522",
+        "url": "https://newtone-records.com/product/0119075",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116302",
+        "artist": "Wax",
+        "title": "No. 90009",
+        "label": "Wax",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/04_08/n_t0116302.jpg?1775630416",
+        "url": "https://newtone-records.com/product/0116302",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      }
+    ]
+  },
+  {
     "date": "2026-08-21",
     "category": "new",
     "records": [
@@ -16300,25 +16371,6 @@
         "used": false,
         "preorder": false,
         "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-05-24",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118021",
-        "artist": "Sergio Gomez",
-        "title": "115 3",
-        "label": "Private Post",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_16/n_t0118021.jpg?1778935289",
-        "url": "https://newtone-records.com/product/0118021",
-        "used": false,
-        "preorder": false,
-        "inStock": false
       }
     ]
   }
