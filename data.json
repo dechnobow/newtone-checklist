@@ -1,5 +1,128 @@
 [
   {
+    "date": "2026-08-28",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119213",
+        "artist": "Lovely Dave",
+        "title": "Lovely Dave",
+        "label": "Accidental Meetings",
+        "format": "Cassette",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_24/n_t0119213.jpg?1787587821",
+        "url": "https://newtone-records.com/product/0119213",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0111429",
+        "artist": "Aquizim",
+        "title": "Kunte Kinte",
+        "label": "Ariwa Sounds",
+        "format": "10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/09_24/n_t0111429.jpg?1727170622",
+        "url": "https://newtone-records.com/product/0111429",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119187",
+        "artist": "Charlemagne Palestine / Oren Ambarchi / Daniel O'Sullivan",
+        "title": "KKAARREENNIINNAA",
+        "label": "Black Truffle",
+        "format": "LP＋DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119187.jpg?1786441985",
+        "url": "https://newtone-records.com/product/0119187",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118463",
+        "artist": "CV313",
+        "title": "Echospace [Detroit] Presents: \"Altering Illusions\" [1/ 3] REMASTERED",
+        "label": "echospace [detroit]",
+        "format": "2x12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_24/n_t0118463.jpg?1787588378",
+        "url": "https://newtone-records.com/product/0118463",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119173",
+        "artist": "Robert Hood",
+        "title": "Archives",
+        "label": "Logistic Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119173.jpg?1786430133",
+        "url": "https://newtone-records.com/product/0119173",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118020",
+        "artist": "Chihei Hatakeyama, Ken Ikeda",
+        "title": "The Empty Rose",
+        "label": "mykesrhiza",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_09/n_t0118020.jpg?1778305643",
+        "url": "https://newtone-records.com/product/0118020",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119176",
+        "artist": "Andre Buljat, Cesare vs Disorder, Cristi Cons, Lola Palmer, Michael James",
+        "title": "Nowhere Fast Vol. 1",
+        "label": "Serialism",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119176.jpg?1786449369",
+        "url": "https://newtone-records.com/product/0119176",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119212",
+        "artist": "aisie",
+        "title": "Black Fire Dream",
+        "label": "studio 33",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_24/n_t0119212.jpg?1787588255",
+        "url": "https://newtone-records.com/product/0119212",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0108850",
+        "artist": "Pablo Schneider",
+        "title": "Música Original De La Película -  Sobre La Hierba Virgen",
+        "label": "Vampi Soul",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/02_13/n_t0108850.webp?1707810937",
+        "url": "https://newtone-records.com/product/0108850",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-08-27",
     "category": "new",
     "records": [
@@ -16128,64 +16251,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/05_15/n_t0117578.jpg?1778831972",
         "url": "https://newtone-records.com/product/0117578",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-05-30",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118268",
-        "artist": "Demuja",
-        "title": "TITLE.TXT",
-        "label": "Peach Discs",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_27/n_t0118268.jpg?1779864879",
-        "url": "https://newtone-records.com/product/0118268",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117287",
-        "artist": "Boo Williams",
-        "title": "The Recovery",
-        "label": "Rush Hour",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_16/n_t0117287.jpg?1773642554",
-        "url": "https://newtone-records.com/product/0117287",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118224",
-        "artist": "El Kazed",
-        "title": "SXB Deep Tales Pt. 2",
-        "label": "Smallville Records",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118224.jpg?1779772186",
-        "url": "https://newtone-records.com/product/0118224",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118223",
-        "artist": "El Kazed",
-        "title": "SXB Deep Tales Pt. 1",
-        "label": "Smallville Records",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118223.jpg?1779772147",
-        "url": "https://newtone-records.com/product/0118223",
         "used": false,
         "preorder": false,
         "inStock": true
