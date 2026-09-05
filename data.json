@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-09-05",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118587",
+        "artist": "Ricardo Villalobos",
+        "title": "Wings",
+        "label": "RAWAX",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_01/n_t0118587.jpg?1788267305",
+        "url": "https://newtone-records.com/product/0118587",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118875",
+        "artist": "Carl Finlow",
+        "title": "The RAWAX Trilogy Part One",
+        "label": "RAWAX MOTOR CITY EDITION",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_01/n_t0118875.jpg?1788267086",
+        "url": "https://newtone-records.com/product/0118875",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-09-04",
     "category": "new",
     "records": [
@@ -15505,38 +15537,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/06_05/n_t0118088.jpg?1780659279",
         "url": "https://newtone-records.com/product/0118088",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-06-07",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118211",
-        "artist": "VARIOUS",
-        "title": "Amateur Hour Vol. I",
-        "label": "Frank Music",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0118211.jpg?1779689416",
-        "url": "https://newtone-records.com/product/0118211",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118090",
-        "artist": "Humble B Flat",
-        "title": "Indigo Blues",
-        "label": "Zinnia Records",
-        "format": "2LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_02/n_t0118090.jpg?1780395446",
-        "url": "https://newtone-records.com/product/0118090",
         "used": false,
         "preorder": false,
         "inStock": true
