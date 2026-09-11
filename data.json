@@ -1,5 +1,89 @@
 [
   {
+    "date": "2026-09-11",
+    "category": "new",
+    "records": [
+      {
+        "id": "0117311",
+        "artist": "The Analogue Cops",
+        "title": "CH In A Gipsy World",
+        "label": "Diggers Society",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0117311.jpg?1779703351",
+        "url": "https://newtone-records.com/product/0117311",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119424",
+        "artist": "7FO",
+        "title": "ひろった石が割れた",
+        "label": "Em Records",
+        "format": "LP+DL",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_07/n_t0119424.jpg?1788765052",
+        "url": "https://newtone-records.com/product/0119424",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119295",
+        "artist": "Dexter",
+        "title": "Tangent Boy",
+        "label": "Endell Street",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_24/n_t0119295.jpg?1787568992",
+        "url": "https://newtone-records.com/product/0119295",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119319",
+        "artist": "Florence",
+        "title": "A Requiem for Prime Time TV",
+        "label": "Fleetway Tapes",
+        "format": "Tape",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_08/n_t0119319.png?1788852599",
+        "url": "https://newtone-records.com/product/0119319",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117671",
+        "artist": "Ferplay",
+        "title": "Electric Waves EP",
+        "label": "Flux Code",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0117671.jpg",
+        "url": "https://newtone-records.com/product/0117671",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0103976",
+        "artist": "Ricardo Villalobos & Washington Miranda",
+        "title": "De Cada Uno EP",
+        "label": "Hearing Colours",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/22/12_19/n_t0103976.jpg?1671436988",
+        "url": "https://newtone-records.com/product/0103976",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-09-10",
     "category": "new",
     "records": [
@@ -14703,51 +14787,6 @@
         "used": false,
         "preorder": false,
         "inStock": false
-      }
-    ]
-  },
-  {
-    "date": "2026-06-13",
-    "category": "new",
-    "records": [
-      {
-        "id": "0116838",
-        "artist": "Anunaku",
-        "title": "Stargate EP",
-        "label": "3024 Music",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_12/n_t0116838.jpg?1781277714",
-        "url": "https://newtone-records.com/product/0116838",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117324",
-        "artist": "Shūdan Sokai",
-        "title": "その前夜 - Live At 八王子 Alone",
-        "label": "Aguirre",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_12/n_t0117324.jpeg?1773318464",
-        "url": "https://newtone-records.com/product/0117324",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118201",
-        "artist": "Horse Lords",
-        "title": "Demand to Be Taken to Heaven Alive!",
-        "label": "PLANCHA",
-        "format": "CD",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_23/n_t0118201.png?1779521831",
-        "url": "https://newtone-records.com/product/0118201",
-        "used": false,
-        "preorder": false,
-        "inStock": true
       }
     ]
   }
