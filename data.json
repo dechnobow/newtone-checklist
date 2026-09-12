@@ -1,5 +1,180 @@
 [
   {
+    "date": "2026-09-12",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119112",
+        "artist": "Nueen",
+        "title": "Swerved",
+        "label": "3XL",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_08/n_t0119112.jpg?1788852374",
+        "url": "https://newtone-records.com/product/0119112",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119473",
+        "artist": "Johannes Albert",
+        "title": "Chicago",
+        "label": "Frank Music",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_10/n_t0119473.jpg",
+        "url": "https://newtone-records.com/product/0119473",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118212",
+        "artist": "V/ A",
+        "title": "Amateur Hour Vol. II",
+        "label": "Frank Music",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0118212.jpg?1779689487",
+        "url": "https://newtone-records.com/product/0118212",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118517",
+        "artist": "Black Truffle",
+        "title": "La Truffe Galactique",
+        "label": "G.A.M.M.",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_18/n_t0118517.jpg?1781804806",
+        "url": "https://newtone-records.com/product/0118517",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118516",
+        "artist": "Felipe Gordon",
+        "title": "Abstract Equatorial Ep",
+        "label": "G.A.M.M.",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_18/n_t0118516.jpg?1781803429",
+        "url": "https://newtone-records.com/product/0118516",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0114825",
+        "artist": "Shaka",
+        "title": "Time Is On Your Side",
+        "label": "HOUSEWAX",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_05/n_t0114825.jpg?1770274096",
+        "url": "https://newtone-records.com/product/0114825",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119192",
+        "artist": "Forest Witches",
+        "title": "Awaken The Woods",
+        "label": "Junction Forest",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_10/n_t0119192.jpg?1789037312",
+        "url": "https://newtone-records.com/product/0119192",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0118973",
+        "artist": "The Mountain People",
+        "title": "Raw Pitch",
+        "label": "mountain people",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_27/n_t0118973.jpg?1785150789",
+        "url": "https://newtone-records.com/product/0118973",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119437",
+        "artist": "Frhanks / Barac",
+        "title": "Criskell / My Son David",
+        "label": "No Lookn Back",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_08/n_t0119437.jpg?1788862662",
+        "url": "https://newtone-records.com/product/0119437",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119333",
+        "artist": "Various",
+        "title": "Eccentric Soul: The Magic Touch Label Vol. 1",
+        "label": "NUMERO GROUP",
+        "format": "2LP(Color)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_26/n_t0119333.jpg",
+        "url": "https://newtone-records.com/product/0119333",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119087",
+        "artist": "Mike Kee",
+        "title": "White Cloud Place",
+        "label": "Ruf Kutz",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_04/n_t0119087.jpg?1785832486",
+        "url": "https://newtone-records.com/product/0119087",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119085",
+        "artist": "Walter Gibbons",
+        "title": "Can't Stop Talking",
+        "label": "Sunshine Sound",
+        "format": "10inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_04/n_t0119085.jpg?1785831874",
+        "url": "https://newtone-records.com/product/0119085",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119468",
+        "artist": "Annie Hall",
+        "title": "Future Sports (transparent turquoise vinyl)",
+        "label": "Synaptic Cliffs",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_10/n_t0119468.jpg?1789021430",
+        "url": "https://newtone-records.com/product/0119468",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-09-11",
     "category": "new",
     "records": [
@@ -14768,25 +14943,6 @@
         "used": false,
         "preorder": false,
         "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-06-14",
-    "category": "new",
-    "records": [
-      {
-        "id": "0117792",
-        "artist": "Gap Mangione",
-        "title": "Diana In The Autumn Wind (LP)",
-        "label": "Be With Records",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_19/n_t0117792.jpg?1776556879",
-        "url": "https://newtone-records.com/product/0117792",
-        "used": false,
-        "preorder": false,
-        "inStock": false
       }
     ]
   }
