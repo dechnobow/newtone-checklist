@@ -1,5 +1,232 @@
 [
   {
+    "date": "2026-10-01",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119708",
+        "artist": "Gradient",
+        "title": "Random Layers",
+        "label": "Alt Dub",
+        "format": "12inch Coloured Vinyl",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119708.jpg?1790747895",
+        "url": "https://newtone-records.com/product/0119708",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119501",
+        "artist": "Lady Jane",
+        "title": "Here I Am Baby",
+        "label": "Athens Of The North",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_12/n_t0119501.jpg?1789199445",
+        "url": "https://newtone-records.com/product/0119501",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119237",
+        "artist": "The Melting Hours",
+        "title": "The Melting Hours EP",
+        "label": "Beyond Space And Time",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_18/n_t0119237.jpg?1787039644",
+        "url": "https://newtone-records.com/product/0119237",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119179",
+        "artist": "Sleep D & Mosam Howieson",
+        "title": "Syphon Filter",
+        "label": "Butter Sessions",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119179.jpg?1786433244",
+        "url": "https://newtone-records.com/product/0119179",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119770",
+        "artist": "MYKI",
+        "title": "Legz & Soul",
+        "label": "Craigie Knowes",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119770.jpg?1790747418",
+        "url": "https://newtone-records.com/product/0119770",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119500",
+        "artist": "Sir Spyro",
+        "title": "2ND SQ",
+        "label": "Deep Medi Musik",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_12/n_t0119500.jpg?1789199091",
+        "url": "https://newtone-records.com/product/0119500",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119499",
+        "artist": "MYTHM",
+        "title": "Revenge",
+        "label": "Deep Medi Musik",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_12/n_t0119499.jpg?1789199006",
+        "url": "https://newtone-records.com/product/0119499",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119306",
+        "artist": "Mondo Freaks",
+        "title": "Won't You Decide (musclecars Remix)",
+        "label": "Every Star",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_25/n_t0119306.jpg?1787647294",
+        "url": "https://newtone-records.com/product/0119306",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119181",
+        "artist": "Ruby My Dear",
+        "title": "Basic",
+        "label": "Love Love",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_24/n_t0119181.jpg?1790235517",
+        "url": "https://newtone-records.com/product/0119181",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119705",
+        "artist": "State Of Flux",
+        "title": "Mind Weeds",
+        "label": "Podadisk",
+        "format": "12inch with Hemp Insert",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119705.jpg?1790748760",
+        "url": "https://newtone-records.com/product/0119705",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118953",
+        "artist": "Eden Aurelius",
+        "title": "Entre Nous",
+        "label": "Short Span",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0118953.jpg?1790749052",
+        "url": "https://newtone-records.com/product/0118953",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119595",
+        "artist": "View / Listen",
+        "title": "Music Takes Me / Carnaval Del Tiempo",
+        "label": "Sweet Breeze Sound",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_29/n_t0119595.jpg?1790667314",
+        "url": "https://newtone-records.com/product/0119595",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119609",
+        "artist": "DAN*EDS",
+        "title": "Foel Grach",
+        "label": "The Legend Of Gelert",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119609.jpg?1790748472",
+        "url": "https://newtone-records.com/product/0119609",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119265",
+        "artist": "Churashima Navigator",
+        "title": "片思い",
+        "label": "Tuff Beats",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_19/n_t0119265.jpg?1787126932",
+        "url": "https://newtone-records.com/product/0119265",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119763",
+        "artist": "Konduku / Kaspiann",
+        "title": "VALA 5",
+        "label": "VALA",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119763.jpg?1790746767",
+        "url": "https://newtone-records.com/product/0119763",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119707",
+        "artist": "Fleet.Dreams",
+        "title": "A Voice Without Color",
+        "label": "Vinezza",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_30/n_t0119707.jpg?1790749128",
+        "url": "https://newtone-records.com/product/0119707",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119247",
+        "artist": "Dele Sosimi, brekkyt & Meith",
+        "title": "Remixed 2026",
+        "label": "Wah Wah 45s",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_18/n_t0119247.jpg?1787041807",
+        "url": "https://newtone-records.com/product/0119247",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-09-30",
     "category": "new",
     "records": [
@@ -13469,64 +13696,6 @@
         "used": false,
         "preorder": false,
         "inStock": false
-      }
-    ]
-  },
-  {
-    "date": "2026-07-03",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118210",
-        "artist": "Aspetuck",
-        "title": "Immersion",
-        "label": "A Strangely Isolated Place",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_25/n_t0118210.jpg",
-        "url": "https://newtone-records.com/product/0118210",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118660",
-        "artist": "Raw Takes",
-        "title": "House Of Phreaks",
-        "label": "All Nice Records",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_29/n_t0118660.jpg?1782721907",
-        "url": "https://newtone-records.com/product/0118660",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118432",
-        "artist": "Christian Wallumrød Ensemble",
-        "title": "Non Sonett",
-        "label": "Aspen Edities",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_29/n_t0118432.jpg?1782723421",
-        "url": "https://newtone-records.com/product/0118432",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118546",
-        "artist": "Noots",
-        "title": "Preobrazhenskaya Ploshchad (feat Edmondson, Nookie mixes)",
-        "label": "Deeppa",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_30/n_t0118546.jpg?1782808920",
-        "url": "https://newtone-records.com/product/0118546",
-        "used": false,
-        "preorder": false,
-        "inStock": true
       }
     ]
   }
