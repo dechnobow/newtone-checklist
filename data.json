@@ -1,5 +1,50 @@
 [
   {
+    "date": "2026-10-03",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118732",
+        "artist": "Fumio Miyashita",
+        "title": "White Morning",
+        "label": "Ambient Sans",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_07/n_t0118732.jpeg?1783409195",
+        "url": "https://newtone-records.com/product/0118732",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119441",
+        "artist": "Portable",
+        "title": "Not Over & Around But Through",
+        "label": "LMD",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_22/n_t0119441.jpg?1790078158",
+        "url": "https://newtone-records.com/product/0119441",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119331",
+        "artist": "Emily A. Sprague",
+        "title": "Cyano",
+        "label": "RVNG INTL.",
+        "format": "LP(Color)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_26/n_t0119331.jpg?1787728480",
+        "url": "https://newtone-records.com/product/0119330",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-02",
     "category": "new",
     "records": [
@@ -13570,51 +13615,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118464.jpg?1782124810",
         "url": "https://newtone-records.com/product/0118464",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-07-05",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118686",
-        "artist": "QUARKS",
-        "title": "Allein (Incl. Sascha Funke & Swayzak Remixes)",
-        "label": "hello, goodbye",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_01/n_t0118686.jpg?1782901302",
-        "url": "https://newtone-records.com/product/0118686",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118537",
-        "artist": "V/ A (Jennifer Loveless, ROKAR, Rudy With A Hoodie ..)",
-        "title": "Peak – Time Archives",
-        "label": "Life and Death",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118537.jpg?1782118134",
-        "url": "https://newtone-records.com/product/0118537",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118684",
-        "artist": "Kerri Chandler / Dee Dee Brave",
-        "title": "Tony Humphries Acetates",
-        "label": "Running Back",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_01/n_t0118684.jpg?1782900764",
-        "url": "https://newtone-records.com/product/0118684",
         "used": false,
         "preorder": false,
         "inStock": true
