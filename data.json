@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-10-04",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119076",
+        "artist": "Various",
+        "title": "30 Years of Freerange Part Three",
+        "label": "Freerange Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_03/n_t0119076.jpg?1785754219",
+        "url": "https://newtone-records.com/product/0119076",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0116029",
+        "artist": "Susumu Yokota",
+        "title": "Grinning Cat (Skintone Edition)",
+        "label": "Lo Recordings",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/25/12_28/n_t0116029.jpg?1766905833",
+        "url": "https://newtone-records.com/product/0116029",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0115882",
+        "artist": "Susumu Yokota",
+        "title": "Sakura (Skintone Edition)",
+        "label": "Lo Recordings",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_08/n_t0115882.jpg?1778242600",
+        "url": "https://newtone-records.com/product/0115882",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0106279",
+        "artist": "Artman",
+        "title": "Re:Sort 2",
+        "label": "Qooki Records",
+        "format": "CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/23/06_27/n_t0106279.jpeg?1687846911",
+        "url": "https://newtone-records.com/product/0106279",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118872",
+        "artist": "Kenji Kawai",
+        "title": "Ghost In The Shell (Authorised Orig. Soundtrack) 2024 Repress",
+        "label": "WRWTFWW",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_17/n_t0118872.jpg?1784271195",
+        "url": "https://newtone-records.com/product/0118872",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-03",
     "category": "new",
     "records": [
@@ -13557,64 +13628,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/03_19/n_t0116881.jpg",
         "url": "https://newtone-records.com/product/0116881",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-07-06",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118336",
-        "artist": "Full Circle",
-        "title": "Remixes",
-        "label": "Full Circle Released",
-        "format": "Tape",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118336.jpg?1782123459",
-        "url": "https://newtone-records.com/product/0118336",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118031",
-        "artist": "Super Static Fever",
-        "title": "Silent Dynamic Torture",
-        "label": "NUMERO GROUP",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_06/n_t0118031.jpg?1783340789",
-        "url": "https://newtone-records.com/product/0118031",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118457",
-        "artist": "Bot1500",
-        "title": "The Black Sea",
-        "label": "Short Span",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118457.jpg?1782129118",
-        "url": "https://newtone-records.com/product/0118457",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118464",
-        "artist": "Galaxy 2 Galaxy",
-        "title": "Galaxy 2 Galaxy",
-        "label": "Underground Resistance",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/06_22/n_t0118464.jpg?1782124810",
-        "url": "https://newtone-records.com/product/0118464",
         "used": false,
         "preorder": false,
         "inStock": true
