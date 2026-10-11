@@ -1,5 +1,141 @@
 [
   {
+    "date": "2026-10-10",
+    "category": "new",
+    "records": [
+      {
+        "id": "0002673",
+        "artist": "KC Flightt / Steve Poindexter / Go Bitch Go!",
+        "title": "Let's Get Jazzy / Work This Pussy / Work That Mother Fucker",
+        "label": "GIANT",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_10/n_t0002673.jpg?1791604783",
+        "url": "https://newtone-records.com/product/0002673",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0116959",
+        "artist": "Studio 2",
+        "title": "Dirty Games / Who Jah Bless?",
+        "label": "Kemet",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/02_10/n_t0116959.jpg?1770721456",
+        "url": "https://newtone-records.com/product/0116959",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119388",
+        "artist": "Andy Martin ft. Gavsborg",
+        "title": "Plato & Caves Remixes [Repress]",
+        "label": "Mole Audio",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_01/n_t0119388.jpg?1788255513",
+        "url": "https://newtone-records.com/product/0119388",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119390",
+        "artist": "Unknown Artist",
+        "title": "Der Muckenschwarn",
+        "label": "Not On Label",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_01/n_t0119390.jpg?1788256161",
+        "url": "https://newtone-records.com/product/0119390",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0002676",
+        "artist": "NIGHTLIFE UNLIMITED",
+        "title": "Peaches & Prunes",
+        "label": "NOT ON LABEL",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_21/n_t0002676.jpeg?1784616327",
+        "url": "https://newtone-records.com/product/0002676",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119863",
+        "artist": "BLACK RASCALS",
+        "title": "So In Love (Joe Claussell Rough Instrumental Takes)",
+        "label": "POLAR CAP",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_10/n_t0119863.jpeg?1791609067",
+        "url": "https://newtone-records.com/product/0119863",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119190",
+        "artist": "The 4th Street Orchestra",
+        "title": "Yuh Learn!",
+        "label": "Real Rock",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_06/n_t0119190.jpg?1791261598",
+        "url": "https://newtone-records.com/product/0119190",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119189",
+        "artist": "Earthquake Studio",
+        "title": "Dub Harder Than Steel",
+        "label": "Real Rock",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_06/n_t0119189.jpeg?1791261915",
+        "url": "https://newtone-records.com/product/0119189",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119443",
+        "artist": "Irisplus",
+        "title": "Irisplus",
+        "label": "Tax Free",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_10/n_t0119443.jpg?1791633754",
+        "url": "https://newtone-records.com/product/0119443",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0119864",
+        "artist": "OST - 日野浩志郎",
+        "title": "天幕のジャードゥーガル",
+        "label": "VAP",
+        "format": "2CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_10/n_t0119864.jpg",
+        "url": "https://newtone-records.com/product/0119864",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-09",
     "category": "new",
     "records": [
@@ -13460,38 +13596,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118238.jpg?1779782764",
         "url": "https://newtone-records.com/product/0118238",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-07-12",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118805",
-        "artist": "Lazarus Plot",
-        "title": "Something Good Has Got To Come Out Of All Of These Goodbyes",
-        "label": "NUMERO GROUP",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_12/n_t0118805.webp?1783827032",
-        "url": "https://newtone-records.com/product/0118805",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118606",
-        "artist": "Douglas",
-        "title": "Marzipan",
-        "label": "recursie",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_12/n_t0118606.jpg?1783852040",
-        "url": "https://newtone-records.com/product/0118606",
         "used": false,
         "preorder": false,
         "inStock": true
