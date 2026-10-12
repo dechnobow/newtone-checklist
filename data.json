@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-10-11",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119327",
+        "artist": "Karate Boogaloo",
+        "title": "Access All Areas",
+        "label": "Colemine Records/College of Knowledge",
+        "format": "LP(Black)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_26/n_t0119327.jpg?1787726252",
+        "url": "https://newtone-records.com/product/0119327",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0002683",
+        "artist": "THE JOUBERT SINGERS",
+        "title": "Stand On The Word",
+        "label": "NEXT PLATEAU RECORDS INC.",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_21/n_t0002683.jpeg?1784617312",
+        "url": "https://newtone-records.com/product/0002683",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0118944",
+        "artist": "Carlos Nilmmns",
+        "title": "Legacy EP (clear marbled vinyl + stamped sleeve)",
+        "label": "Ornaments",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/07_23/n_t0118944.jpg",
+        "url": "https://newtone-records.com/product/0118944",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119174",
+        "artist": "95 STEPS",
+        "title": "Deep Blue",
+        "label": "Pf Originals",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/08_11/n_t0119174.jpg?1786430318",
+        "url": "https://newtone-records.com/product/0119174",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-10",
     "category": "new",
     "records": [
@@ -13525,77 +13583,6 @@
         "genre": "",
         "img": "https://www.newtone-records.com/pic/26/07_14/n_t0118717.jpg?1784002859",
         "url": "https://newtone-records.com/product/0118717",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
-  },
-  {
-    "date": "2026-07-13",
-    "category": "new",
-    "records": [
-      {
-        "id": "0111010",
-        "artist": "Hortense Ellis & Big Youth",
-        "title": "Hell & Sorrow / Tribulation",
-        "label": "333",
-        "format": "7inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/24/08_20/n_t0111010.jpg?1724155358",
-        "url": "https://newtone-records.com/product/0111010",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0117366",
-        "artist": "Natural Rhythm",
-        "title": "The Jive EP (reissue) (limited white & baby blue vinyl 12\")",
-        "label": "Earthtones",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/03_31/n_t0117366.jpg?1774944214",
-        "url": "https://newtone-records.com/product/0117366",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0116742",
-        "artist": "f.ampism",
-        "title": "The Vertical Luminous",
-        "label": "Hive Mind",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/04_01/n_t0116742.jpg?1775021133",
-        "url": "https://newtone-records.com/product/0116742",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0114064",
-        "artist": "Tezeta",
-        "title": "Seventh Place",
-        "label": "Klang Tone",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/25/06_19/n_t0114064.jpg?1750316303",
-        "url": "https://newtone-records.com/product/0114064",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0118238",
-        "artist": "Lowertown",
-        "title": "Ugly Duckling Union (Rainbow Road Marble Vinyl LP)",
-        "label": "Summer Shade",
-        "format": "LP(Color)",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/05_26/n_t0118238.jpg?1779782764",
-        "url": "https://newtone-records.com/product/0118238",
         "used": false,
         "preorder": false,
         "inStock": true
