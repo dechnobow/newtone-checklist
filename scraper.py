@@ -402,36 +402,60 @@ def save_data(data, path):
     print(f"Saved {path}: days {old_days} -> {new_days}, records {old_records} -> {new_records}")
 
 
-if __name__ == "__main__":
+SCRAPE_META_PATH = "scrape-meta.json"
+TMP_DAILY_PATH = "tmp-daily.json"   # push がぶつかったときの書き足し直し用（コミットしない）
 
-    date_from = os.getenv("DATE_FROM")
-    date_to = os.getenv("DATE_TO")
+
+def load_scrape_meta():
+    try:
+        with open(SCRAPE_META_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def save_scrape_meta(meta):
+    with open(SCRAPE_META_PATH, "w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+
+
+def bump_last_scraped(meta, *dates):
+    """最後に取得した日付を進める（戻さない）。
+
+    アプリで日付を削除すると data.json からその日が消えるので、
+    data.json の最新日だけを見て続きを決めると、削除した日を取り直してしまう。
+    そのため最後に取得した日付は別に覚えておく。
+    """
+    cands = [d for d in (meta.get("lastScrapedDate"), *dates) if d]
+    if not cands:
+        return meta
+    latest = max(cands)
+    if meta.get("lastScrapedDate") != latest:
+        meta = {**meta, "lastScrapedDate": latest}
+        save_scrape_meta(meta)
+    return meta
+
+
+if __name__ == "__main__":
 
     today = today_jst_str()
     print(f"Today (JST): {today}")
 
     # --------------------------------------
-    # Range scrape (アプリからの過去取得)
+    # 書き足し直し（push が削除とぶつかったとき、update.yml から呼ばれる）
+    # 最新の data.json に、今回取得した分だけを書き足す
     # --------------------------------------
-    if date_from and date_to:
-        print(f"Range scrape: {date_from} ~ {date_to}")
-
-        result = scrape_range(date_from, date_to)
-
-        save_data(result, "tmp-range.json")
-
-        meta = {
-            "from": date_from,
-            "to": date_to,
-            "groups": len(result),
-            "count": sum(len(g.get("records", [])) for g in result),
-            "generatedAt": datetime.now(JST).isoformat(),
-        }
-
-        save_data(meta, "tmp-range-meta.json")
-
-        print("Saved tmp-range.json successfully")
-        print("Saved tmp-range-meta.json successfully")
+    if "--merge-only" in sys.argv:
+        existing = load_existing_data("data.json")
+        meta = bump_last_scraped(load_scrape_meta(), *(g["date"] for g in existing[:1]))
+        if not os.path.exists(TMP_DAILY_PATH):
+            print("No tmp-daily.json — nothing to re-merge")
+            sys.exit(0)
+        with open(TMP_DAILY_PATH, encoding="utf-8") as f:
+            tmp = json.load(f)
+        merged = merge_groups(existing, tmp.get("groups", []))
+        save_data(merged, "data.json")
+        bump_last_scraped(meta, tmp.get("to"))
         sys.exit(0)
 
     # --------------------------------------
@@ -441,8 +465,10 @@ if __name__ == "__main__":
     existing = load_existing_data("data.json")
     existing.sort(key=lambda x: x["date"], reverse=True)
 
+    scrape_meta = bump_last_scraped(load_scrape_meta(), existing[0]["date"] if existing else None)
+    latest_date = scrape_meta.get("lastScrapedDate")
+
     yesterday = (datetime.now(JST) - timedelta(days=1)).date()
-    latest_date = existing[0]["date"] if existing else None
 
     if latest_date:
         target_from_date = (
@@ -476,8 +502,12 @@ if __name__ == "__main__":
             "records": g["records"],
         })
 
+    with open(TMP_DAILY_PATH, "w", encoding="utf-8") as f:
+        json.dump({"to": target_to, "groups": normalized}, f, ensure_ascii=False)
+
     merged = merge_groups(existing, normalized)
 
     save_data(merged, "data.json")
+    bump_last_scraped(scrape_meta, target_to)
 
     print("Saved data.json successfully")
