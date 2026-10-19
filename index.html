@@ -723,6 +723,17 @@
       <button class="settings-btn" id="fetch-range-btn" onclick="triggerRangeScrape()">取得する</button>
       <div class="settings-status" id="settings-status"></div>
 
+      <div class="settings-section-title" style="margin-top:36px">同期とバックアップ</div>
+      <div class="settings-status" id="sync-status" style="margin:0 0 14px"></div>
+      <div class="settings-row">
+        <select class="settings-input" id="snapshot-select"><option value="">読み込み中…</option></select>
+      </div>
+      <button class="settings-btn" onclick="restoreSnapshot()">この日の状態から復元</button>
+      <button class="settings-btn" onclick="exportState()">状態を書き出す</button>
+      <button class="settings-btn" onclick="document.getElementById('import-file').click()">ファイルから読み込む</button>
+      <input type="file" id="import-file" accept="application/json" style="display:none"
+             onchange="this.files[0] && importState(this.files[0]); this.value=''">
+
     </div>
   </div>
 
@@ -753,72 +764,239 @@ let activeDay = null, activeMonth = null;
 // ── GitHub settings ──
 const RANGE_API_BASE = 'https://newtone-range-worker.dechnobow-newtone.workers.dev';
 
-// ── Server sync (iOS の localStorage 自動削除対策) ──
-// state-worker をデプロイして、その URL を SYNC_API_BASE に入れると同期が有効になる。
-// 空文字のままなら同期はオフで、これまで通りローカル保存のみで動作する。
+// ── Server sync v2 ──
+// 状態は項目ごとの LWW（後勝ち）マップ meta で持ち、サーバーへは
+// 「この項目をオン／オフにした」という操作だけを送る。
+// 状態の塊を丸ごと送る経路はないので、localStorage が消えた端末が
+// サーバーの履歴を上書きすることは構造的に起こらない。
+//   キー: c:<id> チェック / p:<id> プール / ri:<id> 削除レコード / rd:<date> 削除日
+//   値:   { v: true | レコード | false | null, ts }
+// レコード本体（localData）は同期しない。data.json（全履歴）から毎回作り直せる。
 const SYNC_API_BASE = 'https://newtone-state.dechnobow-newtone.workers.dev'; // 状態保存 Worker
-const SYNC_KEY      = 'newtone-main'; // このアプリの保存スロット名（複数店舗で分けたい場合のみ変更）
-const LS_UPDATED    = 'nt_updated_at';
+const SYNC_KEY      = 'newtone-main';
+const LS_META       = 'nt_meta';
+const LS_OUTBOX     = 'nt_outbox';
+const LS_LAST_SYNC  = 'nt_last_sync';
 
-let syncApplying   = false; // サーバー内容をローカルへ書き戻している最中は true（自動 push を止める）
-let syncReady      = false; // 初回 pull 完了後に true（それまで push しない）
-let syncPushTimer  = null;
+let meta   = loadStorage(LS_META, {});
+let outbox = loadStorage(LS_OUTBOX, []);
+let syncTimer = null;
+let flushing  = false;
+let lastClock = 0;
 
-// ローカルに変更があったら、少し待ってからサーバーへ保存（連続チェックはまとめて1回）
-function scheduleSync() {
-  if (!SYNC_API_BASE || syncApplying || !syncReady) return;
-  saveStorage(LS_UPDATED, Date.now());
-  clearTimeout(syncPushTimer);
-  syncPushTimer = setTimeout(pushStateNow, 2000);
+function syncUrl(path, params = {}) {
+  const q = new URLSearchParams({ key: SYNC_KEY, ...params });
+  return `${SYNC_API_BASE}${path}?${q}`;
 }
 
-async function pushStateNow() {
-  if (!SYNC_API_BASE) return;
-  const bundle = {
-    updatedAt: loadStorage(LS_UPDATED, Date.now()),
-    data: localData, checked, pool, removedIds, removedDays
+function clockNow() {
+  lastClock = Math.max(lastClock + 1, Date.now());
+  return lastClock;
+}
+
+// 旧形式（meta なし）のローカル状態を「古い操作」として取り込む。
+// ts=1 なので、どこかで行われた本物の操作には必ず負ける。
+function adoptLegacy(src) {
+  let n = 0;
+  const add = (k, v) => {
+    if (meta[k]) return;
+    meta[k] = { v, ts: 1 };
+    outbox.push({ k, v, ts: 1 });
+    n++;
   };
-  try {
-    await fetch(`${SYNC_API_BASE}/state?key=${encodeURIComponent(SYNC_KEY)}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bundle)
-    });
-  } catch (e) { console.log('sync push failed:', e); }
+  Object.entries(src.checked     || {}).forEach(([id, on]) => on && add('c:' + id, true));
+  Object.entries(src.pool        || {}).forEach(([id, r])  => r && r.id && add('p:' + id, r));
+  Object.entries(src.removedIds  || {}).forEach(([id, on]) => on && add('ri:' + id, true));
+  Object.entries(src.removedDays || {}).forEach(([d, on])  => on && add('rd:' + d, true));
+  if (n) { saveStorage(LS_META, meta); saveStorage(LS_OUTBOX, outbox); }
+  return n;
 }
 
-// 起動時にサーバーから状態を取得。サーバーの方が新しい（＝ローカルが消えた等）なら復元する。
-async function pullState() {
-  if (!SYNC_API_BASE) { syncReady = true; return; }
+// 状態を変える操作はすべてここを通す
+function mark(k, v) {
+  const ts = clockNow();
+  meta[k] = { v, ts };
+  outbox.push({ k, v, ts });
+  saveStorage(LS_META, meta);
+  saveStorage(LS_OUTBOX, outbox);
+  scheduleSync();
+}
+
+function setChecked(id, on) {
+  if (!!checked[id] === !!on) return;
+  if (on) checked[id] = true; else delete checked[id];
+  mark('c:' + id, !!on);
+}
+
+function setPooled(id, record) {
+  if (record) pool[id] = record; else delete pool[id];
+  mark('p:' + id, record || null);
+}
+
+function mergeMeta(remote) {
+  let changed = false;
+  Object.entries(remote || {}).forEach(([k, e]) => {
+    if (!e || typeof e.ts !== 'number') return;
+    const cur = meta[k];
+    if (!cur || e.ts > cur.ts) { meta[k] = e; changed = true; }
+  });
+  if (changed) saveStorage(LS_META, meta);
+  return changed;
+}
+
+// meta から表示用のマップを作り直す
+function applyMeta() {
+  checked = {}; pool = {}; removedIds = {}; removedDays = {};
+  Object.entries(meta).forEach(([k, e]) => {
+    if (!e || !e.v) return;
+    const i = k.indexOf(':');
+    const t = k.slice(0, i), id = k.slice(i + 1);
+    if (t === 'c') checked[id] = true;
+    else if (t === 'p' && typeof e.v === 'object' && e.v.id) pool[id] = e.v;
+    else if (t === 'ri') removedIds[id] = true;
+    else if (t === 'rd') removedDays[id] = true;
+  });
+  saveStorage(LS_CHECKED, checked);
+  saveStorage(LS_POOL, pool);
+  saveStorage(LS_REMOVED_IDS, removedIds);
+  saveStorage(LS_REMOVED_DAYS, removedDays);
+}
+
+function scheduleSync(delay = 1500) {
+  if (!SYNC_API_BASE) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(flushOutbox, delay);
+}
+
+async function flushOutbox() {
+  if (!SYNC_API_BASE || flushing || outbox.length === 0) return;
+  flushing = true;
+  const batch = outbox.slice(0, 100); // keepalive の 64KB 制限に収める
+  let ok = false;
   try {
-    const res = await fetch(`${SYNC_API_BASE}/state?key=${encodeURIComponent(SYNC_KEY)}`, { cache: 'no-store' });
+    const res = await fetch(syncUrl('/ops'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ops: batch }),
+      keepalive: true,
+    });
     const j = await res.json();
-    const server = j && j.data;
-    if (server && typeof server === 'object') {
-      const localUpdated  = loadStorage(LS_UPDATED, 0);
-      const serverUpdated = server.updatedAt || 0;
-      const localEmpty =
-        Object.keys(checked).length === 0 &&
-        Object.keys(pool).length === 0 &&
-        Object.keys(localData).length === 0;
-      if (serverUpdated > localUpdated || localEmpty) {
-        syncApplying = true;
-        localData   = server.data       || {};
-        checked     = server.checked     || {};
-        pool        = server.pool        || {};
-        removedIds  = server.removedIds  || {};
-        removedDays = server.removedDays || {};
-        saveStorage(LS_DATA, localData);
-        saveStorage(LS_CHECKED, checked);
-        saveStorage(LS_POOL, pool);
-        saveStorage(LS_REMOVED_IDS, removedIds);
-        saveStorage(LS_REMOVED_DAYS, removedDays);
-        saveStorage(LS_UPDATED, serverUpdated || Date.now());
-        syncApplying = false;
+    if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
+    // 送れた分だけ外す（送信中に積まれた操作は残る）
+    outbox = outbox.slice(batch.length);
+    saveStorage(LS_OUTBOX, outbox);
+    saveStorage(LS_LAST_SYNC, Date.now());
+    if (j.meta && mergeMeta(j.meta)) applyMeta();
+    ok = true;
+  } catch (e) {
+    console.log('sync 送信失敗（未送信として保持し、あとで再送）:', e);
+  } finally {
+    flushing = false;
+  }
+  if (outbox.length) scheduleSync(ok ? 200 : 30000);
+  updateSyncStatus();
+}
+
+async function pullState() {
+  // まず手元の旧形式を取り込む（初回のみ実質的に動く）
+  adoptLegacy({ checked, pool, removedIds, removedDays });
+  if (SYNC_API_BASE) {
+    try {
+      const res = await fetch(syncUrl('/state'), { cache: 'no-store' });
+      const j = await res.json();
+      if (j && j.ok) {
+        if (j.meta) mergeMeta(j.meta);
+        else if (j.data) adoptLegacy(j.data); // v1 Worker のままでも安全に取り込む
+        saveStorage(LS_LAST_SYNC, Date.now());
       }
+    } catch (e) {
+      console.log('sync 取得失敗（ローカルの状態で続行）:', e);
     }
-  } catch (e) { console.log('sync pull failed:', e); }
-  syncReady = true;
+  }
+  applyMeta();
+  flushOutbox();
+}
+
+// 閉じる直前に未送信分を送る / 戻ってきたら取り直す
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') flushOutbox();
+});
+
+// 消されにくいストレージを要求（iOS では保証されないが害もない）
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (_) {}
+
+// ── 設定画面：同期とバックアップ ──
+function updateSyncStatus() {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  const last = loadStorage(LS_LAST_SYNC, 0);
+  const when = last ? new Date(last).toLocaleString('ja-JP') : '未同期';
+  el.textContent = `最終同期: ${when}\n未送信: ${outbox.length} 件 / チェック: ${Object.keys(checked).length} 件`;
+}
+
+function exportState() {
+  const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), meta }, null, 1)],
+                        { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `newtone-state-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+async function importState(file) {
+  const st = document.getElementById('sync-status');
+  try {
+    const j = JSON.parse(await file.text());
+    const src = j.meta || {};
+    const ts = clockNow();
+    let n = 0;
+    // 読み込んだファイルでオンだった項目を、今の時刻でオンに戻す（何も消さない）
+    Object.entries(src).forEach(([k, e]) => {
+      if (!e || !e.v) return;
+      const cur = meta[k];
+      if (!cur || !cur.v) { meta[k] = { v: e.v, ts }; outbox.push({ k, v: e.v, ts }); n++; }
+    });
+    saveStorage(LS_META, meta); saveStorage(LS_OUTBOX, outbox);
+    applyMeta(); scheduleSync(200);
+    tree = buildTree(); renderTree(); updatePoolTabCount();
+    if (st) st.textContent = `読み込み: ${n} 件を復元しました`;
+  } catch (e) {
+    if (st) st.textContent = '読み込みに失敗しました: ' + e.message;
+  }
+}
+
+async function loadSnapshots() {
+  const sel = document.getElementById('snapshot-select');
+  if (!sel) return;
+  try {
+    const j = await (await fetch(syncUrl('/snapshots'), { cache: 'no-store' })).json();
+    const dates = (j && j.dates) || [];
+    sel.innerHTML = dates.length
+      ? dates.map(d => `<option value="${d}">${d}</option>`).join('')
+      : '<option value="">（まだありません）</option>';
+  } catch (e) {
+    sel.innerHTML = '<option value="">取得できませんでした</option>';
+  }
+}
+
+async function restoreSnapshot() {
+  const sel = document.getElementById('snapshot-select');
+  const st = document.getElementById('sync-status');
+  const date = sel && sel.value;
+  if (!date) return;
+  if (!confirm(`${date} 時点でチェック済みだったものを復元します。今の状態からは何も消えません。`)) return;
+  try {
+    await flushOutbox();
+    const res = await fetch(syncUrl('/restore', { date }), { method: 'POST' });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || 'failed');
+    mergeMeta(j.meta); applyMeta();
+    tree = buildTree(); renderTree(); updatePoolTabCount();
+    if (st) st.textContent = `${date} から ${j.restored} 件を復元しました`;
+  } catch (e) {
+    if (st) st.textContent = '復元に失敗しました: ' + e.message;
+  }
 }
 
 // ── Fetch data.json and merge into localStorage ──
@@ -895,7 +1073,9 @@ function mergeRangeGroups(groups) {
     groups.map(g => g.date).filter(Boolean)
   );
 
-  targetDates.forEach(date => { delete removedDays[date]; });
+  targetDates.forEach(date => {
+    if (removedDays[date]) { delete removedDays[date]; mark('rd:' + date, false); }
+  });
 
   Object.keys(localData).forEach(key => {
     const date = key.split('|')[0];
@@ -911,7 +1091,9 @@ function mergeRangeGroups(groups) {
     if (!date) return;
 
     const incomingRecords = (Array.isArray(g.records) ? g.records : []).filter(r => r && r.id);
-    incomingRecords.forEach(r => { delete removedIds[r.id]; });
+    incomingRecords.forEach(r => {
+      if (removedIds[r.id]) { delete removedIds[r.id]; mark('ri:' + r.id, false); }
+    });
 
     if (incomingRecords.length === 0) return;
 
@@ -960,7 +1142,7 @@ function buildTree() {
 
 let tree = {};
 
-function save() { saveStorage(LS_CHECKED, checked); scheduleSync(); }
+function save() { saveStorage(LS_CHECKED, checked); }
 function dayChecked(recs) { return recs.filter(r => checked[r.id]).length; }
 const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function fmtMonth(ym) { const [y,m] = ym.split('-'); return MN[+m-1] + ' ' + y; }
@@ -976,7 +1158,6 @@ function savePool() {
   });
   pool = cleaned;
   saveStorage(LS_POOL, pool);
-  scheduleSync();
 }
   
 function updatePoolTabCount() {
@@ -997,11 +1178,7 @@ function togglePool(id, record, event) {
     return;
   }
 
-  if (pool[id]) {
-    delete pool[id];
-  } else {
-    pool[id] = actualRecord;
-  }
+  setPooled(id, pool[id] ? null : actualRecord);
 
   savePool();
   updatePoolTabCount();
@@ -1018,7 +1195,7 @@ function togglePool(id, record, event) {
 }
 
 function removeFromPool(id) {
-  delete pool[id];
+  setPooled(id, null);
   savePool();
   updatePoolTabCount();
   const btn = document.getElementById('heart-' + id);
@@ -1031,8 +1208,8 @@ function clearPool() {
   Object.keys(pool).forEach(id => {
     const btn = document.getElementById('heart-' + id);
     if (btn) { btn.classList.remove('pooled'); btn.textContent = '♡'; }
+    setPooled(id, null);
   });
-  pool = {};
   savePool();
   updatePoolTabCount();
   renderPoolPage();
@@ -1137,6 +1314,8 @@ function toggleSettingsPage() {
     page.classList.add('visible');
     page.scrollTop = 0;
     setStatus('', '');
+    updateSyncStatus();
+    loadSnapshots();
   }
 }
 
@@ -1418,7 +1597,7 @@ function renderDay(date) {
 }
 
 function toggle(id, date) {
-  checked[id] = !checked[id];
+  setChecked(id, !checked[id]);
   save();
   const row = document.getElementById('row-' + id);
   if (row) {
@@ -1447,11 +1626,13 @@ function deleteDay(date) {
   const recs = tree[y]?.[m]?.[date] || [];
 
   removedDays[date] = true;
+  mark('rd:' + date, true);
 
   recs.forEach(r => {
     if (r.id) {
       removedIds[r.id] = true;
-      delete checked[r.id];
+      mark('ri:' + r.id, true);
+      setChecked(r.id, false);
     }
   });
 
@@ -1512,7 +1693,7 @@ function updateDayBadge(date) {
 
 function checkAll(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { checked[r.id] = true; });
+  (tree[y]?.[m]?.[date] || []).forEach(r => setChecked(r.id, true));
   save();
   renderDay(date);
   updateDayBadge(date);
@@ -1520,7 +1701,7 @@ function checkAll(date) {
 
 function uncheckAll(date) {
   const [y,mo] = date.split('-'); const m = y + '-' + mo;
-  (tree[y]?.[m]?.[date] || []).forEach(r => { delete checked[r.id]; });
+  (tree[y]?.[m]?.[date] || []).forEach(r => setChecked(r.id, false));
   save();
   renderDay(date);
   updateDayBadge(date);
@@ -1530,7 +1711,6 @@ function uncheckAll(date) {
 async function init() {
   await pullState();
   await fetchAndMerge();
-  scheduleSync();
   tree = buildTree();
   renderTree();
   updatePoolTabCount();

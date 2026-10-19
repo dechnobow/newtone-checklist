@@ -356,17 +356,50 @@ def merge_groups(existing, incoming):
     merged = list(by_date.values())
     merged.sort(key=lambda x: x["date"], reverse=True)
 
-    cutoff = (datetime.now(JST) - timedelta(days=90)).strftime("%Y-%m-%d")
-    merged = [g for g in merged if g.get("date", "") >= cutoff]
-
+    # 以前はここで90日より古いグループを捨てていたため、チェック履歴が
+    # 毎回ローリングで消えていた。履歴は残す（削除はしない）。
     print(f"Total groups after merge: {len(merged)}")
     return merged
 
 
 def save_data(data, path):
+    """data.json を書き出す。
+
+    件数・日数が減る書き込みは事故（カットオフの再導入、スクレイプ失敗、
+    マージのバグ）とみなして中断する。履歴はこのファイルからしか
+    作り直せないため、減る方向の上書きは常に異常として扱う。
+    意図的に減らすときだけ ALLOW_SHRINK=1 を付けて実行する。
+    """
+    old_days, old_records = 0, 0
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as f:
+                old = json.load(f)
+            old_days = len({g.get("date") for g in old if g.get("date")})
+            old_records = sum(len(g.get("records", [])) for g in old)
+        except Exception as e:
+            print(f"WARNING: could not read existing {path} for the shrink check: {e}")
+
+    new_days = len({g.get("date") for g in data if g.get("date")})
+    new_records = sum(len(g.get("records", [])) for g in data)
+
+    if old_days or old_records:
+        if new_days < old_days or new_records < old_records:
+            msg = (
+                f"ABORT: {path} would shrink — "
+                f"days {old_days} -> {new_days}, records {old_records} -> {new_records}. "
+                f"過去データが失われる書き込みのため中断しました。"
+                f"意図的な場合は ALLOW_SHRINK=1 を指定してください。"
+            )
+            if os.getenv("ALLOW_SHRINK") == "1":
+                print(f"WARNING (ALLOW_SHRINK=1 により続行): {msg}")
+            else:
+                print(msg, file=sys.stderr)
+                sys.exit(1)
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"Saved {path} successfully")
+    print(f"Saved {path}: days {old_days} -> {new_days}, records {old_records} -> {new_records}")
 
 
 if __name__ == "__main__":
