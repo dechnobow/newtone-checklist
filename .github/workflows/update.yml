@@ -32,6 +32,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # チェック状態のバックアップ。git 履歴がそのまま世代管理になる。
+      # スクレイパーが失敗しても必ず先に取っておく。
+      - name: Back up sync state
+        run: |
+          curl -fsS "https://newtone-state.dechnobow-newtone.workers.dev/state?key=newtone-main" \
+            | python3 -c "import json,sys; j=json.load(sys.stdin); assert j.get('ok'); json.dump(j, open('state-backup.json','w'), ensure_ascii=False, indent=1, sort_keys=True)" \
+            || echo "state backup skipped"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -65,12 +73,15 @@ jobs:
           fi
 
       - name: Commit data
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data.json tmp-range.json tmp-range-meta.json
+          if [ -f state-backup.json ]; then git add state-backup.json; fi
           git diff --staged --quiet || git commit -m "update data"
 
       - name: Push
+        if: ${{ !cancelled() }}
         run: |
           git push
