@@ -860,6 +860,23 @@ function applyMeta() {
   saveStorage(LS_POOL, pool);
   saveStorage(LS_REMOVED_IDS, removedIds);
   saveStorage(LS_REMOVED_DAYS, removedDays);
+
+  // 削除済みの日・レコードを手元のレコード一覧からも外す
+  // （別の端末やサーバー側で削除されたものを反映する）
+  let purged = false;
+  Object.keys(localData).forEach(key => {
+    const g = localData[key];
+    const date = key.split('|')[0];
+    if (removedDays[date]) { delete localData[key]; purged = true; return; }
+    const recs = (g && g.records) || [];
+    const kept = recs.filter(r => !(r && removedIds[r.id]));
+    if (kept.length !== recs.length) {
+      purged = true;
+      if (kept.length) localData[key] = { ...g, records: kept };
+      else delete localData[key];
+    }
+  });
+  if (purged) saveStorage(LS_DATA, localData);
 }
 
 function scheduleSync(delay = 1500) {
