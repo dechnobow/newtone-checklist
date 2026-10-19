@@ -2526,50 +2526,5 @@
         "inStock": true
       }
     ]
-  },
-  {
-    "date": "2026-10-03",
-    "category": "new",
-    "records": [
-      {
-        "id": "0118732",
-        "artist": "Fumio Miyashita",
-        "title": "White Morning",
-        "label": "Ambient Sans",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/07_07/n_t0118732.jpeg?1783409195",
-        "url": "https://newtone-records.com/product/0118732",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0119441",
-        "artist": "Portable",
-        "title": "Not Over & Around But Through",
-        "label": "LMD",
-        "format": "12inch",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/09_22/n_t0119441.jpg?1790078158",
-        "url": "https://newtone-records.com/product/0119441",
-        "used": false,
-        "preorder": false,
-        "inStock": false
-      },
-      {
-        "id": "0119331",
-        "artist": "Emily A. Sprague",
-        "title": "Cyano",
-        "label": "RVNG INTL.",
-        "format": "LP(Color)",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/08_26/n_t0119331.jpg?1787728480",
-        "url": "https://newtone-records.com/product/0119330",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
   }
 ]
