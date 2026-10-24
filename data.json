@@ -1,5 +1,50 @@
 [
   {
+    "date": "2026-10-24",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119673",
+        "artist": "Institut für Feinmotorik",
+        "title": "Öd",
+        "label": "Faitiche",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_23/n_t0119673.jpeg?1790144430",
+        "url": "https://newtone-records.com/product/0119673",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119671",
+        "artist": "Alan & Jan",
+        "title": "Take me, I’m yours",
+        "label": "Faitiche",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_23/n_t0119671.jpeg?1790143528",
+        "url": "https://newtone-records.com/product/0119671",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119829",
+        "artist": "Sid Lovejoy",
+        "title": "King Kong Man / Version",
+        "label": "Shella Records",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_06/n_t0119829.jpg?1791291053",
+        "url": "https://newtone-records.com/product/0119829",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-23",
     "category": "new",
     "records": [
