@@ -1,5 +1,115 @@
 [
   {
+    "date": "2026-10-26",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119957",
+        "artist": "K.O.P. 32",
+        "title": "Symmetry EP",
+        "label": "Beyond The Bridge",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_15/n_t0119957.jpg?1792048751",
+        "url": "https://newtone-records.com/product/0119957",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119953",
+        "artist": "Vril",
+        "title": "Krux",
+        "label": "Delsin",
+        "format": "2x12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_15/n_t0119953.jpg?1792048348",
+        "url": "https://newtone-records.com/product/0119953",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119523",
+        "artist": "RFLX",
+        "title": "Parallel Worlds EP w/ Joey Beltram & AT-XYA Remixes",
+        "label": "Eight Of Cups",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_25/n_t0119523.jpg?1790319570",
+        "url": "https://newtone-records.com/product/0119523",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119971",
+        "artist": "Jesse You",
+        "title": "Detour EP",
+        "label": "Entered Records",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_16/n_t0119971.jpg",
+        "url": "https://newtone-records.com/product/0119971",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119959",
+        "artist": "Beste Hira",
+        "title": "MP 10",
+        "label": "Magic Power",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_15/n_t0119959.jpg?1792048944",
+        "url": "https://newtone-records.com/product/0119959",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0117900",
+        "artist": "Fruko Y Sus Tesos / The Latin Brothers",
+        "title": "A La Memoria Del Muerto / Buscándote",
+        "label": "Panorama",
+        "format": "7inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_03/n_t0117900.jpg",
+        "url": "https://newtone-records.com/product/0117900",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119978",
+        "artist": "Various Artists",
+        "title": "Untitled",
+        "label": "Parallel Universe",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_16/n_t0119978.jpg?1792132287",
+        "url": "https://newtone-records.com/product/0119978",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119859",
+        "artist": "Intellitronic",
+        "title": "Pixel",
+        "label": "Rubadub",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_19/n_t0119859.jpeg?1792396843",
+        "url": "https://newtone-records.com/product/0119859",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-25",
     "category": "new",
     "records": [
