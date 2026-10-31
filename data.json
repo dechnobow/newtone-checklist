@@ -1614,37 +1614,5 @@
         "inStock": true
       }
     ]
-  },
-  {
-    "date": "2026-10-25",
-    "category": "new",
-    "records": [
-      {
-        "id": "0119259",
-        "artist": "Various Artists",
-        "title": "Peace Anthems",
-        "label": "Red Hook Records",
-        "format": "LP",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/08_19/n_t0119259.jpg?1787115173",
-        "url": "https://newtone-records.com/product/0119259",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      },
-      {
-        "id": "0119324",
-        "artist": "Karen Y Los Remedios",
-        "title": "Bestiaria",
-        "label": "Zzk Records",
-        "format": "LP(Color)",
-        "genre": "",
-        "img": "https://www.newtone-records.com/pic/26/08_26/n_t0119324.jpg?1787725116",
-        "url": "https://newtone-records.com/product/0119324",
-        "used": false,
-        "preorder": false,
-        "inStock": true
-      }
-    ]
   }
 ]
