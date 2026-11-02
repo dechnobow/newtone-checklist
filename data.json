@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-11-01",
+    "category": "new",
+    "records": [
+      {
+        "id": "0120174",
+        "artist": "SAUNTER Magazine",
+        "title": "SAUNTER Magazine 09 : 特集「屋久島を愛した詩人 山尾三省没後25周年 アニミズムという希望 / Sacred Ecology」。",
+        "label": "kilty Books",
+        "format": "Magazine＋CD",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/11_01/n_t0120174.jpeg",
+        "url": "https://newtone-records.com/product/0120174",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119464",
+        "artist": "Niños du Brasil",
+        "title": "Ordem Micelial",
+        "label": "Multi Culti",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_18/n_t0119464.jpg",
+        "url": "https://newtone-records.com/product/0119464",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0117446",
+        "artist": "Various",
+        "title": "Art Form 2",
+        "label": "WRWTFWW",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/03_23/n_t0117446.jpg?1774284660",
+        "url": "https://newtone-records.com/product/117446",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119471",
+        "artist": "Various",
+        "title": "Art Form I (2LP)",
+        "label": "WRWTFWW",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_10/n_t0119471.jpg?1789022009",
+        "url": "https://newtone-records.com/product/0119471",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-31",
     "category": "new",
     "records": [
