@@ -1,5 +1,102 @@
 [
   {
+    "date": "2026-11-14",
+    "category": "new",
+    "records": [
+      {
+        "id": "0118066",
+        "artist": "Boards Of Canada",
+        "title": "Inferno（数量限定レッド・トランスルーセント・ヴァイナル／16Pブックレット封入／日本語帯付き）",
+        "label": "BEAT RECORDS / WARP RECORDS",
+        "format": "2LP＋Booklet＋日本語帯付き",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/05_13/n_t0118066.jpg?1778665766",
+        "url": "https://newtone-records.com/product/0118063",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0120327",
+        "artist": "Warren Burt",
+        "title": "Three Movements from “Some Kind of Seasoning”（『あ る種のスパイス』からの3楽章）",
+        "label": "Em Records",
+        "format": "LP+DL code",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/11_13/n_t0120327.png?1794555408",
+        "url": "https://newtone-records.com/product/0120327",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0120299",
+        "artist": "Housey Doingz",
+        "title": "Baby Dunit",
+        "label": "HD1",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/11_11/n_t0120299.jpg?1794367184",
+        "url": "https://newtone-records.com/product/0120299",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119426",
+        "artist": "Anna Butterss",
+        "title": "Mighty Vertebrate",
+        "label": "International Anthem",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_07/n_t0119426.jpg?1788783636",
+        "url": "https://newtone-records.com/product/0119426",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0118319",
+        "artist": "SML",
+        "title": "Spontaneous Music Live",
+        "label": "International Anthem",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/06_02/n_t0118319.jpg?1780399707",
+        "url": "https://newtone-records.com/product/0118319",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0085556",
+        "artist": "Jon Hassell",
+        "title": "Listening To Pictures (Pentimento Volume One)",
+        "label": "Ndeya",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/18/06_08/n_t0085556.jpg?1636482247",
+        "url": "https://newtone-records.com/product/0085556",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0120289",
+        "artist": "David Chesworth",
+        "title": "Maydena Creek",
+        "label": "Program Records",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/11_13/n_t0120289.jpg?1794560244",
+        "url": "https://newtone-records.com/product/0120289",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-11-13",
     "category": "new",
     "records": [
