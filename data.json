@@ -1,5 +1,37 @@
 [
   {
+    "date": "2026-11-15",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119415",
+        "artist": "Aaron Dilloway",
+        "title": "No Skill Comedy Mind Reading",
+        "label": "DAIS Records",
+        "format": "LP(Color)",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_04/n_t0119415.jpg?1788516870",
+        "url": "https://newtone-records.com/product/0119415",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119700",
+        "artist": "Ivo Malec",
+        "title": "Luminétudes",
+        "label": "Recollection GRM",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_24/n_t0119700.jpg?1790240168",
+        "url": "https://newtone-records.com/product/0119700",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-11-14",
     "category": "new",
     "records": [
