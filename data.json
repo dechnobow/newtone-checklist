@@ -1,5 +1,76 @@
 [
   {
+    "date": "2026-11-16",
+    "category": "new",
+    "records": [
+      {
+        "id": "0109983",
+        "artist": "The Vernon Spring",
+        "title": "A Plane Over Woods",
+        "label": "Lima Limo",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_08/n_t0109983.jpg?1788850445",
+        "url": "https://newtone-records.com/product/0109983",
+        "used": false,
+        "preorder": false,
+        "inStock": false
+      },
+      {
+        "id": "0109979",
+        "artist": "The Vernon Spring & Gwilym Gold",
+        "title": "Still",
+        "label": "Lima Limo",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/24/05_14/n_t0109979.jpg?1715676351",
+        "url": "https://newtone-records.com/product/0109979",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0120233",
+        "artist": "Greer",
+        "title": "Seven Wise Dogs Bless You With Their Kindness",
+        "label": "Oomycota",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/11_04/n_t0120233.jpg?1793781048",
+        "url": "https://newtone-records.com/product/0120233",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119582",
+        "artist": "Archie Hamilton",
+        "title": "Friends In Low Places",
+        "label": "Risk/Reward",
+        "format": "12inch",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_16/n_t0119582.jpeg",
+        "url": "https://newtone-records.com/product/0119582",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      },
+      {
+        "id": "0119684",
+        "artist": "David Grubbs & Luke Fowler",
+        "title": "J'ai pensé sans paroles",
+        "label": "Shelter Press",
+        "format": "LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/10_27/n_t0119684.jpg?1793087013",
+        "url": "https://newtone-records.com/product/0119684",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-11-15",
     "category": "new",
     "records": [
