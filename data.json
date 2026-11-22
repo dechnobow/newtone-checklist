@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-11-21",
+    "category": "new",
+    "records": [
+      {
+        "id": "0119404",
+        "artist": "Telectu",
+        "title": "Off Off",
+        "label": "Holuzam",
+        "format": "2LP",
+        "genre": "",
+        "img": "https://www.newtone-records.com/pic/26/09_02/n_t0119404.jpeg?1788343242",
+        "url": "https://newtone-records.com/product/0119404",
+        "used": false,
+        "preorder": false,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "date": "2026-11-20",
     "category": "new",
     "records": [
